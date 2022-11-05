@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS public.campus
     id bigint NOT NULL,
     cidade character varying(255) COLLATE pg_catalog."default",
     nome character varying(255) COLLATE pg_catalog."default",
+    bairro character varying(255) COLLATE pg_catalog."default",
+    rua character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT campus_pkey PRIMARY KEY (id)
 );
 
@@ -34,6 +36,13 @@ CREATE TABLE IF NOT EXISTS public.curso_projeto
     CONSTRAINT curso_projeto_pkey PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.perfil
+(
+    id bigint NOT NULL,
+    nome character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT perfil_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS public.projeto
 (
     id bigint NOT NULL,
@@ -50,7 +59,24 @@ CREATE TABLE IF NOT EXISTS public.projeto
     resumo text COLLATE pg_catalog."default",
     suporte_financeiro double precision,
     titulo character varying(255) COLLATE pg_catalog."default",
+    area_tematica character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT projeto_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.usuario
+(
+    id bigint NOT NULL,
+    email character varying(255) COLLATE pg_catalog."default",
+    matricula character varying(255) COLLATE pg_catalog."default",
+    nome character varying(255) COLLATE pg_catalog."default",
+    senha character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT usuario_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.usuario_perfis
+(
+    usuario_id bigint NOT NULL,
+    perfis_id bigint NOT NULL
 );
 
 ALTER TABLE IF EXISTS public.campus_curso
@@ -77,6 +103,20 @@ ALTER TABLE IF EXISTS public.curso_projeto
 ALTER TABLE IF EXISTS public.curso_projeto
     ADD CONSTRAINT fkaqqkuykyeg5po3f1byx7nll4s FOREIGN KEY (id_curso)
     REFERENCES public.curso (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+
+ALTER TABLE IF EXISTS public.usuario_perfis
+    ADD CONSTRAINT fk7bhs80brgvo80vhme3u8m6ive FOREIGN KEY (perfis_id)
+    REFERENCES public.perfil (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+
+ALTER TABLE IF EXISTS public.usuario_perfis
+    ADD CONSTRAINT fks91tgiyagbilt959wbufiphgc FOREIGN KEY (usuario_id)
+    REFERENCES public.usuario (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
