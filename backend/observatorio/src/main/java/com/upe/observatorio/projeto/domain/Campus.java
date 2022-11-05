@@ -1,32 +1,34 @@
-package com.upe.observatorio.domain;
+package com.upe.observatorio.projeto.domain;
+
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="curso_projeto")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CursoProjeto {
+public class Campus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	private String nome;
+
+	private String cidade;
 	
-	@ManyToOne
-	@JoinColumn(name="id_curso")
-	private Curso curso;
+	private String bairro;
 	
-	@ManyToOne
-	@JoinColumn(name="id_projeto")
-	private Projeto projeto;
+	private String rua;
+
+	@OneToMany(mappedBy = "campus")
+	private List<CampusCurso> campusCurso;
 }

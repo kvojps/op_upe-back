@@ -1,4 +1,4 @@
-package com.upe.observatorio.domain;
+package com.upe.observatorio.usuario.domain;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,16 +16,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Curso {
+public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String nome;
+	private String nome; 
 	
-	@OneToMany(mappedBy = "curso")
-	private List<CampusCurso> campusCurso;
+	private String email;
 	
-	@OneToMany(mappedBy = "curso")
-	private List<CursoProjeto> cursoProjeto;
+	private String senha;
+	
+	private String matricula;
+	
+	@ManyToMany
+	private List<Perfil> perfis;
+	
 }
