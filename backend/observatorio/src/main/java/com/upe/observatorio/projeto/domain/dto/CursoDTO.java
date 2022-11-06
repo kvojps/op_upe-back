@@ -1,5 +1,12 @@
 package com.upe.observatorio.projeto.domain.dto;
 
-public class CursoDTO {
+import javax.validation.constraints.NotBlank;
 
+import lombok.Data;
+
+@Data
+public class CursoDTO {
+	
+	@NotBlank
+	private String nome;
 }

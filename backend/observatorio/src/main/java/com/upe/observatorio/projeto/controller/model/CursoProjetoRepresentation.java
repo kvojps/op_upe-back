@@ -1,5 +1,17 @@
 package com.upe.observatorio.projeto.controller.model;
 
-public class CursoProjetoRepresentation {
+import java.io.Serializable;
 
+import lombok.Data;
+
+@Data
+public class CursoProjetoRepresentation implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	
+	private CursoRepresentation curso;
+	
+	private ProjetoRepresentation projeto;
 }

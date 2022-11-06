@@ -1,5 +1,12 @@
 package com.upe.observatorio.usuario.domain.dto;
 
-public class PerfilDTO {
+import javax.validation.constraints.NotBlank;
 
+import lombok.Data;
+
+@Data
+public class PerfilDTO {
+	
+	@NotBlank
+	private String nome;
 }
