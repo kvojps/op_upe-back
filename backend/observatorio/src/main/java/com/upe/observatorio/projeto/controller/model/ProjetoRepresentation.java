@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
+
 import lombok.Data;
 
 @Data
@@ -11,9 +14,9 @@ public class ProjetoRepresentation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String areaTematica;
+	private AreaTematicaEnum areaTematica;
 	
-	private String modalidade;
+	private ModalidadeEnum modalidade;
 	
 	private String titulo;
 	

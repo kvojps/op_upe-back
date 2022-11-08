@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.utilities.ProjetoException;
 
 public interface ProjetoService {
 	
@@ -13,11 +14,11 @@ public interface ProjetoService {
 	
 	public Optional<Projeto> buscarProjetoPorId(Long id);
 	
-	public Projeto adicionarProjeto(ProjetoDTO projeto);
+	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ProjetoException;
 	
-	public void atualizarProjeto(ProjetoDTO projeto, Long id);
+	public void atualizarProjeto(ProjetoDTO projeto, Long id) throws ProjetoException;
 	
-	public void removerProjeto(Long id);
+	public void removerProjeto(Long id) throws ProjetoException;
 	
 	public Map<String, Object> filtrarProjetoPorAreaTematica(String areaTematica, int pag, int tamanho);
 	

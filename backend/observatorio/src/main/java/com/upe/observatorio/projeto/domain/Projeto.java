@@ -18,11 +18,13 @@ import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Projeto {
@@ -67,8 +69,6 @@ public class Projeto {
 	private String publicoAlvo;
 
 	private int pessoasAtendidas;
-
-	// palavras chaves
 
 	private Double suporteFinanceiro;
 

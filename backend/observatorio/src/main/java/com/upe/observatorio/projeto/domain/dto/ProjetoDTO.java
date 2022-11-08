@@ -2,18 +2,24 @@ package com.upe.observatorio.projeto.domain.dto;
 
 import java.util.Date;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 
 import lombok.Data;
 
 @Data
 public class ProjetoDTO {
 	
-	@NotBlank
-	private String areaTematica;
+	@Enumerated(EnumType.STRING)
+	private AreaTematicaEnum areaTematica;
 	
-	@NotBlank
-	private String modalidade;
+	@Enumerated(EnumType.STRING)
+	private ModalidadeEnum modalidade;
 	
 	@NotBlank
 	private String titulo;
@@ -30,9 +36,12 @@ public class ProjetoDTO {
 	@NotBlank
 	private String objetivos;
 	
+	@NotBlank
+	private String conclusao;
+	
 	private String memoriaVisual;
 	
-	@NotBlank
+	@NotNull
 	private Date dataInicio;
 	
 	private Date dataFim;
