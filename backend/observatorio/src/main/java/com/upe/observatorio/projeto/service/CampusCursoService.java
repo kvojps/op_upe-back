@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.upe.observatorio.projeto.domain.CampusCurso;
 import com.upe.observatorio.projeto.domain.dto.CampusCursoDTO;
+import com.upe.observatorio.projeto.utilities.ProjetoException;
 
 public interface CampusCursoService {
 
@@ -12,9 +13,9 @@ public interface CampusCursoService {
 	
 	public Optional<CampusCurso> buscarCampusCursoPorId(Long id);
 	
-	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso);
+	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ProjetoException;
 	
-	public void atualizarCampusCurso(CampusCursoDTO campusCurso, Long id);
+	public void atualizarCampusCurso(CampusCursoDTO campusCurso, Long id) throws ProjetoException;
 	
-	public void removerCampusCurso(Long id);
+	public void removerCampusCurso(Long id) throws ProjetoException;
 }

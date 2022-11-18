@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.upe.observatorio.projeto.domain.Campus;
 import com.upe.observatorio.projeto.domain.dto.CampusDTO;
+import com.upe.observatorio.projeto.utilities.ProjetoException;
 
 public interface CampusService {
 	
@@ -13,13 +14,13 @@ public interface CampusService {
 	
 	public Optional<Campus> buscarCampusPorId(Long id);
 	
-	public Campus adicionarCampus(CampusDTO campus);
+	public Campus adicionarCampus(CampusDTO campus) throws ProjetoException;
 	
-	public void atualizarCampus(CampusDTO campus, Long id);
+	public void atualizarCampus(CampusDTO campus, Long id) throws ProjetoException;
 	
-	public void removerCampus(Long id);
+	public void removerCampus(Long id) throws ProjetoException;
 	
-	public Map<String, Object> filtrarProjetoPorNome(String nome, int pag, int tamanho);
+	public Map<String, Object> filtrarCampusPorNome(String nome, int pag, int tamanho);
 	
-	public Map<String, Object> filtrarProjetoPorCidade(String cidade, int pag, int tamanho);
+	public Map<String, Object> filtrarCampusPorCidade(String cidade, int pag, int tamanho);
 }

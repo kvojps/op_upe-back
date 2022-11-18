@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +31,8 @@ public class ProjetoServiceImpl implements ProjetoService {
 
 	@Override
 	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ProjetoException {
-		Projeto projetoSalvar = new Projeto();
-		BeanUtils.copyProperties(projeto, projetoSalvar);
+		ModelMapper modelMapper = new ModelMapper();
+		Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
 
 		return repositorio.save(projetoSalvar);
 	}
@@ -43,8 +43,8 @@ public class ProjetoServiceImpl implements ProjetoService {
 			throw new ProjetoException("Não existe um projeto associado a este id");
 		}
 		
-		Projeto projetoAtualizar = new Projeto();
-		BeanUtils.copyProperties(projeto, projetoAtualizar);
+		ModelMapper modelMapper = new ModelMapper();
+		Projeto projetoAtualizar = modelMapper.map(projeto, Projeto.class);
 		
 		repositorio.save(projetoAtualizar);
 

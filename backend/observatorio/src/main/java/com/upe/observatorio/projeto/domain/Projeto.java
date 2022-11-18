@@ -73,7 +73,7 @@ public class Projeto {
 	private Double suporteFinanceiro;
 
 	@OneToMany(mappedBy = "projeto")
-	private List<CursoProjeto> cursoProjeto;
+	private List<CursoProjeto> cursoProjetos;
 
 	// coordenadores - entidade NtoN
 	// professores - entidade NtoN
