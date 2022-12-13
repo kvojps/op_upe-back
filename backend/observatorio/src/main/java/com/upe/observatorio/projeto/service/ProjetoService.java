@@ -1,11 +1,12 @@
 package com.upe.observatorio.projeto.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Projeto;
@@ -40,11 +41,69 @@ public class ProjetoService {
 			throw new ProjetoException("Não existe um projeto associado a este id");
 		}
 		
-		ModelMapper modelMapper = new ModelMapper();
-		Projeto projetoAtualizar = modelMapper.map(projeto, Projeto.class);
+		Projeto projetoExistente = repositorio.findById(id).get();
+		if (!projetoExistente.getAreaTematica().equals(projeto.getAreaTematica())) {
+			projetoExistente.setAreaTematica(projeto.getAreaTematica());
+		}
 		
-		repositorio.save(projetoAtualizar);
-
+		if (!projetoExistente.getModalidade().equals(projeto.getModalidade())) {
+			projetoExistente.setModalidade(projeto.getModalidade());
+		}
+		
+		if (!projetoExistente.getTitulo().equals(projeto.getTitulo())) {
+			projetoExistente.setTitulo(projeto.getTitulo());
+		}
+		
+		if (!projetoExistente.getResumo().equals(projeto.getResumo())) {
+			projetoExistente.setResumo(projeto.getResumo());
+		}
+		
+		if (!projetoExistente.getIntroducao().equals(projeto.getIntroducao())) {
+			projetoExistente.setIntroducao(projeto.getIntroducao());
+		}
+		
+		if (!projetoExistente.getFundamentacao().equals(projeto.getFundamentacao())) {
+			projetoExistente.setFundamentacao(projeto.getFundamentacao());
+		}
+		
+		if (!projetoExistente.getObjetivos().equals(projeto.getObjetivos())) {
+			projetoExistente.setObjetivos(projeto.getObjetivos());
+		}
+		
+		if (!projetoExistente.getConclusao().equals(projeto.getConclusao())) {
+			projetoExistente.setConclusao(projeto.getConclusao());
+		}
+		
+		if (!projetoExistente.getMemoriaVisual().equals(projeto.getMemoriaVisual())) {
+			projetoExistente.setMemoriaVisual(projeto.getMemoriaVisual());
+		}
+		
+		if (!projetoExistente.getDataInicio().equals(projeto.getDataInicio())) {
+			projetoExistente.setDataInicio(projeto.getDataInicio());
+		}
+		
+		if (!projetoExistente.getDataFim().equals(projeto.getDataFim())) {
+			projetoExistente.setDataFim(projeto.getDataFim());
+		}
+		
+		if (!projetoExistente.getDataFim().equals(projeto.getDataFim())) {
+			projetoExistente.setDataFim(projeto.getDataFim());
+		}
+		
+		if (!projetoExistente.getPublicoAlvo().equals(projeto.getPublicoAlvo())) {
+			projetoExistente.setPublicoAlvo(projeto.getPublicoAlvo());
+		}
+		
+		if (!projetoExistente.getPessoasAtendidas().equals(projeto.getPessoasAtendidas())) {
+			projetoExistente.setPessoasAtendidas(projeto.getPessoasAtendidas());
+		}
+		
+		if (!projetoExistente.getSuporteFinanceiro().equals(projeto.getSuporteFinanceiro())) {
+			projetoExistente.setSuporteFinanceiro(projeto.getSuporteFinanceiro());
+		}
+		
+		repositorio.save(projetoExistente);
+	
 	}
 
 	public void removerProjeto(Long id) throws ProjetoException {
@@ -55,19 +114,16 @@ public class ProjetoService {
 		repositorio.deleteById(id);
 	}
 
-	public Map<String, Object> filtrarProjetoPorAreaTematica(String areaTematica, int pag, int tamanho) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Projeto> filtrarProjetoPorAreaTematica(String areaTematica, Pageable pageable) {
+		return repositorio.findAllByAreaTematicaContainingIgnoreCase(areaTematica, pageable);
 	}
-	
-	public Map<String, Object> filtrarProjetoPorModalidade(String modalidade, int pag, int tamanho) {
-		// TODO Auto-generated method stub
-		return null;
+		
+	public Page<Projeto> filtrarProjetoPorModalidade(String modalidade, Pageable pageable) {
+		return repositorio.findAllByModalidadeContainingIgnoreCase(modalidade, pageable);
 	}
 
-	public Map<String, Object> filtrarProjetoPorTitulo(String titulo, int page, int tamanho) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Projeto> filtrarProjetoPorTitulo(String titulo, Pageable pageable) {
+		return repositorio.findAllByTituloContainingIgnoreCase(titulo, pageable);
 	}
 
 }

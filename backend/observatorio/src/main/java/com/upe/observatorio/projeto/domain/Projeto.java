@@ -68,7 +68,7 @@ public class Projeto {
 
 	private String publicoAlvo;
 
-	private int pessoasAtendidas;
+	private Integer pessoasAtendidas;
 
 	private Double suporteFinanceiro;
 

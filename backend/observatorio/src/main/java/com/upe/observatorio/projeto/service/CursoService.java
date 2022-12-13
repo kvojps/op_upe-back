@@ -1,11 +1,12 @@
 package com.upe.observatorio.projeto.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Curso;
@@ -20,8 +21,7 @@ public class CursoService {
 	private CursoRepository repositorio;
 
 	public List<Curso> listarCursos() {
-		// TODO Auto-generated method stub
-		return null;
+		return repositorio.findAll();
 	}
 
 	public Optional<Curso> buscarCursoPorId(Long id) {
@@ -36,18 +36,30 @@ public class CursoService {
 	}
 
 	public void atualizarCurso(CursoDTO curso, Long id) throws ProjetoException {
-		// TODO Auto-generated method stub
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ProjetoException("Não existe um curso associado a este id");
+		}
+		
+		Curso cursoExistente = repositorio.findById(id).get();
+		if (!cursoExistente.getNome().equals(curso.getNome())) {
+			cursoExistente.setNome(curso.getNome());
+		}
+		
+		repositorio.save(cursoExistente);
 		
 	}
 
 	public void removerCurso(Long id) throws ProjetoException {
-		// TODO Auto-generated method stub
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ProjetoException("Não existe um curso associado a este id");
+		}
+		
+		repositorio.deleteById(id);
 		
 	}
 
-	public Map<String, Object> filtrarCursoPorNome(String nome, int pag, int tamanho) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Curso> filtrarCursoPorNome(String nome, Pageable pageable) {
+		return repositorio.findAllByNomeContainingIgnoreCase(nome, pageable);
 	}
 
 }
