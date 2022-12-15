@@ -1,11 +1,12 @@
 package com.upe.observatorio.projeto.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Campus;
@@ -39,11 +40,21 @@ public class CampusService {
 			throw new ProjetoException("Não existe um campus associado a este id");
 		}
 
-		ModelMapper modelMapper = new ModelMapper();
-		Campus campusAtualizar = modelMapper.map(campus, Campus.class);
+		Campus campusExistente = repositorio.findById(id).get();
+		if (!campusExistente.getNome().equals(campus.getNome())) {
+			campusExistente.setNome(campus.getNome());
+		}
+		if (!campusExistente.getCidade().equals(campus.getCidade())) {
+			campusExistente.setCidade(campus.getCidade());
+		}
+		if (!campusExistente.getBairro().equals(campus.getBairro())) {
+			campusExistente.setBairro(campus.getBairro());
+		}
+		if (!campusExistente.getRua().equals(campus.getRua())) {
+			campusExistente.setRua(campus.getRua());
+		}
 
-		repositorio.save(campusAtualizar);
-
+		repositorio.save(campusExistente);
 	}
 
 	public void removerCampus(Long id) throws ProjetoException {
@@ -55,14 +66,12 @@ public class CampusService {
 
 	}
 
-	public Map<String, Object> filtrarCampusPorNome(String nome, int pag, int tamanho) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Campus> filtrarCampusPorNome(String nome, Pageable pageable) {
+		return repositorio.findAllByNomeContainingIgnoreCase(nome, pageable);
 	}
 
-	public Map<String, Object> filtrarCampusPorCidade(String cidade, int pag, int tamanho) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Campus> filtrarCampusPorCidade(String cidade, Pageable pageable) {
+		return repositorio.findAllByCidadeContainingIgnoreCase(cidade, pageable);
 	}
 
 }
