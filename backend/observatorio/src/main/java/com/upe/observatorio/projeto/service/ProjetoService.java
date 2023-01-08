@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Projeto;
@@ -114,13 +112,13 @@ public class ProjetoService {
 		repositorio.deleteById(id);
 	}
 
-	public List<Projeto> filtrarProjetoPorAreaTematica(String areaTematica) {
-		return repositorio.findAllByAreaTematicaContainingIgnoreCase(areaTematica);
-	}
-		
-	public List<Projeto> filtrarProjetoPorModalidade(String modalidade) {
-		return repositorio.findAllByModalidadeContainingIgnoreCase(modalidade);
-	}
+//	public List<Projeto> filtrarProjetoPorAreaTematica(String areaTematica) {
+//		return repositorio.findAllByAreaTematicaContainingIgnoreCase(areaTematica);
+//	}
+//		
+//	public List<Projeto> filtrarProjetoPorModalidade(String modalidade) {
+//		return repositorio.findAllByModalidadeContainingIgnoreCase(modalidade);
+//	}
 
 	public List<Projeto> filtrarProjetoPorTitulo(String titulo) {
 		return repositorio.findAllByTituloContainingIgnoreCase(titulo);

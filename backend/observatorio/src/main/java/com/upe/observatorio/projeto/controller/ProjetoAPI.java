@@ -83,30 +83,30 @@ public class ProjetoAPI {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
-	@GetMapping("filtro/area-tematica")
-	public ResponseEntity<Page<ProjetoRepresentation>> filtrarProjetoPorAreaTematica(
-			@RequestParam(value = "areaTematica", required = true) String areaTematica,
-			@PageableDefault(size = 10) Pageable pageable) {
-
-		List<ProjetoRepresentation> projetosFiltrados = service.filtrarProjetoPorAreaTematica(areaTematica).stream()
-				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-		Page<ProjetoRepresentation> paginas = new PageImpl<ProjetoRepresentation>(projetosFiltrados, pageable,
-				projetosFiltrados.size());
-		
-		return ResponseEntity.ok(paginas);
-	}
-
-	@GetMapping("filtro/modalidade")
-	public ResponseEntity<Page<ProjetoRepresentation>> filtrarProjetoPorModalidade(
-			@RequestParam(value = "modalidade", required = true) String modalidade,
-			@PageableDefault(size = 10) Pageable pageable) {
-		List<ProjetoRepresentation> projetosFiltrados = service.filtrarProjetoPorModalidade(modalidade).stream()
-				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-		Page<ProjetoRepresentation> paginas = new PageImpl<ProjetoRepresentation>(projetosFiltrados, pageable,
-				projetosFiltrados.size());
-		
-		return ResponseEntity.ok(paginas);
-	}
+//	@GetMapping("filtro/area-tematica")
+//	public ResponseEntity<Page<ProjetoRepresentation>> filtrarProjetoPorAreaTematica(
+//			@RequestParam(value = "areaTematica", required = true) String areaTematica,
+//			@PageableDefault(size = 10) Pageable pageable) {
+//
+//		List<ProjetoRepresentation> projetosFiltrados = service.filtrarProjetoPorAreaTematica(areaTematica).stream()
+//				.map(projeto -> convert(projeto)).collect(Collectors.toList());
+//		Page<ProjetoRepresentation> paginas = new PageImpl<ProjetoRepresentation>(projetosFiltrados, pageable,
+//				projetosFiltrados.size());
+//		
+//		return ResponseEntity.ok(paginas);
+//	}
+//
+//	@GetMapping("filtro/modalidade")
+//	public ResponseEntity<Page<ProjetoRepresentation>> filtrarProjetoPorModalidade(
+//			@RequestParam(value = "modalidade", required = true) String modalidade,
+//			@PageableDefault(size = 10) Pageable pageable) {
+//		List<ProjetoRepresentation> projetosFiltrados = service.filtrarProjetoPorModalidade(modalidade).stream()
+//				.map(projeto -> convert(projeto)).collect(Collectors.toList());
+//		Page<ProjetoRepresentation> paginas = new PageImpl<ProjetoRepresentation>(projetosFiltrados, pageable,
+//				projetosFiltrados.size());
+//		
+//		return ResponseEntity.ok(paginas);
+//	}
 
 	@GetMapping("filtro/titulo")
 	public ResponseEntity<Page<ProjetoRepresentation>> filtrarProjetoPorTitulo(
