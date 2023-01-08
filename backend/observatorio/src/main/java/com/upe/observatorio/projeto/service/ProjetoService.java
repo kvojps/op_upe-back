@@ -114,16 +114,16 @@ public class ProjetoService {
 		repositorio.deleteById(id);
 	}
 
-	public Page<Projeto> filtrarProjetoPorAreaTematica(String areaTematica, Pageable pageable) {
-		return repositorio.findAllByAreaTematicaContainingIgnoreCase(areaTematica, pageable);
+	public List<Projeto> filtrarProjetoPorAreaTematica(String areaTematica) {
+		return repositorio.findAllByAreaTematicaContainingIgnoreCase(areaTematica);
 	}
 		
-	public Page<Projeto> filtrarProjetoPorModalidade(String modalidade, Pageable pageable) {
-		return repositorio.findAllByModalidadeContainingIgnoreCase(modalidade, pageable);
+	public List<Projeto> filtrarProjetoPorModalidade(String modalidade) {
+		return repositorio.findAllByModalidadeContainingIgnoreCase(modalidade);
 	}
 
-	public Page<Projeto> filtrarProjetoPorTitulo(String titulo, Pageable pageable) {
-		return repositorio.findAllByTituloContainingIgnoreCase(titulo, pageable);
+	public List<Projeto> filtrarProjetoPorTitulo(String titulo) {
+		return repositorio.findAllByTituloContainingIgnoreCase(titulo);
 	}
 
 }

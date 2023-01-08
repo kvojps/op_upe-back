@@ -26,13 +26,11 @@ public class CursoProjetoService {
 	private ProjetoService projetoServico;
 	
 	public List<CursoProjeto> listarCursoProjetos() {
-		// TODO Auto-generated method stub
-		return null;
+		return repositorio.findAll();
 	}
 
 	public Optional<CursoProjeto> buscarCursoProjetoPorId(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repositorio.findById(id);
 	}
 
 	public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) throws ProjetoException {
@@ -55,13 +53,12 @@ public class CursoProjetoService {
 		return repositorio.save(cursoProjetoSalvar);
 	}
 
-	public void atualizarCursoProjeto(CursoProjetoDTO cursoProjeto, Long id) throws ProjetoException {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void removerCursoProjeto(Long id) throws ProjetoException {
-		// TODO Auto-generated method stub
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ProjetoException("Não existe um relacionamento entre curso e projeto associado a este id");
+		}
+		
+		repositorio.deleteById(id);
 		
 	}
 

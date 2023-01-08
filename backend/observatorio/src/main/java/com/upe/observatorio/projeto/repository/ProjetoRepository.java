@@ -1,16 +1,16 @@
 package com.upe.observatorio.projeto.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.upe.observatorio.projeto.domain.Projeto;
 
 public interface ProjetoRepository extends JpaRepository<Projeto, Long>{
 	
-	Page<Projeto> findAllByAreaTematicaContainingIgnoreCase(String areaTematica, Pageable pageable);
+	List<Projeto> findAllByAreaTematicaContainingIgnoreCase(String areaTematica);
 	
-	Page<Projeto> findAllByModalidadeContainingIgnoreCase(String modalidade, Pageable pageable);
+	List<Projeto> findAllByModalidadeContainingIgnoreCase(String modalidade);
 	
-	Page<Projeto> findAllByTituloContainingIgnoreCase(String titulo, Pageable pageable);
+	List<Projeto> findAllByTituloContainingIgnoreCase(String titulo);
 }

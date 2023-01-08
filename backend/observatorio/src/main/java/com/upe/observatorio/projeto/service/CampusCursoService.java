@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Campus;
 import com.upe.observatorio.projeto.domain.CampusCurso;
+import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repository.CampusCursoRepository;
 import com.upe.observatorio.projeto.utilities.ProjetoException;
@@ -17,49 +18,47 @@ public class CampusCursoService {
 
 	@Autowired
 	private CampusCursoRepository repositorio;
-	
+
 	@Autowired
 	private CampusService campusService;
-	
-//	@Autowired
-//	private CursoService cursoService;
-	
+
+	@Autowired
+	private CursoService cursoService;
+
 	public List<CampusCurso> listarCampusCurso() {
 		return repositorio.findAll();
 	}
 
 	public Optional<CampusCurso> buscarCampusCursoPorId(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repositorio.findById(id);
 	}
-	
+
 	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ProjetoException {
 		Optional<Campus> campusExistente = campusService.buscarCampusPorId(campusCurso.getCampusId());
 		if (campusExistente.isEmpty()) {
 			throw new ProjetoException("O campus informado não existe");
 		}
-		
-//		Optional<Curso> cursoExistente = cursoService.buscarCursoPorId(campusCurso.getCursoId());
-//		if (cursoExistente.isEmpty()) {
-//			throw new ProjetoException("O curso informado não existe");
-//		}
-		
+
+		Optional<Curso> cursoExistente = cursoService.buscarCursoPorId(campusCurso.getCursoId());
+		if (cursoExistente.isEmpty()) {
+			throw new ProjetoException("O curso informado não existe");
+		}
+
 		CampusCurso campusCursoSalvar = new CampusCurso();
 		campusCursoSalvar.setCampus(campusExistente.get());
-//		campusCursoSalvar.setCurso(cursoExistente.get());
-		
-		return repositorio.save(campusCursoSalvar);
-	
-	}
+		campusCursoSalvar.setCurso(cursoExistente.get());
 
-	public void atualizarCampusCurso(CampusCursoDTO campusCurso, Long id) throws ProjetoException {
-		// TODO Auto-generated method stub
-		
+		return repositorio.save(campusCursoSalvar);
+
 	}
 
 	public void removerCampusCurso(Long id) throws ProjetoException {
-		// TODO Auto-generated method stub
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ProjetoException("Não existe um relacionamento entre campus e curso associado a este id");
+		}
 		
+		repositorio.deleteById(id);
+
 	}
 
 }
