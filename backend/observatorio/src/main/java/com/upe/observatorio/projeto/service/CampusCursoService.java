@@ -43,7 +43,12 @@ public class CampusCursoService {
 		if (cursoExistente.isEmpty()) {
 			throw new ObservatorioException("O curso informado não existe");
 		}
-
+		
+		Optional<CampusCurso> campusCursoExistente = repositorio.findByCampusAndCurso(campusExistente.get(), cursoExistente.get());
+		if (campusCursoExistente.isPresent()) {
+			throw new ObservatorioException("Já existe um relacionamento criado entre o campus e o curso informado");
+		}
+		
 		CampusCurso campusCursoSalvar = new CampusCurso();
 		campusCursoSalvar.setCampus(campusExistente.get());
 		campusCursoSalvar.setCurso(cursoExistente.get());
@@ -56,7 +61,7 @@ public class CampusCursoService {
 		if (repositorio.findById(id).isEmpty()) {
 			throw new ObservatorioException("Não existe um relacionamento entre campus e curso associado a este id");
 		}
-		
+
 		repositorio.deleteById(id);
 
 	}

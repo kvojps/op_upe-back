@@ -45,6 +45,10 @@ public class CursoProjetoService {
 			throw new ObservatorioException("O projeto informado não existe");
 		}
 		
+		Optional<CursoProjeto> cursoProjetoExistente = repositorio.findByCursoAndProjeto(cursoExistente.get(), projetoExistente.get());
+		if (cursoProjetoExistente.isPresent()) {
+			throw new ObservatorioException("Já existe um relacionamento criado entre o curso e o projeto informado");
+		}
 		
 		CursoProjeto cursoProjetoSalvar = new CursoProjeto();
 		cursoProjetoSalvar.setCurso(cursoExistente.get());
