@@ -11,7 +11,7 @@ import com.upe.observatorio.projeto.domain.CursoProjeto;
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.repository.CursoProjetoRepository;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @Service
 public class CursoProjetoService {
@@ -33,16 +33,16 @@ public class CursoProjetoService {
 		return repositorio.findById(id);
 	}
 
-	public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) throws ProjetoException {
+	public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) throws ObservatorioException {
 
 		Optional<Curso> cursoExistente = cursoServico.buscarCursoPorId(cursoProjeto.getCursoId());
 		if (cursoExistente.isEmpty()) {
-			throw new ProjetoException("O curso informado não existe");
+			throw new ObservatorioException("O curso informado não existe");
 		}
 		
 		Optional<Projeto> projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
 		if (projetoExistente.isEmpty()) {
-			throw new ProjetoException("O projeto informado não existe");
+			throw new ObservatorioException("O projeto informado não existe");
 		}
 		
 		
@@ -53,9 +53,9 @@ public class CursoProjetoService {
 		return repositorio.save(cursoProjetoSalvar);
 	}
 
-	public void removerCursoProjeto(Long id) throws ProjetoException {
+	public void removerCursoProjeto(Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um relacionamento entre curso e projeto associado a este id");
+			throw new ObservatorioException("Não existe um relacionamento entre curso e projeto associado a este id");
 		}
 		
 		repositorio.deleteById(id);

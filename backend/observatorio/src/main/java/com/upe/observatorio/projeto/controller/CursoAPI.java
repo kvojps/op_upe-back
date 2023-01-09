@@ -22,7 +22,7 @@ import com.upe.observatorio.projeto.controller.model.CursoRepresentation;
 import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CursoDTO;
 import com.upe.observatorio.projeto.service.CursoService;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @RestController
 @RequestMapping("api/curso")
@@ -51,7 +51,7 @@ public class CursoAPI {
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
@@ -60,7 +60,7 @@ public class CursoAPI {
 	public ResponseEntity<?> atualizarCurso(@RequestBody @Valid CursoDTO curso, @PathVariable Long id) {
 		try {
 			servico.atualizarCurso(curso, id);
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 
@@ -71,7 +71,7 @@ public class CursoAPI {
 	public ResponseEntity<?> removerCurso(@PathVariable("id") Long id) {
 		try {
 			servico.removerCurso(id);
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 

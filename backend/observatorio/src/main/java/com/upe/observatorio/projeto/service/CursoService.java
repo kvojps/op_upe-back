@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CursoDTO;
 import com.upe.observatorio.projeto.repository.CursoRepository;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @Service
 public class CursoService {
@@ -28,16 +28,16 @@ public class CursoService {
 		return repositorio.findById(id);
 	}
 
-	public Curso adicionarCurso(CursoDTO curso) throws ProjetoException {
+	public Curso adicionarCurso(CursoDTO curso) throws ObservatorioException {
 		ModelMapper modelMapper = new ModelMapper();
 		Curso cursoSalvar = modelMapper.map(curso, Curso.class);
 
 		return repositorio.save(cursoSalvar);
 	}
 
-	public void atualizarCurso(CursoDTO curso, Long id) throws ProjetoException {
+	public void atualizarCurso(CursoDTO curso, Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um curso associado a este id");
+			throw new ObservatorioException("Não existe um curso associado a este id");
 		}
 		
 		Curso cursoExistente = repositorio.findById(id).get();
@@ -49,9 +49,9 @@ public class CursoService {
 		
 	}
 
-	public void removerCurso(Long id) throws ProjetoException {
+	public void removerCurso(Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um curso associado a este id");
+			throw new ObservatorioException("Não existe um curso associado a este id");
 		}
 		
 		repositorio.deleteById(id);

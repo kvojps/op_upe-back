@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.upe.observatorio.projeto.domain.Campus;
 import com.upe.observatorio.projeto.domain.dto.CampusDTO;
 import com.upe.observatorio.projeto.repository.CampusRepository;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @Service
 public class CampusService {
@@ -28,16 +28,16 @@ public class CampusService {
 		return repositorio.findById(id);
 	}
 
-	public Campus adicionarCampus(CampusDTO campus) throws ProjetoException {
+	public Campus adicionarCampus(CampusDTO campus) throws ObservatorioException {
 		ModelMapper modelMapper = new ModelMapper();
 		Campus campusSalvar = modelMapper.map(campus, Campus.class);
 
 		return repositorio.save(campusSalvar);
 	}
 
-	public void atualizarCampus(CampusDTO campus, Long id) throws ProjetoException {
+	public void atualizarCampus(CampusDTO campus, Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um campus associado a este id");
+			throw new ObservatorioException("Não existe um campus associado a este id");
 		}
 
 		Campus campusExistente = repositorio.findById(id).get();
@@ -57,9 +57,9 @@ public class CampusService {
 		repositorio.save(campusExistente);
 	}
 
-	public void removerCampus(Long id) throws ProjetoException {
+	public void removerCampus(Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um curso associado a este id");
+			throw new ObservatorioException("Não existe um curso associado a este id");
 		}
 
 		repositorio.deleteById(id);

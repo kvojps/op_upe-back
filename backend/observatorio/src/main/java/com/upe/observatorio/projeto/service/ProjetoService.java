@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.repository.ProjetoRepository;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @Service
 public class ProjetoService {
@@ -27,16 +27,16 @@ public class ProjetoService {
 		return repositorio.findById(id);
 	}
 
-	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ProjetoException {
+	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioException {
 		ModelMapper modelMapper = new ModelMapper();
 		Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
 
 		return repositorio.save(projetoSalvar);
 	}
 
-	public void atualizarProjeto(ProjetoDTO projeto, Long id) throws ProjetoException {
+	public void atualizarProjeto(ProjetoDTO projeto, Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um projeto associado a este id");
+			throw new ObservatorioException("Não existe um projeto associado a este id");
 		}
 		
 		Projeto projetoExistente = repositorio.findById(id).get();
@@ -104,9 +104,9 @@ public class ProjetoService {
 	
 	}
 
-	public void removerProjeto(Long id) throws ProjetoException {
+	public void removerProjeto(Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um projeto associado a este id");
+			throw new ObservatorioException("Não existe um projeto associado a este id");
 		}
 		
 		repositorio.deleteById(id);

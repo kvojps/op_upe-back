@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upe.observatorio.projeto.controller.model.CampusCursoRepresentation;
 import com.upe.observatorio.projeto.domain.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.service.CampusCursoService;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @RestController
 @RequestMapping("api/campus-curso")
@@ -36,7 +36,7 @@ public class CampusCursoAPI {
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

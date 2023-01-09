@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upe.observatorio.projeto.controller.model.CursoProjetoRepresentation;
 import com.upe.observatorio.projeto.domain.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.service.CursoProjetoService;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @RestController
 @RequestMapping("api/curso-projeto")
@@ -36,7 +36,7 @@ public class CursoProjetoAPI {
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

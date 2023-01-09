@@ -22,7 +22,7 @@ import com.upe.observatorio.projeto.controller.model.CampusRepresentation;
 import com.upe.observatorio.projeto.domain.Campus;
 import com.upe.observatorio.projeto.domain.dto.CampusDTO;
 import com.upe.observatorio.projeto.service.CampusService;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @RestController
 @RequestMapping("api/campus")
@@ -51,7 +51,7 @@ public class CampusAPI {
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
@@ -60,7 +60,7 @@ public class CampusAPI {
 	public ResponseEntity<?> atualizarCampus(@RequestBody @Valid CampusDTO campus, @PathVariable Long id) {
 		try {
 			servico.atualizarCampus(campus, id);
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 
@@ -71,7 +71,7 @@ public class CampusAPI {
 	public ResponseEntity<?> removerCampus(@PathVariable("id") Long id) {
 		try {
 			servico.removerCampus(id);
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 

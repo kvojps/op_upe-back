@@ -27,7 +27,7 @@ import com.upe.observatorio.projeto.controller.model.ProjetoRepresentation;
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.service.ProjetoService;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @RestController
 @RequestMapping("api/projeto")
@@ -56,7 +56,7 @@ public class ProjetoAPI {
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
@@ -65,7 +65,7 @@ public class ProjetoAPI {
 	public ResponseEntity<?> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
 		try {
 			service.atualizarProjeto(projeto, id);
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 
@@ -76,7 +76,7 @@ public class ProjetoAPI {
 	public ResponseEntity<?> removerProjeto(@PathVariable("id") Long id) {
 		try {
 			service.removerProjeto(id);
-		} catch (ProjetoException e) {
+		} catch (ObservatorioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 

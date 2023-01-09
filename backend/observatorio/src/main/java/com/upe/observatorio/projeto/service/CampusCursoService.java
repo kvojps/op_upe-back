@@ -11,7 +11,7 @@ import com.upe.observatorio.projeto.domain.CampusCurso;
 import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repository.CampusCursoRepository;
-import com.upe.observatorio.projeto.utilities.ProjetoException;
+import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
 @Service
 public class CampusCursoService {
@@ -33,15 +33,15 @@ public class CampusCursoService {
 		return repositorio.findById(id);
 	}
 
-	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ProjetoException {
+	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ObservatorioException {
 		Optional<Campus> campusExistente = campusService.buscarCampusPorId(campusCurso.getCampusId());
 		if (campusExistente.isEmpty()) {
-			throw new ProjetoException("O campus informado não existe");
+			throw new ObservatorioException("O campus informado não existe");
 		}
 
 		Optional<Curso> cursoExistente = cursoService.buscarCursoPorId(campusCurso.getCursoId());
 		if (cursoExistente.isEmpty()) {
-			throw new ProjetoException("O curso informado não existe");
+			throw new ObservatorioException("O curso informado não existe");
 		}
 
 		CampusCurso campusCursoSalvar = new CampusCurso();
@@ -52,9 +52,9 @@ public class CampusCursoService {
 
 	}
 
-	public void removerCampusCurso(Long id) throws ProjetoException {
+	public void removerCampusCurso(Long id) throws ObservatorioException {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ProjetoException("Não existe um relacionamento entre campus e curso associado a este id");
+			throw new ObservatorioException("Não existe um relacionamento entre campus e curso associado a este id");
 		}
 		
 		repositorio.deleteById(id);
