@@ -1,5 +1,15 @@
 package com.upe.observatorio.usuario.controller;
 
-public class UsuarioAPI {
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("api/usuario")
+public class UsuarioAPI {
+	
+	@GetMapping
+	public String getResponseTest() {
+		return "usuarioTeste";
+	}
 }
