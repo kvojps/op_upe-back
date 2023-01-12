@@ -45,7 +45,7 @@ public class CursoAPI {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> adicionarCampusCurso(@RequestBody @Valid CursoDTO curso) {
+	public ResponseEntity<?> adicionarCurso(@RequestBody @Valid CursoDTO curso) {
 		try {
 			CursoRepresentation resultado = convert(servico.adicionarCurso(curso));
 
