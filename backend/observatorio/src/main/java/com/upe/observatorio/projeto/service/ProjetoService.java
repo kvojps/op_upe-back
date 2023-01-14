@@ -1,5 +1,6 @@
 package com.upe.observatorio.projeto.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repository.ProjetoRepository;
 import com.upe.observatorio.projeto.utilities.ObservatorioException;
 
@@ -123,5 +126,41 @@ public class ProjetoService {
 	public List<Projeto> filtrarProjetoPorTitulo(String titulo) {
 		return repositorio.findAllByTituloContainingIgnoreCase(titulo);
 	}
-
+	
+	public int obterQuantidadeTotalDeProjetos() {
+		return repositorio.findAll().size();
+	}
+	
+	public HashMap<String, Integer> obterQuantidadeDeProjetosPorAreaTematica() {
+		HashMap<String, Integer> resultado = new HashMap<>();
+		
+		int qtdProjetosPesquisa = repositorio.findAllByAreaTematica(AreaTematicaEnum.PESQUISA).size();
+		int qtdProjetosExtensao = repositorio.findAllByAreaTematica(AreaTematicaEnum.EXTENSAO).size();
+		int qtdProjetosInovacao = repositorio.findAllByAreaTematica(AreaTematicaEnum.INOVACAO).size();
+		
+		resultado.put("Pesquisa: ", qtdProjetosPesquisa);
+		resultado.put("Extensão: ", qtdProjetosExtensao);
+		resultado.put("Inovação: ", qtdProjetosInovacao);
+		
+		return resultado;
+	}
+	
+	public HashMap<String, Integer> obterQuantidadeDeProjetosPorModalidade() {
+		HashMap<String, Integer> resultado = new HashMap<>();
+		
+		int qtdPrograma = repositorio.findAllByModalidade(ModalidadeEnum.PROGRAMA).size();
+		int qtdProjeto = repositorio.findAllByModalidade(ModalidadeEnum.PROJETO).size();
+		int qtdCurso = repositorio.findAllByModalidade(ModalidadeEnum.CURSO).size();
+		int qtdOficina = repositorio.findAllByModalidade(ModalidadeEnum.OFICINA).size();
+		int qtdEvento = repositorio.findAllByModalidade(ModalidadeEnum.EVENTO).size();
+		
+		resultado.put("Programa: ", qtdPrograma);
+		resultado.put("Projeto", qtdProjeto);
+		resultado.put("Curso", qtdCurso);
+		resultado.put("Oficina", qtdOficina);
+		resultado.put("Evento", qtdEvento);
+		
+		return resultado;
+		
+	}
 }

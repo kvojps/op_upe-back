@@ -1,5 +1,6 @@
 package com.upe.observatorio.projeto.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,8 +63,25 @@ public class CursoProjetoService {
 			throw new ObservatorioException("Não existe um relacionamento entre curso e projeto associado a este id");
 		}
 		
-		repositorio.deleteById(id);
+		repositorio.deleteById(id);	
+	}
+	
+	public HashMap<String, Integer> obterQuantidadeDeProjetosPorCurso() {
+		HashMap<String, Integer> resultado = new HashMap<>();
+		List<CursoProjeto> cursoProjetos = repositorio.findAll();
 		
+		for (CursoProjeto cursoProjeto : cursoProjetos) {
+			Curso curso = cursoServico.buscarCursoPorId(cursoProjeto.getCurso().getId()).get();
+			
+			if (resultado.containsKey(curso.getNome())) {
+				Integer qtdProjetos = resultado.get(curso.getNome());
+				resultado.put(curso.getNome(), qtdProjetos + 1);
+			} else {
+				resultado.put(curso.getNome(), 1);
+			}
+		}
+		
+		return resultado;
 	}
 
 }
