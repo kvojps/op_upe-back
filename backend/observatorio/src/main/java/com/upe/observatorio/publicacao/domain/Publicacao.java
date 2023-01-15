@@ -1,39 +1,32 @@
-package com.upe.observatorio.usuario.domain;
-
-import java.util.List;
+package com.upe.observatorio.publicacao.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import com.upe.observatorio.projeto.domain.Projeto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Publicacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String nome; 
+	private Integer curtidas;
 	
-	private String email;
+	private Integer descurtidas;
 	
-	private String senha;
-	
-	private String matricula;
-	
-	@ManyToMany
-	private List<Perfil> perfis;
-	
-	//lista de projetos
-	
-	//lista de publicacoes
-	
+	@OneToOne
+	private Projeto projeto;
 }

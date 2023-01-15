@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
+import com.upe.observatorio.publicacao.controller.model.PublicacaoRepresentation;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -62,5 +64,8 @@ public class ProjetoRepresentation implements Serializable {
 	@Schema(example = "0.00", description = "Suporte financeiro do projeto")
 	private Double suporteFinanceiro;
 
+	@JsonIgnore
+	private PublicacaoRepresentation publicacao;
+	
 	private List<CursoProjetoRepresentation> cursoProjetos;
 }

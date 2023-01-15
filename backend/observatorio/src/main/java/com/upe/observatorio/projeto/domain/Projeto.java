@@ -11,11 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
+import com.upe.observatorio.publicacao.domain.Publicacao;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,6 +73,9 @@ public class Projeto {
 	private Integer pessoasAtendidas;
 
 	private Double suporteFinanceiro;
+	
+	@OneToOne
+	private Publicacao publicacao;
 
 	@OneToMany(mappedBy = "projeto")
 	private List<CursoProjeto> cursoProjetos;
