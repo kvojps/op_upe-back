@@ -14,12 +14,17 @@ import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repository.ProjetoRepository;
 import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.usuario.domain.Usuario;
+import com.upe.observatorio.usuario.service.UsuarioService;
 
 @Service
 public class ProjetoService {
 
 	@Autowired
 	private ProjetoRepository repositorio;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 
 	public List<Projeto> listarProjetos() {
@@ -33,6 +38,12 @@ public class ProjetoService {
 	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioException {
 		ModelMapper modelMapper = new ModelMapper();
 		Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
+		
+		if (usuarioService.buscarUsuarioPorId(projeto.getUsuarioId()).isEmpty()) {
+			throw new ObservatorioException("Não existe um usuário associado a este id");
+		}
+		Usuario usuarioExistente = usuarioService.buscarUsuarioPorId(projeto.getUsuarioId()).get();
+		projetoSalvar.setUsuario(usuarioExistente);
 
 		return repositorio.save(projetoSalvar);
 	}

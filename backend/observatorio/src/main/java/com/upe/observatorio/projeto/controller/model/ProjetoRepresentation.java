@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 import com.upe.observatorio.publicacao.controller.model.PublicacaoRepresentation;
+import com.upe.observatorio.usuario.controller.model.UsuarioRepresentation;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -66,6 +67,9 @@ public class ProjetoRepresentation implements Serializable {
 
 	@JsonIgnore
 	private PublicacaoRepresentation publicacao;
+	
+	@JsonIgnore
+	private UsuarioRepresentation usuario;
 	
 	private List<CursoProjetoRepresentation> cursoProjetos;
 }

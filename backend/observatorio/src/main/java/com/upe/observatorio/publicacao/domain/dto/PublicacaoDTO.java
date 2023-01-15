@@ -9,4 +9,6 @@ public class PublicacaoDTO {
 	private Integer descurtidas;
 	
 	private Long projetoId;
+	
+	private Long usuarioId;
 }

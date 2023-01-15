@@ -4,9 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.upe.observatorio.projeto.domain.Projeto;
+import com.upe.observatorio.usuario.domain.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,4 +31,7 @@ public class Publicacao {
 	
 	@OneToOne
 	private Projeto projeto;
+	
+	@ManyToOne
+	private Usuario usuario;
 }

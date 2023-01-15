@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -18,6 +19,7 @@ import javax.persistence.TemporalType;
 import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 import com.upe.observatorio.publicacao.domain.Publicacao;
+import com.upe.observatorio.usuario.domain.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -80,7 +82,6 @@ public class Projeto {
 	@OneToMany(mappedBy = "projeto")
 	private List<CursoProjeto> cursoProjetos;
 
-	// coordenadores - entidade NtoN
-	// professores - entidade NtoN
-	// extensionistas - entidade NtoN
+	@ManyToOne
+	private Usuario usuario;
 }

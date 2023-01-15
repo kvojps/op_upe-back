@@ -12,6 +12,8 @@ import com.upe.observatorio.projeto.utilities.ObservatorioException;
 import com.upe.observatorio.publicacao.domain.Publicacao;
 import com.upe.observatorio.publicacao.domain.dto.PublicacaoDTO;
 import com.upe.observatorio.publicacao.repository.PublicacaoRepository;
+import com.upe.observatorio.usuario.domain.Usuario;
+import com.upe.observatorio.usuario.service.UsuarioService;
 
 @Service
 public class PublicacaoService {
@@ -21,6 +23,9 @@ public class PublicacaoService {
 	
 	@Autowired
 	private ProjetoService projetoService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	public List<Publicacao> listarPublicacoes() {
 		return repositorio.findAll();
@@ -35,11 +40,17 @@ public class PublicacaoService {
 			throw new ObservatorioException("Não existe um projeto associado a este id");
 		}
 		
+		if (usuarioService.buscarUsuarioPorId(publicacao.getUsuarioId()).isEmpty()) {
+			throw new ObservatorioException("Não existe um usuário associado a este id");
+		}
+		
 		Projeto projetoSalvar = projetoService.buscarProjetoPorId(publicacao.getProjetoId()).get();
+		Usuario usuarioExistente = usuarioService.buscarUsuarioPorId(publicacao.getUsuarioId()).get();
 		Publicacao publicacaoSalvar = new Publicacao();
 		publicacaoSalvar.setCurtidas(0);
 		publicacaoSalvar.setDescurtidas(0);
 		publicacaoSalvar.setProjeto(projetoSalvar);
+		publicacaoSalvar.setUsuario(usuarioExistente);
 		
 		return repositorio.save(publicacaoSalvar);
 	}

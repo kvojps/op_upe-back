@@ -69,4 +69,6 @@ public class ProjetoDTO {
 	@Schema(example = "0.00", description = "Suporte financeiro do projeto")
 	private Double suporteFinanceiro;
 	
+	private Long usuarioId;
+	
 }

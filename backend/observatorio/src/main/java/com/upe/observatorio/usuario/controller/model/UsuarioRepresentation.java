@@ -3,6 +3,9 @@ package com.upe.observatorio.usuario.controller.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.upe.observatorio.projeto.controller.model.ProjetoRepresentation;
+import com.upe.observatorio.publicacao.controller.model.PublicacaoRepresentation;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -24,6 +27,10 @@ public class UsuarioRepresentation implements Serializable {
 	
 	@Schema(example = "20221412", description = "Matrícula de um usuário")
 	private String matricula;
+	
+	private List<ProjetoRepresentation> projetos;
+	
+	private List<PublicacaoRepresentation> publicacoes;
 	
 	private List<PerfilRepresentation> perfis;
 }

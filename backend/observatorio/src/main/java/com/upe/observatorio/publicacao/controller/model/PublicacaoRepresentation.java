@@ -2,7 +2,9 @@ package com.upe.observatorio.publicacao.controller.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upe.observatorio.projeto.controller.model.ProjetoRepresentation;
+import com.upe.observatorio.usuario.controller.model.UsuarioRepresentation;
 
 import lombok.Data;
 
@@ -16,5 +18,9 @@ public class PublicacaoRepresentation implements Serializable{
 	
 	private Integer descurtidas;
 	
+	@JsonIgnore
 	private ProjetoRepresentation projeto;
+	
+	@JsonIgnore
+	private UsuarioRepresentation usuario;
 }
