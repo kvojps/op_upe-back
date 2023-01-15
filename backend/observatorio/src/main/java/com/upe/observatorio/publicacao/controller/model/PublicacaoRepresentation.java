@@ -18,6 +18,8 @@ public class PublicacaoRepresentation implements Serializable{
 	
 	private Integer descurtidas;
 	
+	private Integer visualizacoes;
+	
 	@JsonIgnore
 	private ProjetoRepresentation projeto;
 	

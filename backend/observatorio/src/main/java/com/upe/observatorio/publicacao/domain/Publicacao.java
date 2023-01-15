@@ -29,6 +29,8 @@ public class Publicacao {
 	
 	private Integer descurtidas;
 	
+	private Integer visualizacoes;
+	
 	@OneToOne
 	private Projeto projeto;
 	

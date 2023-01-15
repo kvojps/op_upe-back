@@ -46,9 +46,11 @@ public class PublicacaoService {
 		
 		Projeto projetoSalvar = projetoService.buscarProjetoPorId(publicacao.getProjetoId()).get();
 		Usuario usuarioExistente = usuarioService.buscarUsuarioPorId(publicacao.getUsuarioId()).get();
+		
 		Publicacao publicacaoSalvar = new Publicacao();
 		publicacaoSalvar.setCurtidas(0);
 		publicacaoSalvar.setDescurtidas(0);
+		publicacaoSalvar.setVisualizacoes(0);
 		publicacaoSalvar.setProjeto(projetoSalvar);
 		publicacaoSalvar.setUsuario(usuarioExistente);
 		
