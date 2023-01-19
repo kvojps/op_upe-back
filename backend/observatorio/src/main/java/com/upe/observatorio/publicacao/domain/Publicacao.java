@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.usuario.domain.Usuario;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,10 +26,13 @@ public class Publicacao {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Schema(example="100", description="Quantidade de curtidas de uma publicação")
 	private Integer curtidas;
 	
+	@Schema(example="1", description="Quantidade de descurtidas de uma publicação")
 	private Integer descurtidas;
 	
+	@Schema(example="1000", description="Quantidade de visualizações de uma publicação")
 	private Integer visualizacoes;
 	
 	@OneToOne
