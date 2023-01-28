@@ -1,17 +1,14 @@
 package com.upe.observatorio.publicacao.controller.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.upe.observatorio.projeto.controller.model.ProjetoRepresentation;
-import com.upe.observatorio.usuario.controller.model.UsuarioRepresentation;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class PublicacaoRepresentation implements Serializable{
+public class ComentarioRepresentation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -22,13 +19,9 @@ public class PublicacaoRepresentation implements Serializable{
 	@Schema(example="1", description="Quantidade de descurtidas de uma publicação")
 	private Integer descurtidas;
 	
-	@Schema(example="1000", description="Quantidade de visualizações de uma publicação")
-	private Integer visualizacoes;
-
-	@JsonIgnore
-	private UsuarioRepresentation usuario;
-
-	private ProjetoRepresentation projeto;
+	@Schema(example="Projeto bastante interessante", description="Texto referente ao comentário de uma publicação")
+	private String mensagem;
 	
-	public List<ComentarioRepresentation> comentarios;
+	@JsonIgnore
+	private PublicacaoRepresentation publicacao;
 }
