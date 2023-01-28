@@ -22,7 +22,7 @@ import com.upe.observatorio.projeto.controller.model.CursoRepresentation;
 import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CursoDTO;
 import com.upe.observatorio.projeto.service.CursoService;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @RestController
 @RequestMapping("api/curso")

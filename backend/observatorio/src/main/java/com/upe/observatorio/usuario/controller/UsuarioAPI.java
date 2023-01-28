@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
 import com.upe.observatorio.usuario.controller.model.UsuarioRepresentation;
 import com.upe.observatorio.usuario.domain.Usuario;
 import com.upe.observatorio.usuario.domain.dto.CriarPerfilUsuarioDTO;
 import com.upe.observatorio.usuario.domain.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.service.UsuarioService;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @RestController
 @RequestMapping("api/usuario")

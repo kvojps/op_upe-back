@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.utilities;
+package com.upe.observatorio.utils;
 
 public class ObservatorioException extends Exception {
 	

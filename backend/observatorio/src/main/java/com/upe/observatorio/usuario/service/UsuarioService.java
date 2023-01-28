@@ -9,13 +9,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
 import com.upe.observatorio.usuario.domain.Perfil;
 import com.upe.observatorio.usuario.domain.Usuario;
 import com.upe.observatorio.usuario.domain.dto.CriarPerfilUsuarioDTO;
 import com.upe.observatorio.usuario.domain.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.repository.PerfilRepository;
 import com.upe.observatorio.usuario.repository.UsuarioRepository;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @Service
 public class UsuarioService {

@@ -11,7 +11,7 @@ import com.upe.observatorio.projeto.domain.CampusCurso;
 import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repository.CampusCursoRepository;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @Service
 public class CampusCursoService {

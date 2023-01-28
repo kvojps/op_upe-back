@@ -13,9 +13,9 @@ import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repository.ProjetoRepository;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
 import com.upe.observatorio.usuario.domain.Usuario;
 import com.upe.observatorio.usuario.service.UsuarioService;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @Service
 public class ProjetoService {

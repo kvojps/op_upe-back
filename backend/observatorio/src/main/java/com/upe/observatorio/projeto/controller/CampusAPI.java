@@ -22,7 +22,7 @@ import com.upe.observatorio.projeto.controller.model.CampusRepresentation;
 import com.upe.observatorio.projeto.domain.Campus;
 import com.upe.observatorio.projeto.domain.dto.CampusDTO;
 import com.upe.observatorio.projeto.service.CampusService;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @RestController
 @RequestMapping("api/campus")

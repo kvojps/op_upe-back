@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.service.ProjetoService;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
 import com.upe.observatorio.publicacao.domain.Publicacao;
 import com.upe.observatorio.publicacao.domain.dto.PublicacaoDTO;
 import com.upe.observatorio.publicacao.repository.PublicacaoRepository;
 import com.upe.observatorio.usuario.domain.Usuario;
 import com.upe.observatorio.usuario.service.UsuarioService;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @Service
 public class PublicacaoService {

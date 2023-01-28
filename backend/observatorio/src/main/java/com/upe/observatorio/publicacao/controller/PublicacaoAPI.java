@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
 import com.upe.observatorio.publicacao.controller.model.PublicacaoRepresentation;
 import com.upe.observatorio.publicacao.domain.Publicacao;
 import com.upe.observatorio.publicacao.domain.dto.PublicacaoDTO;
 import com.upe.observatorio.publicacao.service.PublicacaoService;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @RestController
 @RequestMapping("api/publicacao")

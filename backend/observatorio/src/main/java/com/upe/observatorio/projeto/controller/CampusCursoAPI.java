@@ -21,7 +21,7 @@ import com.upe.observatorio.projeto.controller.model.CampusCursoRepresentation;
 import com.upe.observatorio.projeto.domain.CampusCurso;
 import com.upe.observatorio.projeto.domain.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.service.CampusCursoService;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @RestController
 @RequestMapping("api/campus-curso")

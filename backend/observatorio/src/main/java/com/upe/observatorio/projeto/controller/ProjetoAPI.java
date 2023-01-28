@@ -27,7 +27,7 @@ import com.upe.observatorio.projeto.controller.model.ProjetoRepresentation;
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.service.ProjetoService;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @RestController
 @RequestMapping("api/projeto")

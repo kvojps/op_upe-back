@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.upe.observatorio.projeto.domain.Curso;
 import com.upe.observatorio.projeto.domain.dto.CursoDTO;
 import com.upe.observatorio.projeto.repository.CursoRepository;
-import com.upe.observatorio.projeto.utilities.ObservatorioException;
+import com.upe.observatorio.utils.ObservatorioException;
 
 @Service
 public class CursoService {
