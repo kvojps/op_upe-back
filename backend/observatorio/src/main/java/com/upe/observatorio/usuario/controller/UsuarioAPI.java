@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.upe.observatorio.usuario.controller.model.UsuarioRepresentation;
 import com.upe.observatorio.usuario.domain.Usuario;
-import com.upe.observatorio.usuario.domain.dto.CriarPerfilUsuarioDTO;
+import com.upe.observatorio.usuario.domain.dto.AutenticacaoRequestDTO;
+import com.upe.observatorio.usuario.domain.dto.AutenticacaoResponseDTO;
+import com.upe.observatorio.usuario.domain.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.domain.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.service.UsuarioService;
 import com.upe.observatorio.utils.ObservatorioException;
@@ -45,15 +47,14 @@ public class UsuarioAPI {
 		return ResponseEntity.status(HttpStatus.OK).body(resultado);
 	}
 
-	@PostMapping
-	public ResponseEntity<?> adicionarUsuario(@RequestBody @Valid UsuarioDTO usuario) {
-		try {
-			UsuarioRepresentation resultado = convert(servico.adicionarUsuario(usuario));
+	@PostMapping("/auth/cadastrar")
+	public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@RequestBody CadastroRequestDTO request) {
+		return ResponseEntity.ok(servico.cadastrarUsuario(request));
+	}
 
-			return ResponseEntity.status(HttpStatus.OK).body(resultado);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	@PostMapping("/auth/login")
+	public ResponseEntity<AutenticacaoResponseDTO> loginUsuario(@RequestBody AutenticacaoRequestDTO request) {
+		return ResponseEntity.ok(servico.loginUsuario(request));
 	}
 
 	@PutMapping("/{id}")
@@ -76,17 +77,6 @@ public class UsuarioAPI {
 		}
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-
-	@PutMapping
-	public ResponseEntity<?> adicionarPerfisUsuario(@RequestBody @Valid CriarPerfilUsuarioDTO addPerfil) {
-		try {
-			UsuarioRepresentation resultado = convert(servico.adicionarPerfisUsuario(addPerfil));
-
-			return ResponseEntity.status(HttpStatus.OK).body(resultado);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
 	}
 
 	private UsuarioRepresentation convert(Usuario entidade) {

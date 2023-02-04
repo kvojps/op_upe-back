@@ -32,5 +32,5 @@ public class UsuarioRepresentation implements Serializable {
 	
 	private List<PublicacaoRepresentation> publicacoes;
 	
-	private List<PerfilRepresentation> perfis;
+	//adicionar perfil
 }

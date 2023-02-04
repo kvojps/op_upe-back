@@ -1,19 +1,21 @@
 package com.upe.observatorio.usuario.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.upe.observatorio.usuario.domain.Perfil;
+import com.upe.observatorio.config.JwtService;
 import com.upe.observatorio.usuario.domain.Usuario;
-import com.upe.observatorio.usuario.domain.dto.CriarPerfilUsuarioDTO;
+import com.upe.observatorio.usuario.domain.dto.AutenticacaoRequestDTO;
+import com.upe.observatorio.usuario.domain.dto.AutenticacaoResponseDTO;
+import com.upe.observatorio.usuario.domain.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.domain.dto.UsuarioDTO;
-import com.upe.observatorio.usuario.repository.PerfilRepository;
+import com.upe.observatorio.usuario.domain.enums.Perfil;
 import com.upe.observatorio.usuario.repository.UsuarioRepository;
 import com.upe.observatorio.utils.ObservatorioException;
 
@@ -24,7 +26,13 @@ public class UsuarioService {
 	private UsuarioRepository repositorio;
 	
 	@Autowired
-	private PerfilRepository perfilRepositorio;
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private JwtService jwtService;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	public List<Usuario> listarUsuarios() {
 		return repositorio.findAll();
@@ -33,16 +41,26 @@ public class UsuarioService {
 	public Optional<Usuario> buscarUsuarioPorId(Long id) {
 		return repositorio.findById(id);
 	}
+	
+	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request) {
+		Usuario usuario = new Usuario();
+		usuario.setNome(request.getNome());
+		usuario.setEmail(request.getEmail());
+		usuario.setSenha(passwordEncoder.encode(request.getSenha()));
+		usuario.setPerfil(Perfil.USUARIO);
+		repositorio.save(usuario);
 
-	public Usuario adicionarUsuario(UsuarioDTO usuario) throws ObservatorioException {
-		if (repositorio.findByEmail(usuario.getEmail()).isPresent()) {
-			throw new ObservatorioException("Existe um usuário cadastrado com este e-mail");
-		}
-		
-		ModelMapper modelMapper = new ModelMapper();
-		Usuario usuarioSalvar = modelMapper.map(usuario, Usuario.class);
-		
-		return repositorio.save(usuarioSalvar);
+		var jwtToken = jwtService.generateToken(usuario);
+		return AutenticacaoResponseDTO.builder().token(jwtToken).build();
+	}
+	
+	public AutenticacaoResponseDTO loginUsuario(AutenticacaoRequestDTO request) {
+		authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha()));
+
+		Usuario usuario = repositorio.findByEmail(request.getEmail()).orElseThrow();
+		var jwtToken = jwtService.generateToken(usuario);
+		return AutenticacaoResponseDTO.builder().token(jwtToken).build();
 	}
 
 	public void atualizarUsuario(UsuarioDTO usuario, Long id) throws ObservatorioException{
@@ -74,29 +92,4 @@ public class UsuarioService {
 		
 		repositorio.deleteById(id);
 	}
-	
-	public Usuario adicionarPerfisUsuario(CriarPerfilUsuarioDTO criarPerfilUsuarioDTO) throws ObservatorioException {
-		Optional<Usuario> usuarioExistente = repositorio.findById(criarPerfilUsuarioDTO.getIdUsuario());
-		List<Perfil> perfis = new ArrayList<>();
-		
-		if (usuarioExistente.isEmpty()) {
-			throw new ObservatorioException("Não existe um usuário associado a este id");
-		}
-		
-		perfis = criarPerfilUsuarioDTO.getIdPerfis().stream().map(id -> {
-			Optional<Perfil> perfilAdicionar = perfilRepositorio.findById(id);
-			if (perfilAdicionar.isPresent()) {
-				return perfilAdicionar.get();
-			}
-			return null;
-		}).collect(Collectors.toList());
-		
-		Usuario usuario = usuarioExistente.get();
-		if (!perfis.isEmpty()) {
-			usuario.setPerfis(perfis);
-		}
-		
-		return repositorio.save(usuario);
-	}
-
 }
