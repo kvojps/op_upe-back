@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
@@ -43,6 +44,7 @@ public class Projeto {
 	@Enumerated(EnumType.STRING)
 	private ModalidadeEnum modalidade;
 
+	@Column(unique = true)
 	private String titulo;
 
 	@Column(columnDefinition = "TEXT")

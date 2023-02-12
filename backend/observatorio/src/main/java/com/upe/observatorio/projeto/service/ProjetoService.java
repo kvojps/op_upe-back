@@ -126,14 +126,6 @@ public class ProjetoService {
 		repositorio.deleteById(id);
 	}
 
-//	public List<Projeto> filtrarProjetoPorAreaTematica(String areaTematica) {
-//		return repositorio.findAllByAreaTematicaContainingIgnoreCase(areaTematica);
-//	}
-//		
-//	public List<Projeto> filtrarProjetoPorModalidade(String modalidade) {
-//		return repositorio.findAllByModalidadeContainingIgnoreCase(modalidade);
-//	}
-
 	public List<Projeto> filtrarProjetoPorTitulo(String titulo) {
 		return repositorio.findAllByTituloContainingIgnoreCase(titulo);
 	}
