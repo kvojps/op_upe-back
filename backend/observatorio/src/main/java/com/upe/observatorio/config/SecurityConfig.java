@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -25,7 +26,7 @@ public class SecurityConfig {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .antMatchers("/api/usuario/auth/**")
+        .antMatchers("/api/usuario/auth/**", "/v3/**", "/swagger-ui/**")
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -37,5 +38,15 @@ public class SecurityConfig {
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
+  }
+  
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+      return (web) -> web.ignoring().antMatchers("/v2/api-docs",
+              "/configuration/ui",
+              "/swagger-resources/**",
+              "/configuration/security",
+              "/swagger-ui.html",
+              "/webjars/**");
   }
 }
