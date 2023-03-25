@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ObservatorioApplication<observatorio>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.upe.observatorio.ObservatorioApplication",
+            "projectName": "observatorio",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
