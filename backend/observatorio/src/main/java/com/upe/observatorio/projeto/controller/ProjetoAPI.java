@@ -1,5 +1,6 @@
 package com.upe.observatorio.projeto.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upe.observatorio.projeto.controller.model.ProjetoRepresentation;
 import com.upe.observatorio.projeto.domain.Projeto;
 import com.upe.observatorio.projeto.domain.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.domain.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.domain.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.service.ProjetoService;
 import com.upe.observatorio.utils.ObservatorioException;
 
@@ -88,6 +91,23 @@ public class ProjetoAPI {
 			@RequestParam(value = "titulo", required = true) String titulo,
 			@PageableDefault(size = 10) Pageable pageable) {
 		List<ProjetoRepresentation> projetosFiltrados = service.filtrarProjetoPorTitulo(titulo).stream()
+				.map(projeto -> convert(projeto)).collect(Collectors.toList());
+		Page<ProjetoRepresentation> paginas = new PageImpl<ProjetoRepresentation>(projetosFiltrados, pageable,
+				projetosFiltrados.size());
+
+		return ResponseEntity.ok(paginas);
+	}
+
+	@GetMapping("/filtro")
+	public ResponseEntity<Page<ProjetoRepresentation>> filtrarProjetoComTodosFiltros(
+			@RequestParam(value = "areaTematica", required = true) AreaTematicaEnum areaTematica,
+			@RequestParam(value = "modalidade", required = true) ModalidadeEnum modalidade,
+			@RequestParam(value = "dataInicio", required = true) Date dataInicio,
+			@RequestParam(value = "dataFim", required = true) Date dataFim,
+			@PageableDefault(size = 10) Pageable pageable) {
+
+		List<ProjetoRepresentation> projetosFiltrados = service
+				.filtrarProjetoComTodosFiltros(areaTematica, modalidade, dataInicio, dataFim).stream()
 				.map(projeto -> convert(projeto)).collect(Collectors.toList());
 		Page<ProjetoRepresentation> paginas = new PageImpl<ProjetoRepresentation>(projetosFiltrados, pageable,
 				projetosFiltrados.size());
