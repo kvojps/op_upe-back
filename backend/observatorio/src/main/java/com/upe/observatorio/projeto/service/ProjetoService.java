@@ -147,9 +147,9 @@ public class ProjetoService {
 		int qtdProjetosExtensao = repositorio.findAllByAreaTematica(AreaTematicaEnum.EXTENSAO).size();
 		int qtdProjetosInovacao = repositorio.findAllByAreaTematica(AreaTematicaEnum.INOVACAO).size();
 
-		resultado.put("Pesquisa: ", qtdProjetosPesquisa);
-		resultado.put("Extensão: ", qtdProjetosExtensao);
-		resultado.put("Inovação: ", qtdProjetosInovacao);
+		resultado.put("Pesquisa", qtdProjetosPesquisa);
+		resultado.put("Extensão", qtdProjetosExtensao);
+		resultado.put("Inovação", qtdProjetosInovacao);
 
 		return resultado;
 	}
@@ -163,7 +163,7 @@ public class ProjetoService {
 		int qtdOficina = repositorio.findAllByModalidade(ModalidadeEnum.OFICINA).size();
 		int qtdEvento = repositorio.findAllByModalidade(ModalidadeEnum.EVENTO).size();
 
-		resultado.put("Programa: ", qtdPrograma);
+		resultado.put("Programa", qtdPrograma);
 		resultado.put("Projeto", qtdProjeto);
 		resultado.put("Curso", qtdCurso);
 		resultado.put("Oficina", qtdOficina);
