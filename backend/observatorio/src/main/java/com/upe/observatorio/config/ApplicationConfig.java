@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.upe.observatorio.usuario.repository.UsuarioRepository;
+import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-	private final UsuarioRepository repositorio;
+	private final UsuarioRepositorio repositorio;
 
 	@Bean
 	public UserDetailsService userDetailsService() {
