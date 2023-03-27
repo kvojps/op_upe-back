@@ -37,10 +37,10 @@ public class DashboardServico {
 		dashboard.setTotalCampuses(obterQuantidadeTotalDeCampus());
 		dashboard.setTotalProjects(obterQuantidadeTotalDeProjetos());
 		dashboard.setTotalUsers(obterQuantidadeTotalDeUsuarios());
-		dashboard.setCourses(obterQuantidadeTotalDeProjetosPorCurso());
-		dashboard.setCampuses(obterQuantidadeTotalDeProjetosPorCampus());
-		dashboard.setModalities(obterQuantidadeTotalDeProjetosPorModalidade());
-		dashboard.setThematicArea(obterQuantidadeTotalDeProjetosPorAreaTematica());
+		dashboard.setProjectsPerCourses(obterQuantidadeTotalDeProjetosPorCurso());
+		dashboard.setProjectsPerCampuses(obterQuantidadeTotalDeProjetosPorCampus());
+		dashboard.setProjectsPerModalities(obterQuantidadeTotalDeProjetosPorModalidade());
+		dashboard.setProjectsPerThematicArea(obterQuantidadeTotalDeProjetosPorAreaTematica());
 		
 		return dashboard;
 	}

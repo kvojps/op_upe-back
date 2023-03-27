@@ -15,11 +15,11 @@ public class DashboardVO {
 	
 	private Integer totalUsers;
 	
-	private HashMap<String, Integer> courses;
+	private HashMap<String, Integer> projectsPerCourses;
 	
-	private HashMap<String, Integer> campuses;
+	private HashMap<String, Integer> projectsPerCampuses;
 	
-	private HashMap<String, Integer> modalities;
+	private HashMap<String, Integer> projectsPerModalities;
 	
-	private HashMap<String, Integer> thematicArea;
+	private HashMap<String, Integer> projectsPerThematicArea;
 }
