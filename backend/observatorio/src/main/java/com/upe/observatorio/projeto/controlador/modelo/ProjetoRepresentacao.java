@@ -71,5 +71,8 @@ public class ProjetoRepresentacao implements Serializable {
 	@JsonIgnore
 	private UsuarioRepresentacao usuario;
 	
+	@JsonIgnore
+	private CampusRepresentacao campusRepresentacao;
+	
 	private List<CursoProjetoRepresentacao> cursoProjetos;
 }

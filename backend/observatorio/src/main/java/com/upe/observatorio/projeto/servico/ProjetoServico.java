@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
@@ -26,6 +27,9 @@ public class ProjetoServico {
 
 	@Autowired
 	private UsuarioServico usuarioServico;
+	
+	@Autowired
+	private CampusServico campusServico;
 
 	public List<Projeto> listarProjetos() {
 		return repositorio.findAll();
@@ -37,6 +41,8 @@ public class ProjetoServico {
 
 	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioExcecao {
 		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);
+		
 		Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
 
 		if (usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId()).isEmpty()) {
@@ -45,6 +51,12 @@ public class ProjetoServico {
 		Usuario usuarioExistente = usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId()).get();
 		projetoSalvar.setUsuario(usuarioExistente);
 
+		if (campusServico.buscarCampusPorId(projeto.getCampusId()).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe um campus associado a este id");
+		}
+		Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId()).get();
+		projetoSalvar.setCampus(campusExistente);
+		
 		return repositorio.save(projetoSalvar);
 	}
 

@@ -85,4 +85,7 @@ public class Projeto {
 
 	@ManyToOne
 	private Usuario usuario;
+	
+	@ManyToOne
+	private Campus campus;
 }

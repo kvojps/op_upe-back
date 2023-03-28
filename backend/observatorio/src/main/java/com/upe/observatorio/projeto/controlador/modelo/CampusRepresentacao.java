@@ -27,4 +27,6 @@ public class CampusRepresentacao implements Serializable {
 	private String rua;
 
 	private List<CampusCursoRepresentacao> campusCurso;
+	
+	private List<ProjetoRepresentacao> projetos;
 }

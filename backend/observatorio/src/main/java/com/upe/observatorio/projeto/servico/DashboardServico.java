@@ -80,6 +80,13 @@ public class DashboardServico {
 	}
 	
 	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCampus() {
-		return null;
+		HashMap<String, Integer> resultado = new HashMap<String, Integer>();
+		List<Campus> campi = campusServico.listarCampus();
+		
+		for (Campus campus : campi) {
+			resultado.put(campus.getNome(), campus.getProjetos().size());
+		}
+		
+		return resultado;
 	}
 }

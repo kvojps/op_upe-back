@@ -71,4 +71,6 @@ public class ProjetoDTO {
 	
 	private Long usuarioId;
 	
+	private Long campusId;
+	
 }

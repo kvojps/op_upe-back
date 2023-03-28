@@ -33,4 +33,7 @@ public class Campus {
 
 	@OneToMany(mappedBy = "campus")
 	private List<CampusCurso> campusCurso;
+	
+	@OneToMany(mappedBy = "campus")
+	private List<Projeto> projetos;
 }

@@ -50,5 +50,8 @@ public class DashboardAPI {
 		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCurso());
 	}
 	
-	//projetos por campus
+	@GetMapping("projeto/campus")
+	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorCampus() {
+		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCampus());
+	}
 }
