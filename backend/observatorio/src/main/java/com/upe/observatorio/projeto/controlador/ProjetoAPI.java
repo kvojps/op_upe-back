@@ -49,20 +49,13 @@ public class ProjetoAPI {
 		return ResponseEntity
 				.ok(servico.listarProjetos().stream().map(projeto -> convert(projeto)).collect(Collectors.toList()));
 	}
-	
+
 	@GetMapping("/paginado")
 	public ResponseEntity<Map<String, Object>> listarProjetosPaginado(
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
 		Page<Projeto> projetosPagina = servico.listarProjetosPaginado(page, size);
-		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
-				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-
-		Map<String, Object> resposta = new HashMap<>();
-		resposta.put("projetos", projetosContent);
-		resposta.put("paginaAtual", projetosPagina.getNumber());
-		resposta.put("totalItens", projetosPagina.getTotalElements());
-		resposta.put("totalPaginas", projetosPagina.getTotalPages());
+		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
 
 		return ResponseEntity.ok(resposta);
 	}
@@ -107,21 +100,14 @@ public class ProjetoAPI {
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	@GetMapping("/filtro/titulo")
 	public ResponseEntity<Map<String, Object>> filtrarProjetoPorTitulo(
 			@RequestParam(value = "titulo", required = true) String titulo,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
 		Page<Projeto> projetosPagina = servico.filtrarProjetoPorTitulo(titulo, page, size);
-		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
-				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-
-		Map<String, Object> resposta = new HashMap<>();
-		resposta.put("projetos", projetosContent);
-		resposta.put("paginaAtual", projetosPagina.getNumber());
-		resposta.put("totalItens", projetosPagina.getTotalElements());
-		resposta.put("totalPaginas", projetosPagina.getTotalPages());
+		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
 
 		return ResponseEntity.ok(resposta);
 	}
@@ -134,17 +120,10 @@ public class ProjetoAPI {
 			@RequestParam(value = "dataFim", required = false) Date dataFim,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
+		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(areaTematica, modalidade, dataInicio,
+				dataFim, page, size);
+		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
 
-		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(areaTematica, modalidade, dataInicio, dataFim, page, size);
-		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
-				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-
-		Map<String, Object> resposta = new HashMap<>();
-		resposta.put("projetos", projetosContent);
-		resposta.put("paginaAtual", projetosPagina.getNumber());
-		resposta.put("totalItens", projetosPagina.getTotalElements());
-		resposta.put("totalPaginas", projetosPagina.getTotalPages());
-		
 		return ResponseEntity.ok(resposta);
 	}
 
@@ -158,5 +137,18 @@ public class ProjetoAPI {
 		}
 
 		return resultado;
+	}
+
+	private Map<String, Object> gerarPaginacao(Page<Projeto> projetosPagina) {
+		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
+				.map(projeto -> convert(projeto)).collect(Collectors.toList());
+
+		Map<String, Object> resposta = new HashMap<>();
+		resposta.put("projetos", projetosContent);
+		resposta.put("paginaAtual", projetosPagina.getNumber());
+		resposta.put("totalItens", projetosPagina.getTotalElements());
+		resposta.put("totalPaginas", projetosPagina.getTotalPages());
+
+		return resposta;
 	}
 }
