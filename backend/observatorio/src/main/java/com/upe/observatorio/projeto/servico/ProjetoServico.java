@@ -7,6 +7,11 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.upe.observatorio.projeto.dominio.Campus;
@@ -33,6 +38,13 @@ public class ProjetoServico {
 
 	public List<Projeto> listarProjetos() {
 		return repositorio.findAll();
+	}
+	
+	public Page<Projeto> listarProjetosPaginado(int page, int size) {
+		Pageable requestedPage = PageRequest.of(page, size);
+		Page<Projeto> resultado = repositorio.findAll(requestedPage);
+		
+		return resultado;
 	}
 
 	public Optional<Projeto> buscarProjetoPorId(Long id) {
@@ -137,16 +149,25 @@ public class ProjetoServico {
 
 		repositorio.deleteById(id);
 	}
+	
+	public Page<Projeto> filtrarProjetoPorTitulo(String titulo, int page, int size) {
+		Pageable requestedPage = PageRequest.of(page, size);
+		Page<Projeto> resultado = repositorio.findAllByTituloContainingIgnoreCase(titulo, requestedPage);
+		
+		return resultado;
+	}
+	
+	public Page<Projeto> filtrarProjetoComTodosFiltros(AreaTematicaEnum areaTematica, ModalidadeEnum modalidade,
+	        Date dataInicio, Date dataFim, int page, int size) {
+	    
+	    ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreCase();
+	    Projeto projeto = Projeto.builder().areaTematica(areaTematica).modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).build();
+	    Example<Projeto> exemplo = Example.of(projeto, matcher);
+	    Pageable pageable = PageRequest.of(page, size);
 
-	public List<Projeto> filtrarProjetoPorTitulo(String titulo) {
-		return repositorio.findAllByTituloContainingIgnoreCase(titulo);
+	    return repositorio.findAll(exemplo, pageable);
 	}
 
-	public List<Projeto> filtrarProjetoComTodosFiltros(AreaTematicaEnum areaTematica, ModalidadeEnum modalidade,
-			Date dataInicio, Date dataFim) {
-		return repositorio.findAllByAreaTematicaAndModalidadeAndDataInicioAndDataFim(areaTematica, modalidade,
-				dataInicio, dataFim);
-	}
 
 	public int obterQuantidadeTotalDeProjetos() {
 		return repositorio.findAll().size();

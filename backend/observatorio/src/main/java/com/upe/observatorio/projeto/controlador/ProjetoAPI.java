@@ -1,7 +1,9 @@
 package com.upe.observatorio.projeto.controlador;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,9 +12,6 @@ import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,14 +40,31 @@ public class ProjetoAPI {
 
 	@Autowired
 	private ProjetoServico servico;
-	
+
 	@Autowired
 	private UsuarioServico usuarioServico;
 
 	@GetMapping
 	public ResponseEntity<List<ProjetoRepresentacao>> listarProjetos() {
-		return ResponseEntity.ok(servico.listarProjetos().stream().map(projeto -> convert(projeto))
-				.collect(Collectors.toList()));
+		return ResponseEntity
+				.ok(servico.listarProjetos().stream().map(projeto -> convert(projeto)).collect(Collectors.toList()));
+	}
+	
+	@GetMapping("/paginado")
+	public ResponseEntity<Map<String, Object>> listarProjetosPaginado(
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size) {
+		Page<Projeto> projetosPagina = servico.listarProjetosPaginado(page, size);
+		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
+				.map(projeto -> convert(projeto)).collect(Collectors.toList());
+
+		Map<String, Object> resposta = new HashMap<>();
+		resposta.put("projetos", projetosContent);
+		resposta.put("paginaAtual", projetosPagina.getNumber());
+		resposta.put("totalItens", projetosPagina.getTotalElements());
+		resposta.put("totalPaginas", projetosPagina.getTotalPages());
+
+		return ResponseEntity.ok(resposta);
 	}
 
 	@GetMapping("/{id}")
@@ -91,45 +107,56 @@ public class ProjetoAPI {
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-
-	@GetMapping("filtro/titulo")
-	public ResponseEntity<Page<ProjetoRepresentacao>> filtrarProjetoPorTitulo(
+	
+	@GetMapping("/filtro/titulo")
+	public ResponseEntity<Map<String, Object>> filtrarProjetoPorTitulo(
 			@RequestParam(value = "titulo", required = true) String titulo,
-			@PageableDefault(size = 10) Pageable pageable) {
-		List<ProjetoRepresentacao> projetosFiltrados = servico.filtrarProjetoPorTitulo(titulo).stream()
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size) {
+		Page<Projeto> projetosPagina = servico.filtrarProjetoPorTitulo(titulo, page, size);
+		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
 				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-		Page<ProjetoRepresentacao> paginas = new PageImpl<ProjetoRepresentacao>(projetosFiltrados, pageable,
-				projetosFiltrados.size());
 
-		return ResponseEntity.ok(paginas);
+		Map<String, Object> resposta = new HashMap<>();
+		resposta.put("projetos", projetosContent);
+		resposta.put("paginaAtual", projetosPagina.getNumber());
+		resposta.put("totalItens", projetosPagina.getTotalElements());
+		resposta.put("totalPaginas", projetosPagina.getTotalPages());
+
+		return ResponseEntity.ok(resposta);
 	}
 
 	@GetMapping("/filtro")
-	public ResponseEntity<Page<ProjetoRepresentacao>> filtrarProjetoComTodosFiltros(
-			@RequestParam(value = "areaTematica", required = true) AreaTematicaEnum areaTematica,
-			@RequestParam(value = "modalidade", required = true) ModalidadeEnum modalidade,
-			@RequestParam(value = "dataInicio", required = true) Date dataInicio,
-			@RequestParam(value = "dataFim", required = true) Date dataFim,
-			@PageableDefault(size = 10) Pageable pageable) {
+	public ResponseEntity<Map<String, Object>> filtrarProjetoComTodosFiltros(
+			@RequestParam(value = "areaTematica", required = false) AreaTematicaEnum areaTematica,
+			@RequestParam(value = "modalidade", required = false) ModalidadeEnum modalidade,
+			@RequestParam(value = "dataInicio", required = false) Date dataInicio,
+			@RequestParam(value = "dataFim", required = false) Date dataFim,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size) {
 
-		List<ProjetoRepresentacao> projetosFiltrados = servico
-				.filtrarProjetoComTodosFiltros(areaTematica, modalidade, dataInicio, dataFim).stream()
+		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(areaTematica, modalidade, dataInicio, dataFim, page, size);
+		List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
 				.map(projeto -> convert(projeto)).collect(Collectors.toList());
-		Page<ProjetoRepresentacao> paginas = new PageImpl<ProjetoRepresentacao>(projetosFiltrados, pageable,
-				projetosFiltrados.size());
 
-		return ResponseEntity.ok(paginas);
+		Map<String, Object> resposta = new HashMap<>();
+		resposta.put("projetos", projetosContent);
+		resposta.put("paginaAtual", projetosPagina.getNumber());
+		resposta.put("totalItens", projetosPagina.getTotalElements());
+		resposta.put("totalPaginas", projetosPagina.getTotalPages());
+		
+		return ResponseEntity.ok(resposta);
 	}
 
 	private ProjetoRepresentacao convert(Projeto entidade) {
 		ModelMapper modelMapper = new ModelMapper();
 		ProjetoRepresentacao resultado = modelMapper.map(entidade, ProjetoRepresentacao.class);
-		
+
 		Optional<Usuario> usuario = usuarioServico.buscarUsuarioPorId(entidade.getUsuario().getId());
 		if (usuario.isPresent()) {
-			resultado.setAutor(usuario.get().getNome());			
+			resultado.setAutor(usuario.get().getNome());
 		}
-		
+
 		return resultado;
 	}
 }

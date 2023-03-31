@@ -3,6 +3,8 @@ package com.upe.observatorio.projeto.repositorio;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.upe.observatorio.projeto.dominio.Projeto;
@@ -15,8 +17,8 @@ public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 
 	List<Projeto> findAllByModalidade(ModalidadeEnum modalidade);
 
-	List<Projeto> findAllByAreaTematicaAndModalidadeAndDataInicioAndDataFim(AreaTematicaEnum areaTematica,
-			ModalidadeEnum modalidade, Date dataInicio, Date dataFim);
+	Page<Projeto> findAllByAreaTematicaOrModalidadeOrDataInicioOrDataFim(AreaTematicaEnum areaTematica,
+			ModalidadeEnum modalidade, Date dataInicio, Date dataFim, Pageable pageable);
 
-	List<Projeto> findAllByTituloContainingIgnoreCase(String titulo);
+	Page<Projeto> findAllByTituloContainingIgnoreCase(String titulo, Pageable pageable);
 }
