@@ -65,6 +65,9 @@ public class ProjetoRepresentacao implements Serializable {
 	@Schema(example = "0.00", description = "Suporte financeiro do projeto")
 	private Double suporteFinanceiro;
 
+	@Schema(example="Jose", description ="Autor do projeto")
+	private String autor;
+	
 	@JsonIgnore
 	private PublicacaoRepresentacao publicacao;
 	

@@ -2,6 +2,7 @@ package com.upe.observatorio.projeto.controlador;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -30,6 +31,8 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
+import com.upe.observatorio.usuario.dominio.Usuario;
+import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 
 @RestController
@@ -38,11 +41,14 @@ public class ProjetoAPI {
 
 	@Autowired
 	private ProjetoServico servico;
+	
+	@Autowired
+	private UsuarioServico usuarioServico;
 
 	@GetMapping
 	public ResponseEntity<List<ProjetoRepresentacao>> listarProjetos() {
-		return ResponseEntity
-				.ok(servico.listarProjetos().stream().map(projeto -> convert(projeto)).collect(Collectors.toList()));
+		return ResponseEntity.ok(servico.listarProjetos().stream().map(projeto -> convert(projeto))
+				.collect(Collectors.toList()));
 	}
 
 	@GetMapping("/{id}")
@@ -111,14 +117,19 @@ public class ProjetoAPI {
 				.map(projeto -> convert(projeto)).collect(Collectors.toList());
 		Page<ProjetoRepresentacao> paginas = new PageImpl<ProjetoRepresentacao>(projetosFiltrados, pageable,
 				projetosFiltrados.size());
-		
+
 		return ResponseEntity.ok(paginas);
 	}
 
 	private ProjetoRepresentacao convert(Projeto entidade) {
 		ModelMapper modelMapper = new ModelMapper();
 		ProjetoRepresentacao resultado = modelMapper.map(entidade, ProjetoRepresentacao.class);
-
+		
+		Optional<Usuario> usuario = usuarioServico.buscarUsuarioPorId(entidade.getUsuario().getId());
+		if (usuario.isPresent()) {
+			resultado.setAutor(usuario.get().getNome());			
+		}
+		
 		return resultado;
 	}
 }
