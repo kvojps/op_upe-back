@@ -114,14 +114,15 @@ public class ProjetoAPI {
 
 	@GetMapping("/filtro")
 	public ResponseEntity<Map<String, Object>> filtrarProjetoComTodosFiltros(
+			@RequestParam(value = "titulo", required = false) String titulo,
 			@RequestParam(value = "areaTematica", required = false) AreaTematicaEnum areaTematica,
 			@RequestParam(value = "modalidade", required = false) ModalidadeEnum modalidade,
 			@RequestParam(value = "dataInicio", required = false) Date dataInicio,
 			@RequestParam(value = "dataFim", required = false) Date dataFim,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
-		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(areaTematica, modalidade, dataInicio,
-				dataFim, page, size);
+		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(titulo, areaTematica, modalidade,
+				dataInicio, dataFim, page, size);
 		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
 
 		return ResponseEntity.ok(resposta);

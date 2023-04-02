@@ -32,18 +32,18 @@ public class ProjetoServico {
 
 	@Autowired
 	private UsuarioServico usuarioServico;
-	
+
 	@Autowired
 	private CampusServico campusServico;
 
 	public List<Projeto> listarProjetos() {
 		return repositorio.findAll();
 	}
-	
+
 	public Page<Projeto> listarProjetosPaginado(int page, int size) {
 		Pageable requestedPage = PageRequest.of(page, size);
 		Page<Projeto> resultado = repositorio.findAll(requestedPage);
-		
+
 		return resultado;
 	}
 
@@ -54,7 +54,7 @@ public class ProjetoServico {
 	public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioExcecao {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		
+
 		Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
 
 		if (usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId()).isEmpty()) {
@@ -68,7 +68,7 @@ public class ProjetoServico {
 		}
 		Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId()).get();
 		projetoSalvar.setCampus(campusExistente);
-		
+
 		return repositorio.save(projetoSalvar);
 	}
 
@@ -149,25 +149,25 @@ public class ProjetoServico {
 
 		repositorio.deleteById(id);
 	}
-	
+
 	public Page<Projeto> filtrarProjetoPorTitulo(String titulo, int page, int size) {
 		Pageable requestedPage = PageRequest.of(page, size);
 		Page<Projeto> resultado = repositorio.findAllByTituloContainingIgnoreCase(titulo, requestedPage);
-		
+
 		return resultado;
 	}
-	
-	public Page<Projeto> filtrarProjetoComTodosFiltros(AreaTematicaEnum areaTematica, ModalidadeEnum modalidade,
-	        Date dataInicio, Date dataFim, int page, int size) {
-	    
-	    ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreCase();
-	    Projeto projeto = Projeto.builder().areaTematica(areaTematica).modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).build();
-	    Example<Projeto> exemplo = Example.of(projeto, matcher);
-	    Pageable pageable = PageRequest.of(page, size);
 
-	    return repositorio.findAll(exemplo, pageable);
+	public Page<Projeto> filtrarProjetoComTodosFiltros(String titulo, AreaTematicaEnum areaTematica,
+			ModalidadeEnum modalidade, Date dataInicio, Date dataFim, int page, int size) {
+
+		ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreCase();
+		Projeto projeto = Projeto.builder().titulo(titulo).areaTematica(areaTematica).modalidade(modalidade)
+				.dataInicio(dataInicio).dataFim(dataFim).build();
+		Example<Projeto> exemplo = Example.of(projeto, matcher);
+		Pageable pageable = PageRequest.of(page, size);
+
+		return repositorio.findAll(exemplo, pageable);
 	}
-
 
 	public int obterQuantidadeTotalDeProjetos() {
 		return repositorio.findAll().size();
