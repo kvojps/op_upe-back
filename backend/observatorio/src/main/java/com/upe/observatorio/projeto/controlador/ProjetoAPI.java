@@ -130,6 +130,12 @@ public class ProjetoAPI {
 		return ResponseEntity.ok(resposta);
 	}
 
+	@GetMapping("/recentes")
+	public ResponseEntity<List<ProjetoRepresentacao>> filtrarProjetosRecentes() {
+		return ResponseEntity.ok(servico.filtrarProjetosRecentes().stream().map(projeto -> convert(projeto))
+				.collect(Collectors.toList()));
+	}
+
 	private ProjetoRepresentacao convert(Projeto entidade) {
 		ModelMapper modelMapper = new ModelMapper();
 		ProjetoRepresentacao resultado = modelMapper.map(entidade, ProjetoRepresentacao.class);

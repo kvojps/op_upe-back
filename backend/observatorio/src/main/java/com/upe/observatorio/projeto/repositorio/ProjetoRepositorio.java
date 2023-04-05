@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
@@ -17,4 +18,7 @@ public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 	List<Projeto> findAllByModalidade(ModalidadeEnum modalidade);
 
 	Page<Projeto> findAllByTituloContainingIgnoreCase(String titulo, Pageable pageable);
+	
+	@Query("SELECT p FROM Projeto p ORDER BY p.dataFim DESC")
+	List<Projeto> findAllOrderByDataFimDesc();
 }

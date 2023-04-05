@@ -169,6 +169,10 @@ public class ProjetoServico {
 		return repositorio.findAll(exemplo, pageable);
 	}
 
+	public List<Projeto> filtrarProjetosRecentes() {
+		return repositorio.findAllOrderByDataFimDesc();
+	}
+	
 	public int obterQuantidadeTotalDeProjetos() {
 		return repositorio.findAll().size();
 	}
