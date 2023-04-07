@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upe.observatorio.projeto.controlador.modelo.ProjetoRepresentacao;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
@@ -103,28 +104,29 @@ public class ProjetoAPI {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
+	@GetMapping("/filtro")
+	public ResponseEntity<Map<String, Object>> filtrarProjetoComTodosFiltros(
+			@RequestParam(value = "titulo", required = false) String titulo,
+			@RequestParam(value = "areaTematica", required = false) AreaTematicaEnum areaTematica,
+			@RequestParam(value = "modalidade", required = false) ModalidadeEnum modalidade,
+			@RequestParam(value = "dataInicio", required = false) String dataInicio,
+			@RequestParam(value = "dataFim", required = false) String dataFim,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size) throws ParseException {
+		ProjetoFiltroDTO dto = ProjetoFiltroDTO.builder().titulo(titulo).areaTematica(areaTematica)
+				.modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).page(page).size(size).build();
+		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(dto);
+		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
+
+		return ResponseEntity.ok(resposta);
+	}
+
 	@GetMapping("/filtro/titulo")
 	public ResponseEntity<Map<String, Object>> filtrarProjetoPorTitulo(
 			@RequestParam(value = "titulo", required = true) String titulo,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
 		Page<Projeto> projetosPagina = servico.filtrarProjetoPorTitulo(titulo, page, size);
-		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
-
-		return ResponseEntity.ok(resposta);
-	}
-
-	@GetMapping("/filtro")
-	public ResponseEntity<Map<String, Object>> filtrarProjetoComTodosFiltros(
-			@RequestParam(value = "titulo", required = false) String titulo,
-			@RequestParam(value = "areaTematica", required = false) AreaTematicaEnum areaTematica,
-			@RequestParam(value = "modalidade", required = false) ModalidadeEnum modalidade,
-			@RequestParam(value = "dataInicio", required = false) Date dataInicio,
-			@RequestParam(value = "dataFim", required = false) Date dataFim,
-			@RequestParam(value = "page", defaultValue = "0") int page,
-			@RequestParam(value = "size", defaultValue = "10") int size) {
-		Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(titulo, areaTematica, modalidade,
-				dataInicio, dataFim, page, size);
 		Map<String, Object> resposta = gerarPaginacao(projetosPagina);
 
 		return ResponseEntity.ok(resposta);

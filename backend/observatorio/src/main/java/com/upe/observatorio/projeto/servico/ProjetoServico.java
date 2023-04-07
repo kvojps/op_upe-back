@@ -1,5 +1,7 @@
 package com.upe.observatorio.projeto.servico;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
@@ -149,24 +152,35 @@ public class ProjetoServico {
 
 		repositorio.deleteById(id);
 	}
+	
+	public Page<Projeto> filtrarProjetoComTodosFiltros(ProjetoFiltroDTO dto) throws ParseException {
 
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		Date dataInicioParsed = null;	
+		Date dataFimParsed = null;
+		if (dto.getDataInicio() != null) {
+			dataInicioParsed = formato.parse(dto.getDataInicio());			
+		}
+		if (dto.getDataFim() != null) {
+			dataFimParsed = formato.parse(dto.getDataFim());			
+		}
+		
+		Projeto projeto = Projeto.builder().titulo(dto.getTitulo()).areaTematica(dto.getAreaTematica())
+				.modalidade(dto.getModalidade()).dataInicio(dataInicioParsed).dataFim(dataFimParsed).build();
+
+		ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreCase();
+		Example<Projeto> filtro = Example.of(projeto, matcher);
+		Pageable pageable = PageRequest.of(dto.getPage(), dto.getSize());
+
+		return repositorio.findAll(filtro, pageable);
+
+	}
+	
 	public Page<Projeto> filtrarProjetoPorTitulo(String titulo, int page, int size) {
 		Pageable requestedPage = PageRequest.of(page, size);
 		Page<Projeto> resultado = repositorio.findAllByTituloContainingIgnoreCase(titulo, requestedPage);
 
 		return resultado;
-	}
-
-	public Page<Projeto> filtrarProjetoComTodosFiltros(String titulo, AreaTematicaEnum areaTematica,
-			ModalidadeEnum modalidade, Date dataInicio, Date dataFim, int page, int size) {
-
-		ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreCase();
-		Projeto projeto = Projeto.builder().titulo(titulo).areaTematica(areaTematica).modalidade(modalidade)
-				.dataInicio(dataInicio).dataFim(dataFim).build();
-		Example<Projeto> exemplo = Example.of(projeto, matcher);
-		Pageable pageable = PageRequest.of(page, size);
-
-		return repositorio.findAll(exemplo, pageable);
 	}
 
 	public List<Projeto> filtrarProjetosRecentes() {

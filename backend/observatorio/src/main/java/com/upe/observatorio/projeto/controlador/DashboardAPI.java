@@ -30,11 +30,6 @@ public class DashboardAPI {
 		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetos());
 	}
 	
-	@GetMapping("/usuario/total")
-	public ResponseEntity<Integer> obterQuantidadeTotalDeUsuarios() {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeUsuarios());
-	}
-	
 	@GetMapping("/projeto/areaTematica")
 	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorAreaTematica() {
 		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorAreaTematica());
@@ -53,5 +48,10 @@ public class DashboardAPI {
 	@GetMapping("projeto/campus")
 	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorCampus() {
 		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCampus());
+	}
+	
+	@GetMapping("/usuario/total")
+	public ResponseEntity<Integer> obterQuantidadeTotalDeUsuarios() {
+		return ResponseEntity.ok(servico.obterQuantidadeTotalDeUsuarios());
 	}
 }

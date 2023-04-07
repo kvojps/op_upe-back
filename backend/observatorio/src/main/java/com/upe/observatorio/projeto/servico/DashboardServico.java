@@ -61,12 +61,6 @@ public class DashboardServico {
 		return projetoServico.obterQuantidadeTotalDeProjetos();
 	}
 	
-	public Integer obterQuantidadeTotalDeUsuarios() {
-		List<Usuario> usuarios = usuarioServico.listarUsuarios();
-		
-		return usuarios.size();
-	}
-	
 	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorModalidade() {
 		return projetoServico.obterQuantidadeDeProjetosPorModalidade();
 	}
@@ -89,4 +83,11 @@ public class DashboardServico {
 		
 		return resultado;
 	}
+	
+	public Integer obterQuantidadeTotalDeUsuarios() {
+		List<Usuario> usuarios = usuarioServico.listarUsuarios();
+		
+		return usuarios.size();
+	}
+	
 }
