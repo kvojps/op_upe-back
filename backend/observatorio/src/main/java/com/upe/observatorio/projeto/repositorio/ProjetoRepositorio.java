@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.usuario.dominio.Usuario;
 
 public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 
@@ -24,4 +25,6 @@ public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 	
     @Query("SELECT p FROM Projeto p WHERE p.publicacao IS NULL")
     List<Projeto> findProjetosWithPublicacaoNull();
+    
+    List<Projeto> findByPublicacaoIsNullAndUsuario(Usuario usuario);
 }

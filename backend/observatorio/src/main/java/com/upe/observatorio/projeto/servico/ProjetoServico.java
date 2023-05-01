@@ -52,6 +52,16 @@ public class ProjetoServico {
 	public List<Projeto> listarProjetosPrivados() {
 		return repositorio.findProjetosWithPublicacaoNull();
 	}
+	
+	public List<Projeto> listarProjetosPrivadosPorUsuario(Long usuarioId) throws ObservatorioExcecao {
+		Optional<Usuario> usuario = usuarioServico.buscarUsuarioPorId(usuarioId);
+		
+		if (usuario.isEmpty()) {
+			throw new ObservatorioExcecao("O usuário não existe!");
+		}
+		
+		return repositorio.findByPublicacaoIsNullAndUsuario(usuario.get());
+	}
 
 	public Page<Projeto> listarProjetosPaginado(int page, int size) {
 		Pageable requestedPage = PageRequest.of(page, size);

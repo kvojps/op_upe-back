@@ -58,6 +58,13 @@ public class ProjetoAPI {
 		return ResponseEntity.ok(servico.listarProjetosPrivados().stream().map(projeto -> convert(projeto))
 				.collect(Collectors.toList()));
 	}
+	
+	@GetMapping("/privado/{id}")
+	public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivadosPorUsuario(@PathVariable("id") Long id)
+			throws ObservatorioExcecao {
+		return ResponseEntity.ok(servico.listarProjetosPrivadosPorUsuario(id).stream().map(projeto -> convert(projeto))
+				.collect(Collectors.toList()));
+	}
 
 	@GetMapping("/paginado")
 	public ResponseEntity<Map<String, Object>> listarProjetosPaginado(
