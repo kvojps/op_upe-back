@@ -23,6 +23,9 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
+import com.upe.observatorio.publicacao.dominio.Publicacao;
+import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
+import com.upe.observatorio.publicacao.servico.PublicacaoServico;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
@@ -38,9 +41,16 @@ public class ProjetoServico {
 
 	@Autowired
 	private CampusServico campusServico;
+	
+	@Autowired
+	private PublicacaoServico publicacaoServico;
 
 	public List<Projeto> listarProjetos() {
 		return repositorio.findAll();
+	}
+	
+	public List<Projeto> listarProjetosPrivados() {
+		return repositorio.findProjetosWithPublicacaoNull();
 	}
 
 	public Page<Projeto> listarProjetosPaginado(int page, int size) {
@@ -68,11 +78,24 @@ public class ProjetoServico {
 
 		if (campusServico.buscarCampusPorId(projeto.getCampusId()).isEmpty()) {
 			throw new ObservatorioExcecao("Não existe um campus associado a este id");
-		}
+		}	
 		Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId()).get();
 		projetoSalvar.setCampus(campusExistente);
-
-		return repositorio.save(projetoSalvar);
+		
+		Projeto projetoSalvo = repositorio.save(projetoSalvar);
+		
+		if (projeto.isVisibilidade()) {
+			PublicacaoDTO publicacaoSalvar = new PublicacaoDTO();
+			publicacaoSalvar.setProjeto(projetoSalvar);
+			publicacaoSalvar.setUsuario(usuarioExistente);
+			
+			Publicacao publicacaoSalvo = publicacaoServico.adicionarPublicacao(publicacaoSalvar);
+			projetoSalvo.setPublicacao(publicacaoSalvo);
+			
+			repositorio.save(projetoSalvo);
+		}
+		
+		return projetoSalvo;
 	}
 
 	public void atualizarProjeto(ProjetoDTO projeto, Long id) throws ObservatorioExcecao {

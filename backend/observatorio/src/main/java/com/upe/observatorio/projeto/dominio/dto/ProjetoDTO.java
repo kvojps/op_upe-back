@@ -69,8 +69,10 @@ public class ProjetoDTO {
 	@Schema(example = "0.00", description = "Suporte financeiro do projeto")
 	private Double suporteFinanceiro;
 	
+	@Schema(example = "true", description = "Visibilidade de um projeto")
+	private boolean visibilidade;
+	
 	private Long usuarioId;
 	
 	private Long campusId;
-	
 }

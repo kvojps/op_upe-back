@@ -53,6 +53,12 @@ public class ProjetoAPI {
 				.ok(servico.listarProjetos().stream().map(projeto -> convert(projeto)).collect(Collectors.toList()));
 	}
 
+	@GetMapping("/privado")
+	public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivados() {
+		return ResponseEntity.ok(servico.listarProjetosPrivados().stream().map(projeto -> convert(projeto))
+				.collect(Collectors.toList()));
+	}
+
 	@GetMapping("/paginado")
 	public ResponseEntity<Map<String, Object>> listarProjetosPaginado(
 			@RequestParam(value = "page", defaultValue = "0") int page,
