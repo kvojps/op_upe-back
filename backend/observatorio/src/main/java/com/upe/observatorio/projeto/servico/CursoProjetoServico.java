@@ -66,7 +66,7 @@ public class CursoProjetoServico {
 		repositorio.deleteById(id);	
 	}
 	
-	public HashMap<String, Integer> obterQuantidadeDeProjetosPorCurso() {
+	public HashMap<String, Integer> obterQuantidadeDeProjetosPorCurso() throws ObservatorioExcecao {
 		HashMap<String, Integer> resultado = new HashMap<>();
 		List<CursoProjeto> cursoProjetos = repositorio.findAll();
 		

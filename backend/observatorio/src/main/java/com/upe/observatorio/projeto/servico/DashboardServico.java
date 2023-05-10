@@ -11,28 +11,29 @@ import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
+import com.upe.observatorio.utils.ObservatorioExcecao;
 
 @Service
 public class DashboardServico {
-	
+
 	@Autowired
 	CampusServico campusServico;
-	
+
 	@Autowired
 	CursoServico cursoServico;
-	
+
 	@Autowired
 	ProjetoServico projetoServico;
-	
+
 	@Autowired
 	UsuarioServico usuarioServico;
-	
+
 	@Autowired
 	CursoProjetoServico cursoProjetoServico;
-	
-	public DashboardVO gerarDashboard() {
+
+	public DashboardVO gerarDashboard() throws ObservatorioExcecao {
 		DashboardVO dashboard = new DashboardVO();
-		
+
 		dashboard.setTotalCourses(obterQuantidadeTotalDeCurso());
 		dashboard.setTotalCampuses(obterQuantidadeTotalDeCampus());
 		dashboard.setTotalProjects(obterQuantidadeTotalDeProjetos());
@@ -41,53 +42,53 @@ public class DashboardServico {
 		dashboard.setProjectsPerCampuses(obterQuantidadeTotalDeProjetosPorCampus());
 		dashboard.setProjectsPerModalities(obterQuantidadeTotalDeProjetosPorModalidade());
 		dashboard.setProjectsPerThematicArea(obterQuantidadeTotalDeProjetosPorAreaTematica());
-		
+
 		return dashboard;
 	}
-	
+
 	public Integer obterQuantidadeTotalDeCampus() {
 		List<Campus> campus = campusServico.listarCampus();
-		
+
 		return campus.size();
 	}
-	
+
 	public Integer obterQuantidadeTotalDeCurso() {
 		List<Curso> cursos = cursoServico.listarCursos();
-		
+
 		return cursos.size();
 	}
-	
+
 	public Integer obterQuantidadeTotalDeProjetos() {
 		return projetoServico.obterQuantidadeTotalDeProjetos();
 	}
-	
+
 	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorModalidade() {
 		return projetoServico.obterQuantidadeDeProjetosPorModalidade();
 	}
-	
+
 	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorAreaTematica() {
 		return projetoServico.obterQuantidadeDeProjetosPorAreaTematica();
 	}
-	
-	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCurso() {
+
+	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCurso() throws ObservatorioExcecao {
 		return cursoProjetoServico.obterQuantidadeDeProjetosPorCurso();
 	}
-	
+
 	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCampus() {
 		HashMap<String, Integer> resultado = new HashMap<String, Integer>();
 		List<Campus> campi = campusServico.listarCampus();
-		
+
 		for (Campus campus : campi) {
 			resultado.put(campus.getNome(), campus.getProjetos().size());
 		}
-		
+
 		return resultado;
 	}
-	
+
 	public Integer obterQuantidadeTotalDeUsuarios() {
 		List<Usuario> usuarios = usuarioServico.listarUsuarios();
-		
+
 		return usuarios.size();
 	}
-	
+
 }

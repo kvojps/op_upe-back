@@ -40,7 +40,7 @@ public class CursoAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CursoRepresentacao> buscarCursoPorId(@PathVariable("id") Long id) {
+	public ResponseEntity<CursoRepresentacao> buscarCursoPorId(@PathVariable("id") Long id) throws ObservatorioExcecao {
 		CursoRepresentacao resultado = convert(servico.buscarCursoPorId(id).get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(resultado);

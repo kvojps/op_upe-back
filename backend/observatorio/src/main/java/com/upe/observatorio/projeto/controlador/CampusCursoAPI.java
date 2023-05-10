@@ -39,7 +39,8 @@ public class CampusCursoAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CampusCursoRepresentacao> buscarCampusCursoPorId(@PathVariable("id") Long id) {
+	public ResponseEntity<CampusCursoRepresentacao> buscarCampusCursoPorId(@PathVariable("id") Long id)
+			throws ObservatorioExcecao {
 		CampusCursoRepresentacao resultado = convert(servico.buscarCampusCursoPorId(id).get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(resultado);

@@ -32,7 +32,7 @@ public class CampusAPI {
 
 	@Autowired
 	private CampusServico servico;
-	
+
 	@GetMapping
 	public ResponseEntity<List<CampusRepresentacao>> listarCampus() {
 		return ResponseEntity
@@ -40,7 +40,8 @@ public class CampusAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CampusRepresentacao> buscarCampusPorId(@PathVariable("id") Long id) {
+	public ResponseEntity<CampusRepresentacao> buscarCampusPorId(@PathVariable("id") Long id)
+			throws ObservatorioExcecao {
 		CampusRepresentacao resultado = convert(servico.buscarCampusPorId(id).get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(resultado);
@@ -68,7 +69,7 @@ public class CampusAPI {
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removerCampus(@PathVariable("id") Long id) {
 		try {
@@ -79,7 +80,7 @@ public class CampusAPI {
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	private CampusRepresentacao convert(Campus entidade) {
 		ModelMapper modelMapper = new ModelMapper();
 		CampusRepresentacao resultado = modelMapper.map(entidade, CampusRepresentacao.class);

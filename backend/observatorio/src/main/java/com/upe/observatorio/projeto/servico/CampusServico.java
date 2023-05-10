@@ -24,7 +24,10 @@ public class CampusServico {
 		return repositorio.findAll();
 	}
 
-	public Optional<Campus> buscarCampusPorId(Long id) {
+	public Optional<Campus> buscarCampusPorId(Long id) throws ObservatorioExcecao {
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe um campus associado a este id!");
+		}
 		return repositorio.findById(id);
 	}
 

@@ -58,7 +58,7 @@ public class ProjetoAPI {
 		return ResponseEntity.ok(servico.listarProjetosPrivados().stream().map(projeto -> convert(projeto))
 				.collect(Collectors.toList()));
 	}
-	
+
 	@GetMapping("/privado/{id}")
 	public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivadosPorUsuario(@PathVariable("id") Long id)
 			throws ObservatorioExcecao {
@@ -77,7 +77,8 @@ public class ProjetoAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ProjetoRepresentacao> buscarProjetoPorId(@PathVariable("id") Long id) {
+	public ResponseEntity<ProjetoRepresentacao> buscarProjetoPorId(@PathVariable("id") Long id)
+			throws ObservatorioExcecao {
 		ProjetoRepresentacao resultado = convert(servico.buscarProjetoPorId(id).get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(resultado);

@@ -29,7 +29,10 @@ public class CampusCursoServico {
 		return repositorio.findAll();
 	}
 
-	public Optional<CampusCurso> buscarCampusCursoPorId(Long id) {
+	public Optional<CampusCurso> buscarCampusCursoPorId(Long id) throws ObservatorioExcecao {
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe um CampusCurso associado a este id!");
+		}
 		return repositorio.findById(id);
 	}
 
