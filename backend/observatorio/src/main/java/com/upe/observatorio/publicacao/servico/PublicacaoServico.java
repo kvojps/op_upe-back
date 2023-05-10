@@ -21,7 +21,16 @@ public class PublicacaoServico {
 		return repositorio.findAll();
 	}
 	
-	public Optional<Publicacao> buscarPublicacaoPorId(Long id) {
+	public Optional<Publicacao> buscarPublicacaoPorId(Long id) throws ObservatorioExcecao {
+		Optional<Publicacao> publicacao = repositorio.findById(id);
+		
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe uma publicação associada a este id!");
+		}
+		
+		publicacao.get().setVisualizacoes(publicacao.get().getVisualizacoes() + 1);
+		repositorio.save(publicacao.get());
+		
 		return repositorio.findById(id);
 	}
 	
@@ -43,5 +52,33 @@ public class PublicacaoServico {
 		}
 		
 		repositorio.deleteById(id);
+	}
+	
+	public void adicionarCurtida(Long id) throws ObservatorioExcecao {
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		publicacaoToSave.setCurtidas(publicacaoToSave.getCurtidas() + 1);
+		
+		repositorio.save(publicacaoToSave);
+	}
+	
+	public void adicionarDescurtida(Long id) throws ObservatorioExcecao {
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		publicacaoToSave.setDescurtidas(publicacaoToSave.getDescurtidas() + 1);
+		
+		repositorio.save(publicacaoToSave);
+	}
+	
+	public void removerCurtida(Long id) throws ObservatorioExcecao {
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		publicacaoToSave.setCurtidas(publicacaoToSave.getCurtidas() - 1);
+		
+		repositorio.save(publicacaoToSave);
+	}
+	
+	public void removerDescurtida(Long id) throws ObservatorioExcecao {
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		publicacaoToSave.setDescurtidas(publicacaoToSave.getDescurtidas() - 1);
+		
+		repositorio.save(publicacaoToSave);
 	}
 }

@@ -36,12 +36,13 @@ public class PublicacaoAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PublicacaoRepresentacao> buscarPublicacaoPorId(@PathVariable("id") Long id) {
+	public ResponseEntity<PublicacaoRepresentacao> buscarPublicacaoPorId(@PathVariable("id") Long id)
+			throws ObservatorioExcecao {
 		PublicacaoRepresentacao resultado = convert(servico.buscarPublicacaoPorId(id).get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(resultado);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<?> adicionarPublicacao(@RequestBody @Valid PublicacaoDTO publicacao) {
 		try {
@@ -53,7 +54,7 @@ public class PublicacaoAPI {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removerPublicacao(@PathVariable("id") Long id) {
 		try {
@@ -63,6 +64,34 @@ public class PublicacaoAPI {
 		}
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@PostMapping("/curtida/add/{id}")
+	public ResponseEntity<?> adicionarCurtida(@PathVariable("id") Long id) throws ObservatorioExcecao {
+		servico.adicionarCurtida(id);
+
+		return ResponseEntity.ok("Curtida adicionada!");
+	}
+	
+	@PostMapping("/descurtida/add/{id}")
+	public ResponseEntity<?> adicionarDescurtida(@PathVariable("id") Long id) throws ObservatorioExcecao {
+		servico.adicionarDescurtida(id);
+
+		return ResponseEntity.ok("Curtida adicionada!");
+	}
+
+	@PostMapping("/curtida/rm/{id}")
+	public ResponseEntity<?> removerCurtida(@PathVariable("id") Long id) throws ObservatorioExcecao {
+		servico.removerCurtida(id);
+
+		return ResponseEntity.ok("Curtida removida!");
+	}
+	
+	@PostMapping("/descurtida/rm/{id}")
+	public ResponseEntity<?> removerDescurtida(@PathVariable("id") Long id) throws ObservatorioExcecao {
+		servico.removerDescurtida(id);
+
+		return ResponseEntity.ok("Curtida removida!");
 	}
 
 	private PublicacaoRepresentacao convert(Publicacao entidade) {
