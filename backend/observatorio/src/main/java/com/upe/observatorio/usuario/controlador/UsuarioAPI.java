@@ -50,7 +50,8 @@ public class UsuarioAPI {
 	}
 
 	@PostMapping("/auth/cadastrar")
-	public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@RequestBody CadastroRequestDTO request) {
+	public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@RequestBody CadastroRequestDTO request)
+			throws ObservatorioExcecao {
 		return ResponseEntity.ok(servico.cadastrarUsuario(request));
 	}
 

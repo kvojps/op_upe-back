@@ -42,7 +42,15 @@ public class UsuarioServico {
 		return repositorio.findById(id);
 	}
 	
-	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request) {
+	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request) throws ObservatorioExcecao {
+		if (request.getSenha().length() < 8) {
+			throw new ObservatorioExcecao("A senha deve conter 8 caracteres ou mais!");
+		}
+		
+		if (repositorio.findByEmail(request.getEmail()).isPresent()) {
+			throw new ObservatorioExcecao("Já existe um usuário cadastrado com esse e-mail!");
+		}
+		
 		Usuario usuario = new Usuario();
 		usuario.setNome(request.getNome());
 		usuario.setEmail(request.getEmail());
