@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
 import com.upe.observatorio.publicacao.repositorio.PublicacaoRepositorio;
@@ -19,6 +20,10 @@ public class PublicacaoServico {
 	
 	public List<Publicacao> listarPublicacoes() {
 		return repositorio.findAll();
+	}
+	
+	public List<Publicacao> listarPublicacoesSemelhantes(AreaTematicaEnum areaTematica) {
+		return repositorio.findByProjetoAreaTematica(areaTematica);
 	}
 	
 	public Optional<Publicacao> buscarPublicacaoPorId(Long id) throws ObservatorioExcecao {

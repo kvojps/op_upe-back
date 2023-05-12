@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.publicacao.controlador.modelo.PublicacaoRepresentacao;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
@@ -33,6 +35,13 @@ public class PublicacaoAPI {
 	public ResponseEntity<List<PublicacaoRepresentacao>> listarPublicacoes() {
 		return ResponseEntity
 				.ok(servico.listarPublicacoes().stream().map(projeto -> convert(projeto)).collect(Collectors.toList()));
+	}
+
+	@GetMapping("/semelhantes")
+	public ResponseEntity<List<PublicacaoRepresentacao>> listarPublicacoesSemelhantes(
+			@RequestParam(value = "areaTematica", required = true) AreaTematicaEnum areaTematica) {
+		return ResponseEntity.ok(servico.listarPublicacoesSemelhantes(areaTematica).stream()
+				.map(publicacao -> convert(publicacao)).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/{id}")
@@ -72,7 +81,7 @@ public class PublicacaoAPI {
 
 		return ResponseEntity.ok("Curtida adicionada!");
 	}
-	
+
 	@PostMapping("/descurtida/add/{id}")
 	public ResponseEntity<?> adicionarDescurtida(@PathVariable("id") Long id) throws ObservatorioExcecao {
 		servico.adicionarDescurtida(id);
@@ -86,7 +95,7 @@ public class PublicacaoAPI {
 
 		return ResponseEntity.ok("Curtida removida!");
 	}
-	
+
 	@PostMapping("/descurtida/rm/{id}")
 	public ResponseEntity<?> removerDescurtida(@PathVariable("id") Long id) throws ObservatorioExcecao {
 		servico.removerDescurtida(id);
