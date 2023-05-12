@@ -3,6 +3,13 @@
 ## O que é? 🤷‍♂️
 O observatório se apresenta como um instrumento de transparência com objetivo de proporcionar o compartilhamento de conhecimento e de apoiar a tomada de decisão diante do caos informacional vivenciado pelas organizações.
 
+O Observatório de Projetos da UPE, é um instrumento que se propõe a minorar ou solucionar as dores dos envolvidos nos projetos e visa melhorar a disseminação das informações relacionadas aos projetos,
+assim como aproximar os indivíduos e grupos interessados em colaboração e
+cooperação. Espera-se que esse tipo de observatório possa ser de grande utilidade para
+todos os atores descritos e que possa fortalecer a cultura de transparência e do uso de
+observatórios como ferramentas de divulgação, análise, participação social e
+colaboração entre pares.
+
 ## Visão arquitetural 🏭
 O observatório de projetos é uma aplicação web que utiliza tecnologias modernas tanto no front-end quanto no back-end. No front-end, são utilizados TypeScript e React, que são duas tecnologias amplamente utilizadas atualmente. Já no back-end é utilizado Java em conjunto com o framework Spring boot. Para movimentar informações entre as camadas, é utilizado o JSON (Javascript Object Notation).
 [Link para o repositório front-end](https://github.com/kvojps/op_upe-front)
