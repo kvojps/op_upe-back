@@ -99,112 +99,112 @@ INSERT INTO public.campus_curso(id, id_campus, id_curso)
 
 --Direito
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (77, 1, 25);
+	VALUES (77, 1, 26);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (78, 2, 25);
+	VALUES (78, 2, 26);
 
 --Educação Física
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (79, 10, 26);
+	VALUES (79, 10, 27);
 
 --Enfermagem
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (80, 9, 27);
+	VALUES (80, 9, 28);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (81, 10, 27);
+	VALUES (81, 10, 28);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (82, 107, 27);
+	VALUES (82, 107, 28);
 
 --Engenharia Civil
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (83, 2, 28);
+	VALUES (83, 2, 29);
 
 --Engenharia da computação
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (84, 2, 28);
+	VALUES (84, 2, 30);
 
 --Engenharia de controle e automação
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (85, 2, 29);
+	VALUES (85, 2, 31);
 
 --Engenharia de software
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (86, 5, 30);
+	VALUES (86, 5, 32);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (87, 12, 30);
+	VALUES (87, 12, 32);
 
 --Engenharia elétrica de teleco
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (88, 2, 31);
+	VALUES (88, 2, 33);
 
 --Engenharia elétrica eletrônica
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (89, 2, 32);
+	VALUES (89, 2, 34);
 
 --Engenharia elétrica eletrotécnica
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (90, 2, 33);
+	VALUES (90, 2, 35);
 
 --Engenharia mecânica
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (91, 2, 34);
+	VALUES (91, 2, 36);
 
 --Física de materiais
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (92, 2, 35);
+	VALUES (92, 2, 37);
 
 --Fisioterapia
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (93, 9, 36);
+	VALUES (93, 9, 38);
 
 --Medicina
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (94, 5, 37);
+	VALUES (94, 5, 39);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (95, 10, 37);
+	VALUES (95, 10, 39);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (96, 11, 37);
+	VALUES (96, 11, 39);
 
 --Nutrição
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (97, 9, 38);
+	VALUES (97, 9, 40);
 
 --Odontologia
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (98, 3, 39);
+	VALUES (98, 3, 41);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (99, 1, 39);
+	VALUES (99, 1, 41);
 
 --Psicologia
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (100, 5, 40);
+	VALUES (100, 5, 42);
 
 --Saúde coletiva
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (101, 10, 41);
+	VALUES (101, 10, 43);
 
 --Serviço social
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (102, 48, 42);
+	VALUES (102, 48, 44);
 
 --SI
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (103, 4, 43);
+	VALUES (103, 4, 45);
 
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (104, 12, 43);
+	VALUES (104, 12, 45);
 
 --Terapia ocupacional
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (105, 10, 44);
+	VALUES (105, 10, 46);
 
 --Tecnologia em logística
 INSERT INTO public.campus_curso(id, id_campus, id_curso)
-	VALUES (106, 6, 45);
+	VALUES (106, 6, 47);
