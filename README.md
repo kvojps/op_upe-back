@@ -52,4 +52,42 @@ Esta seção tem como objetivo apresentar o diagrama de classes do sistema em qu
 | Diagrama de classes - Escopo Publicação |
 
 #### Endpoints disponíveis 🟢
-Em construção 🏗️
+| ![Apis disponíveis](readme-img/apis-disponiveis.jpeg) |
+|:--:|
+| APIs disponíveis |
+
+| ![Endpoints disponíveis para entidade campus](readme-img/campus-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Campus API |
+
+| ![Endpoints disponíveis para entidade curso](readme-img/curso-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Curso API |
+
+| ![Endpoints disponíveis para entidade projeto](readme-img/projeto-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Projeto API |
+
+| ![Endpoints disponíveis para entidade campus e curso](readme-img/campus_curso-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - CampusCurso API |
+
+| ![Endpoints disponíveis para entidade curso e projeto](readme-img/curso_projeto-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - CursoProjeto API |
+
+| ![Endpoints disponíveis para entidade dashboard](readme-img/dashboard-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Dashboard API |
+
+| ![Endpoints disponíveis para entidade usuário](readme-img/usuario-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Usuario API |
+
+| ![Endpoints disponíveis para entidade publicação](readme-img/publicacao-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Publicacao API |
+
+| ![Endpoints disponíveis para entidade comentário](readme-img/comentarios-endpoints.jpeg) |
+|:--:|
+| Endpoints disponíveis - Comentario API |
