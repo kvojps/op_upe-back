@@ -1,5 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.upe.observatorio.projeto.controlador.modelo.ProjetoRepresentacao;
 import com.upe.observatorio.projeto.dominio.Projeto;
@@ -152,6 +155,15 @@ public class ProjetoAPI {
 				.collect(Collectors.toList()));
 	}
 
+	@PostMapping("/planilha")
+	public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
+		try {
+			servico.carregarProjetosPlanilha(planilha);
+		} catch (IOException | ObservatorioExcecao e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private ProjetoRepresentacao convert(Projeto entidade) {
 		ModelMapper modelMapper = new ModelMapper();
 		ProjetoRepresentacao resultado = modelMapper.map(entidade, ProjetoRepresentacao.class);

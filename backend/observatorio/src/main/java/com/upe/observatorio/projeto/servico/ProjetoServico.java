@@ -1,5 +1,7 @@
 package com.upe.observatorio.projeto.servico;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -15,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
@@ -91,7 +98,7 @@ public class ProjetoServico {
 		projetoSalvar.setUsuario(usuarioExistente);
 
 		if (campusServico.buscarCampusPorId(projeto.getCampusId()).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um campus associado a este id");
+			throw new ObservatorioExcecao("Não existe um campus associado a este id" + projeto.getCampusId());
 		}	
 		Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId()).get();
 		projetoSalvar.setCampus(campusExistente);
@@ -258,5 +265,60 @@ public class ProjetoServico {
 		resultado.put("Evento", qtdEvento);
 
 		return resultado;
+	}
+
+	public void carregarProjetosPlanilha(MultipartFile file) throws IOException, ObservatorioExcecao {
+		InputStream input = file.getInputStream();
+		try (Workbook workbook = new XSSFWorkbook(input)) {
+			Sheet sheet = workbook.getSheetAt(0);
+			
+			for (Row row : sheet) {
+				if (row.getRowNum() == 0 || repositorio
+						.findByTituloContainingIgnoreCase(row.getCell(2).getStringCellValue()).isPresent()) {
+					continue;
+				}
+				
+				ProjetoDTO projeto = criarProjetoPorLinha(row);
+				adicionarProjeto(projeto);		
+			}
+		}
+	}
+	
+	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
+		AreaTematicaEnum areaTematicaResponse = null;
+		
+		if (areaTematica.toLowerCase() == "pesquisa") {
+			areaTematicaResponse = AreaTematicaEnum.PESQUISA;
+		} else if (areaTematica.toLowerCase() == "extensao") {
+			areaTematicaResponse = AreaTematicaEnum.EXTENSAO;
+		} else if (areaTematica.toLowerCase() == "inovacao") {
+			areaTematicaResponse = AreaTematicaEnum.INOVACAO;
+		}
+		
+		return areaTematicaResponse;
+	}
+	
+	
+	private ProjetoDTO criarProjetoPorLinha(Row row) {
+		ProjetoDTO projeto = new ProjetoDTO();
+		if(row.getCell(0) != null) projeto.setAreaTematica(obterAreaTematica(row.getCell(0).getStringCellValue()));
+		if(row.getCell(1) != null) projeto.setModalidade(null); //falta
+		if(row.getCell(2) != null) projeto.setTitulo(row.getCell(2).getStringCellValue());
+		if(row.getCell(3) != null) projeto.setResumo(row.getCell(3).getStringCellValue());
+		if(row.getCell(4) != null) projeto.setIntroducao(row.getCell(4).getStringCellValue());
+		if(row.getCell(5) != null) projeto.setFundamentacao(row.getCell(5).getStringCellValue());
+		if(row.getCell(6) != null) projeto.setObjetivos(row.getCell(6).getStringCellValue());
+		if(row.getCell(7) != null) projeto.setConclusao(row.getCell(7).getStringCellValue());
+		if(row.getCell(8) != null) projeto.setMemoriaVisual(row.getCell(8).getStringCellValue());
+		if(row.getCell(9) != null) projeto.setDataInicio(null); ///falta
+		if(row.getCell(10) != null) projeto.setDataFim(null); //falta
+		if(row.getCell(11) != null) projeto.setPublicoAlvo(row.getCell(11).getStringCellValue());
+		if(row.getCell(12) != null) projeto.setPessoasAtendidas((int) row.getCell(12).getNumericCellValue());
+		if(row.getCell(13) != null) projeto.setSuporteFinanceiro(row.getCell(13).getNumericCellValue());
+		if(row.getCell(14) != null) projeto.setUsuarioId(1L);
+		if(row.getCell(15) != null) projeto.setCampusId((long) (row.getCell(15).getNumericCellValue()));
+		projeto.setVisibilidade(true);
+			
+		return projeto;
 	}
 }

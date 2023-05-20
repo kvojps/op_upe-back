@@ -31,30 +31,24 @@ public class ProjetoDTO {
 	
 	@Schema(example = "O OPUPE tem o intuito de concentrar informações sobre os projetos da UPE...", 
 			description = "Resumo do projeto")
-	@NotBlank
 	private String resumo;
 	
 	@Schema(example = "A transparência da informação...", description = "Introducao do projeto")
-	@NotBlank
 	private String introducao;
 	
 	@Schema(example = "Foi necessário uma pesquisa bibliográfica...", description = "Fundamentação do projeto")
-	@NotBlank
 	private String fundamentacao;
 	
 	@Schema(example = "Compartilhar as experiências obtidas nos projetos...", description = "Objetivos do projeto")
-	@NotBlank
 	private String objetivos;
 	
 	@Schema(example = "Diante disso, é possível evidenciar...", description = "Conclusão do projeto")
-	@NotBlank
 	private String conclusao;
 	
 	@Schema(example = "https://www.youtube.com/", description = "Memória visual do projeto")
 	private String memoriaVisual;
 	
 	@Schema(example = "2020-04-22", description = "Data de início do projeto")
-	@NotNull
 	private Date dataInicio;
 	
 	@Schema(example = "2020-04-23", description = "Data de finalização do projeto")
@@ -70,6 +64,7 @@ public class ProjetoDTO {
 	private Double suporteFinanceiro;
 	
 	@Schema(example = "true", description = "Visibilidade de um projeto")
+	@NotNull
 	private boolean visibilidade;
 	
 	private Long usuarioId;
