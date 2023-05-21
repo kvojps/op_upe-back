@@ -35,6 +35,14 @@ public class CampusCursoServico {
 		}
 		return repositorio.findById(id);
 	}
+	
+	public Optional<CampusCurso> buscarCampusCursoPorCampusCurso(Campus campus, Curso curso)
+			throws ObservatorioExcecao {
+		if (repositorio.findByCampusAndCurso(campus, curso).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe um CampusCurso associado a este id!");
+		}
+		return repositorio.findByCampusAndCurso(campus, curso);
+	}
 
 	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ObservatorioExcecao {
 		Optional<Campus> campusExistente = campusService.buscarCampusPorId(campusCurso.getCampusId());

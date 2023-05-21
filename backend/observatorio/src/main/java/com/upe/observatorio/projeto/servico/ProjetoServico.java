@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
+import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
@@ -48,6 +49,9 @@ public class ProjetoServico {
 
 	@Autowired
 	private CampusServico campusServico;
+	
+	@Autowired
+	private CursoProjetoServico cursoProjetoServico;
 	
 	@Autowired
 	private PublicacaoServico publicacaoServico;
@@ -280,8 +284,10 @@ public class ProjetoServico {
 
 				try {
 					ProjetoDTO projeto = criarProjetoPorLinha(row);
-					adicionarProjeto(projeto);
-					//adicionar campusCurso
+					Projeto projetoSalvo = adicionarProjeto(projeto);
+					long cursoId = (long) (row.getCell(16).getNumericCellValue());
+					
+					adicionarCursoProjeto(cursoId, projetoSalvo.getId());
 				} catch (IllegalStateException | IllegalArgumentException e) {
 					e.printStackTrace();
 				}
@@ -322,5 +328,17 @@ public class ProjetoServico {
 		ModalidadeEnum modalidadeResponse = ModalidadeEnum.valueOf(modalidade);
 		
 		return modalidadeResponse;
+	}
+	
+	private void adicionarCursoProjeto(Long cursoId, Long projetoId) {
+		try {
+			CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
+			cursoProjeto.setCursoId(cursoId);	
+			cursoProjeto.setProjetoId(projetoId);		
+			
+			cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
+		} catch (ObservatorioExcecao e) {
+			e.printStackTrace();
+		}
 	}
 }
