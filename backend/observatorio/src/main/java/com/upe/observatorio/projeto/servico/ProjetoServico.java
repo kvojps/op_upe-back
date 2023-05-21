@@ -274,30 +274,19 @@ public class ProjetoServico {
 			
 			for (Row row : sheet) {
 				if (row.getRowNum() == 0 || repositorio
-						.findByTituloContainingIgnoreCase(row.getCell(2).getStringCellValue()).isPresent()) {
+						.findByTitulo(row.getCell(2).getStringCellValue()).isPresent()) {
 					continue;
 				}
-				
-				ProjetoDTO projeto = criarProjetoPorLinha(row);
-				adicionarProjeto(projeto);		
+
+				try {
+					ProjetoDTO projeto = criarProjetoPorLinha(row);
+					adicionarProjeto(projeto);		
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-	
-	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
-		AreaTematicaEnum areaTematicaResponse = null;
-		
-		if (areaTematica.toLowerCase() == "pesquisa") {
-			areaTematicaResponse = AreaTematicaEnum.PESQUISA;
-		} else if (areaTematica.toLowerCase() == "extensao") {
-			areaTematicaResponse = AreaTematicaEnum.EXTENSAO;
-		} else if (areaTematica.toLowerCase() == "inovacao") {
-			areaTematicaResponse = AreaTematicaEnum.INOVACAO;
-		}
-		
-		return areaTematicaResponse;
-	}
-	
 	
 	private ProjetoDTO criarProjetoPorLinha(Row row) {
 		ProjetoDTO projeto = new ProjetoDTO();
@@ -314,11 +303,25 @@ public class ProjetoServico {
 		if(row.getCell(10) != null) projeto.setDataFim(null); //falta
 		if(row.getCell(11) != null) projeto.setPublicoAlvo(row.getCell(11).getStringCellValue());
 		if(row.getCell(12) != null) projeto.setPessoasAtendidas((int) row.getCell(12).getNumericCellValue());
-		if(row.getCell(13) != null) projeto.setSuporteFinanceiro(row.getCell(13).getNumericCellValue());
+		if(row.getCell(13) != null) projeto.setSuporteFinanceiro(row.getCell(13).getStringCellValue());
 		if(row.getCell(14) != null) projeto.setUsuarioId(1L);
 		if(row.getCell(15) != null) projeto.setCampusId((long) (row.getCell(15).getNumericCellValue()));
 		projeto.setVisibilidade(true);
 			
 		return projeto;
+	}
+	
+	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
+		AreaTematicaEnum areaTematicaResponse = null;
+		
+		if (areaTematica.toLowerCase() == "pesquisa") {
+			areaTematicaResponse = AreaTematicaEnum.PESQUISA;
+		} else if (areaTematica.toLowerCase() == "extensao") {
+			areaTematicaResponse = AreaTematicaEnum.EXTENSAO;
+		} else if (areaTematica.toLowerCase() == "inovacao") {
+			areaTematicaResponse = AreaTematicaEnum.INOVACAO;
+		}
+		
+		return areaTematicaResponse;
 	}
 }

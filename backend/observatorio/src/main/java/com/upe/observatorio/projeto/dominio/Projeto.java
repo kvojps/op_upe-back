@@ -75,7 +75,7 @@ public class Projeto {
 
 	private Integer pessoasAtendidas;
 
-	private Double suporteFinanceiro;
+	private String suporteFinanceiro;
 	
 	@OneToOne
 	private Publicacao publicacao;

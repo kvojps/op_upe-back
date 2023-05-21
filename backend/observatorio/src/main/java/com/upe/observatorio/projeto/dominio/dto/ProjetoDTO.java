@@ -60,8 +60,8 @@ public class ProjetoDTO {
 	@Schema(example = "1000", description = "Pessoas atendidas pelo projeto")
 	private int pessoasAtendidas;
 	
-	@Schema(example = "0.00", description = "Suporte financeiro do projeto")
-	private Double suporteFinanceiro;
+	@Schema(example = "S/N", description = "Suporte financeiro do projeto")
+	private String suporteFinanceiro;
 	
 	@Schema(example = "true", description = "Visibilidade de um projeto")
 	@NotNull

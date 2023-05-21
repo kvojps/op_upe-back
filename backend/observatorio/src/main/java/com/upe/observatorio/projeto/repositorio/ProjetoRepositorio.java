@@ -21,7 +21,7 @@ public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 
 	Page<Projeto> findAllByTituloContainingIgnoreCase(String titulo, Pageable pageable);
 	
-	Optional<Projeto> findByTituloContainingIgnoreCase(String titulo);
+	Optional<Projeto> findByTitulo(String titulo);
 	
 	@Query("SELECT p FROM Projeto p ORDER BY p.dataFim DESC")
 	List<Projeto> findAllOrderByDataFimDesc();
