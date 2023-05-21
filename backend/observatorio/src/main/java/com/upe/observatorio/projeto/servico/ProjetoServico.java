@@ -280,8 +280,9 @@ public class ProjetoServico {
 
 				try {
 					ProjetoDTO projeto = criarProjetoPorLinha(row);
-					adicionarProjeto(projeto);		
-				} catch (IllegalStateException e) {
+					adicionarProjeto(projeto);
+					//adicionar campusCurso
+				} catch (IllegalStateException | IllegalArgumentException e) {
 					e.printStackTrace();
 				}
 			}
@@ -291,7 +292,7 @@ public class ProjetoServico {
 	private ProjetoDTO criarProjetoPorLinha(Row row) {
 		ProjetoDTO projeto = new ProjetoDTO();
 		if(row.getCell(0) != null) projeto.setAreaTematica(obterAreaTematica(row.getCell(0).getStringCellValue()));
-		if(row.getCell(1) != null) projeto.setModalidade(null); //falta
+		if(row.getCell(1) != null) projeto.setModalidade(obterModalidade(row.getCell(1).getStringCellValue()));
 		if(row.getCell(2) != null) projeto.setTitulo(row.getCell(2).getStringCellValue());
 		if(row.getCell(3) != null) projeto.setResumo(row.getCell(3).getStringCellValue());
 		if(row.getCell(4) != null) projeto.setIntroducao(row.getCell(4).getStringCellValue());
@@ -312,16 +313,14 @@ public class ProjetoServico {
 	}
 	
 	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
-		AreaTematicaEnum areaTematicaResponse = null;
-		
-		if (areaTematica.toLowerCase() == "pesquisa") {
-			areaTematicaResponse = AreaTematicaEnum.PESQUISA;
-		} else if (areaTematica.toLowerCase() == "extensao") {
-			areaTematicaResponse = AreaTematicaEnum.EXTENSAO;
-		} else if (areaTematica.toLowerCase() == "inovacao") {
-			areaTematicaResponse = AreaTematicaEnum.INOVACAO;
-		}
+		AreaTematicaEnum areaTematicaResponse = AreaTematicaEnum.valueOf(areaTematica);
 		
 		return areaTematicaResponse;
+	}
+	
+	private ModalidadeEnum obterModalidade(String modalidade) {
+		ModalidadeEnum modalidadeResponse = ModalidadeEnum.valueOf(modalidade);
+		
+		return modalidadeResponse;
 	}
 }
