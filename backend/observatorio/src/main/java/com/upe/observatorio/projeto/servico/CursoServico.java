@@ -26,7 +26,7 @@ public class CursoServico {
 
 	public Optional<Curso> buscarCursoPorId(Long id) throws ObservatorioExcecao {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um curso associado a este id!");
+			throw new ObservatorioExcecao("Não existe um curso associado a este id: " + id);
 		}
 		return repositorio.findById(id);
 	}

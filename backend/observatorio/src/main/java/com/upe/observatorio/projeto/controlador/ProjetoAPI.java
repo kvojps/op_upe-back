@@ -34,6 +34,7 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.servico.PlanilhaServico;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
@@ -46,6 +47,9 @@ public class ProjetoAPI {
 
 	@Autowired
 	private ProjetoServico servico;
+	
+	@Autowired
+	private PlanilhaServico planilhaServico;
 
 	@Autowired
 	private UsuarioServico usuarioServico;
@@ -158,7 +162,7 @@ public class ProjetoAPI {
 	@PostMapping("/planilha")
 	public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
 		try {
-			servico.carregarProjetosPlanilha(planilha);
+			planilhaServico.carregarProjetosPlanilha(planilha);
 		} catch (IOException | ObservatorioExcecao e) {
 			e.printStackTrace();
 		}

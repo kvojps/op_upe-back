@@ -38,7 +38,7 @@ public class CursoProjetoServico {
 
 		Optional<Curso> cursoExistente = cursoServico.buscarCursoPorId(cursoProjeto.getCursoId());
 		if (cursoExistente.isEmpty()) {
-			throw new ObservatorioExcecao("O curso informado não existe");
+			throw new ObservatorioExcecao("O curso informado não existe: " + cursoExistente.get().getId());
 		}
 		
 		Optional<Projeto> projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
