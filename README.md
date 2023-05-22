@@ -18,7 +18,7 @@ Ao utilizar essas tecnologias, o sistema oferece aos usuários uma experiência 
 
 ### Visão de casos de uso 👤
 Há 04 (quatro) tipos de usuários que interagem com o observatório: usuário geral, usuário cadastrado, coordenador de projeto e administrador (figura 2). Cada um desses tipos de usuários têm diferentes usos para o sistema:
-| ![perfis de usuário](readme-img/perfis.jpeg) |
+| ![perfis de usuário](dados/readme-img/perfis.jpeg) |
 |:--:|
 | Diagrama de casos de uso - Perfis do usuário |
 
@@ -36,7 +36,7 @@ Um administrador pode associar o perfil “Coordenador de Projeto” a um outro 
 
 ### Visão lógica 🖖🏾
 Os pacotes do back-end do sistema foram divididos por caso de uso, e inserido em cada caso de uso existem os pacotes de controlador, serviço, repositório e modelo. Além desses pacotes adicionais, existem os pacotes config e utils que possuem algumas configurações adicionais do sistema
-| ![pacotes do sistema](readme-img/pacotes-back.jpeg)|
+| ![pacotes do sistema](dados/readme-img/pacotes-back.jpeg)|
 |:--:|
 | Diagrama de pacotes - Back-end |
 
@@ -50,51 +50,51 @@ Esta seção tem como objetivo apresentar o diagrama de classes do sistema em qu
 * Publicacão;
 * Comentário;
   
-| ![classes referentes ao escopo de projeto](readme-img/classes-projeto.jpeg) |
+| ![classes referentes ao escopo de projeto](dados/readme-img/classes-projeto.jpeg) |
 |:--:|
 | Diagrama de classes - Escopo Projeto |
 
-| ![classes referentes ao escopo de publicação](readme-img/classes-publicacao.jpeg) |
+| ![classes referentes ao escopo de publicação](dados/readme-img/classes-publicacao.jpeg) |
 |:--:|
 | Diagrama de classes - Escopo Publicação |
 
 #### Endpoints disponíveis 🟢
-| ![Apis disponíveis](readme-img/apis-disponiveis.jpeg) |
+| ![Apis disponíveis](dados/readme-img/apis-disponiveis.jpeg) |
 |:--:|
 | APIs disponíveis |
 
-| ![Endpoints disponíveis para entidade campus](readme-img/campus-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade campus](dados/readme-img/campus-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Campus API |
 
-| ![Endpoints disponíveis para entidade curso](readme-img/curso-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade curso](dados/readme-img/curso-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Curso API |
 
-| ![Endpoints disponíveis para entidade projeto](readme-img/projeto-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade projeto](dados/readme-img/projeto-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Projeto API |
 
-| ![Endpoints disponíveis para entidade campus e curso](readme-img/campus_curso-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade campus e curso](dados/readme-img/campus_curso-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - CampusCurso API |
 
-| ![Endpoints disponíveis para entidade curso e projeto](readme-img/curso_projeto-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade curso e projeto](dados/readme-img/curso_projeto-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - CursoProjeto API |
 
-| ![Endpoints disponíveis para entidade dashboard](readme-img/dashboard-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade dashboard](dados/readme-img/dashboard-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Dashboard API |
 
-| ![Endpoints disponíveis para entidade usuário](readme-img/usuario-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade usuário](dados/readme-img/usuario-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Usuario API |
 
-| ![Endpoints disponíveis para entidade publicação](readme-img/publicacao-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade publicação](dados/readme-img/publicacao-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Publicacao API |
 
-| ![Endpoints disponíveis para entidade comentário](readme-img/comentarios-endpoints.jpeg) |
+| ![Endpoints disponíveis para entidade comentário](dados/readme-img/comentarios-endpoints.jpeg) |
 |:--:|
 | Endpoints disponíveis - Comentario API |
