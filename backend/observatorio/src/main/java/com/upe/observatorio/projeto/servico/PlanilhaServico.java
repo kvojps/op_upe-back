@@ -2,7 +2,13 @@ package com.upe.observatorio.projeto.servico;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -41,7 +47,10 @@ public class PlanilhaServico {
 						.findByTitulo(row.getCell(2).getStringCellValue()).isPresent()) {
 					continue;
 				}
-
+				
+				corrigirTipoColunaData(workbook, row, 9);
+				corrigirTipoColunaData(workbook, row, 10);
+			    
 				try {
 					ProjetoDTO projeto = criarProjetoPorLinha(row);
 					Projeto projetoSalvo = projetoServico.adicionarProjeto(projeto);
@@ -55,7 +64,22 @@ public class PlanilhaServico {
 		}
 	}
 	
+	private void adicionarCursoProjeto(Long cursoId, Long projetoId) {
+		try {
+			CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
+			cursoProjeto.setCursoId(cursoId);	
+			cursoProjeto.setProjetoId(projetoId);		
+			
+			cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
+		} catch (ObservatorioExcecao e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private ProjetoDTO criarProjetoPorLinha(Row row) {
+		String dataInicio = row.getCell(9).getStringCellValue();
+		String dataFim = row.getCell(10).getStringCellValue();
+	
 		ProjetoDTO projeto = new ProjetoDTO();
 		if(row.getCell(0) != null) projeto.setAreaTematica(obterAreaTematica(row.getCell(0).getStringCellValue()));
 		if(row.getCell(1) != null) projeto.setModalidade(obterModalidade(row.getCell(1).getStringCellValue()));
@@ -66,8 +90,8 @@ public class PlanilhaServico {
 		if(row.getCell(6) != null) projeto.setObjetivos(row.getCell(6).getStringCellValue());
 		if(row.getCell(7) != null) projeto.setConclusao(row.getCell(7).getStringCellValue());
 		if(row.getCell(8) != null) projeto.setMemoriaVisual(row.getCell(8).getStringCellValue());
-		if(row.getCell(9) != null) projeto.setDataInicio(null); ///falta
-		if(row.getCell(10) != null) projeto.setDataFim(null); //falta
+		if(!dataInicio.isBlank()) projeto.setDataInicio(converterStringData(dataInicio));
+		if(!dataFim.isBlank()) projeto.setDataFim(converterStringData(dataFim));
 		if(row.getCell(11) != null) projeto.setPublicoAlvo(row.getCell(11).getStringCellValue());
 		if(row.getCell(12) != null) projeto.setPessoasAtendidas((int) row.getCell(12).getNumericCellValue());
 		if(row.getCell(13) != null) projeto.setSuporteFinanceiro(row.getCell(13).getStringCellValue());
@@ -90,15 +114,27 @@ public class PlanilhaServico {
 		return modalidadeResponse;
 	}
 	
-	private void adicionarCursoProjeto(Long cursoId, Long projetoId) {
-		try {
-			CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
-			cursoProjeto.setCursoId(cursoId);	
-			cursoProjeto.setProjetoId(projetoId);		
-			
-			cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
-		} catch (ObservatorioExcecao e) {
-			e.printStackTrace();
-		}
+	private void corrigirTipoColunaData(Workbook workbook, Row row, int nRow) {
+		DataFormatter dataFormatter = new DataFormatter();
+		Cell cell = row.getCell(nRow);
+		String cellValue = dataFormatter.formatCellValue(cell);
+	    CellStyle stringCellStyle = workbook.createCellStyle();
+	    
+	    stringCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("@"));
+	    cell.setCellStyle(stringCellStyle);
+	    cell.setCellValue(cellValue);
+	}
+	
+	private Date converterStringData(String data) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        
+        try {
+            date = format.parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        return date;
 	}
 }
