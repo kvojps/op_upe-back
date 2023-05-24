@@ -43,7 +43,7 @@ public class Projeto {
 	@Enumerated(EnumType.STRING)
 	private ModalidadeEnum modalidade;
 
-	@Column(unique = true)
+	@Column(unique = true, columnDefinition = "TEXT")
 	private String titulo;
 
 	@Column(columnDefinition = "TEXT")
@@ -61,7 +61,7 @@ public class Projeto {
 	@Column(columnDefinition = "TEXT")
 	private String conclusao;
 
-	@Column(name = "memoria_visual")
+	@Column(name = "memoria_visual", columnDefinition = "TEXT")
 	private String memoriaVisual;
 
 	@Column(name = "data_inicio")
@@ -71,6 +71,7 @@ public class Projeto {
 	@Temporal(TemporalType.DATE)
 	private Date dataFim;
 
+	@Column(columnDefinition = "TEXT")
 	private String publicoAlvo;
 
 	private Integer pessoasAtendidas;
