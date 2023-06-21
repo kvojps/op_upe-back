@@ -33,7 +33,7 @@ public class ProjetoDTO {
 			description = "Resumo do projeto")
 	private String resumo;
 	
-	@Schema(example = "A transparência da informação...", description = "Introducao do projeto")
+	@Schema(example = "A transparência da informação...", description = "Introducão do projeto")
 	private String introducao;
 	
 	@Schema(example = "Foi necessário uma pesquisa bibliográfica...", description = "Fundamentação do projeto")

@@ -36,7 +36,6 @@ public class Projeto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "area_tematica")
 	@Enumerated(EnumType.STRING)
 	private AreaTematicaEnum areaTematica;
 
@@ -61,10 +60,9 @@ public class Projeto {
 	@Column(columnDefinition = "TEXT")
 	private String conclusao;
 
-	@Column(name = "memoria_visual", columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String memoriaVisual;
 
-	@Column(name = "data_inicio")
 	@Temporal(TemporalType.DATE)
 	private Date dataInicio;
 

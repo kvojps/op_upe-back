@@ -1,21 +1,5 @@
 package com.upe.observatorio.projeto.servico;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
@@ -29,21 +13,26 @@ import com.upe.observatorio.publicacao.servico.PublicacaoServico;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProjetoServico {
 
-	@Autowired
-	private ProjetoRepositorio repositorio;
-
-	@Autowired
-	private UsuarioServico usuarioServico;
-
-	@Autowired
-	private CampusServico campusServico;
-
-	@Autowired
-	private PublicacaoServico publicacaoServico;
+	private final ProjetoRepositorio repositorio;
+	private final UsuarioServico usuarioServico;
+	private final CampusServico campusServico;
+	private final PublicacaoServico publicacaoServico;
 
 	public List<Projeto> listarProjetos() {
 		return repositorio.findAll();
@@ -65,12 +54,14 @@ public class ProjetoServico {
 
 	public Page<Projeto> listarProjetosPaginado(int page, int size) {
 		Pageable requestedPage = PageRequest.of(page, size);
-		Page<Projeto> resultado = repositorio.findAll(requestedPage);
 
-		return resultado;
+		return repositorio.findAll(requestedPage);
 	}
 
 	public Optional<Projeto> buscarProjetoPorId(Long id) throws ObservatorioExcecao {
+		if (id == null) {
+			throw new ObservatorioExcecao("O id do projeto não pode ser nulo!");
+		}
 		if (repositorio.findById(id).isEmpty()) {
 			throw new ObservatorioExcecao("Não existe um projeto associado a este id!");
 		}
@@ -183,8 +174,11 @@ public class ProjetoServico {
 	}
 
 	public void removerProjeto(Long id) throws ObservatorioExcecao {
+		if (id == null) {
+			throw new ObservatorioExcecao("O id do projeto a ser apagado não pode ser nulo!");
+		}
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um projeto associado a este id");
+			throw new ObservatorioExcecao("Não existe um projeto associado a este id!");
 		}
 
 		repositorio.deleteById(id);
@@ -215,9 +209,8 @@ public class ProjetoServico {
 
 	public Page<Projeto> filtrarProjetoPorTitulo(String titulo, int page, int size) {
 		Pageable requestedPage = PageRequest.of(page, size);
-		Page<Projeto> resultado = repositorio.findAllByTituloContainingIgnoreCase(titulo, requestedPage);
 
-		return resultado;
+		return repositorio.findAllByTituloContainingIgnoreCase(titulo, requestedPage);
 	}
 
 	public List<Projeto> filtrarProjetosRecentes() {
