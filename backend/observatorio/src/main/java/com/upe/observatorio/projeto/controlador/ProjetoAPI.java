@@ -8,11 +8,8 @@ import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.servico.PlanilhaServico;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
-import com.upe.observatorio.usuario.dominio.Usuario;
-import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,7 +32,6 @@ public class ProjetoAPI {
 
     private final ProjetoServico servico;
     private final PlanilhaServico planilhaServico;
-    private final UsuarioServico usuarioServico;
 
     @GetMapping
     public ResponseEntity<List<ProjetoRepresentacao>> listarProjetos() {
