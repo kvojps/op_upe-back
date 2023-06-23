@@ -1,23 +1,16 @@
 package com.upe.observatorio.projeto.controlador.modelo;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.upe.observatorio.projeto.dominio.CampusCurso;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class CampusCursoRepresentacao implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class CampusCursoRepresentacao {
 
 	@Schema(example = "1", description = "Id referente ao campusCurso")
 	private Long id;
 
-	@JsonIgnore
-	private CampusRepresentacao campus;
-
-	@JsonIgnore
-	private CursoRepresentacao curso;
+	public CampusCursoRepresentacao(CampusCurso campusCurso) {
+		this.id = campusCurso.getId();
+	}
 }

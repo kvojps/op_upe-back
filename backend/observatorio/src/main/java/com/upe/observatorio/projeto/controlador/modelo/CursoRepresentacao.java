@@ -1,17 +1,16 @@
 package com.upe.observatorio.projeto.controlador.modelo;
 
-import java.io.Serializable;
-import java.util.List;
-
+import com.upe.observatorio.projeto.dominio.CampusCurso;
+import com.upe.observatorio.projeto.dominio.Curso;
+import com.upe.observatorio.projeto.dominio.CursoProjeto;
 import com.upe.observatorio.projeto.dominio.enums.TipoCursoEnum;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class CursoRepresentacao implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+public class CursoRepresentacao {
 
 	@Schema(example = "1", description = "Id referente ao curso")
 	private Long id;
@@ -25,4 +24,19 @@ public class CursoRepresentacao implements Serializable {
 	private List<CampusCursoRepresentacao> campusCurso;
 	
 	private List<CursoProjetoRepresentacao> cursoProjeto;
+
+	public CursoRepresentacao(Curso curso) {
+		this.id = curso.getId();
+		this.nome = curso.getNome();
+		this.tipo = curso.getTipo();
+		this.campusCurso = converterCampusCursos(curso.getCampusCurso());
+		this.cursoProjeto = converterCursoProjetos(curso.getCursoProjeto());
+	}
+
+	private List<CampusCursoRepresentacao> converterCampusCursos(List<CampusCurso> campusCursos) {
+		return campusCursos.stream().map(CampusCursoRepresentacao::new).toList();
+	}
+	private List<CursoProjetoRepresentacao> converterCursoProjetos(List<CursoProjeto> cursoProjetos) {
+		return cursoProjetos.stream().map(CursoProjetoRepresentacao::new).toList();
+	}
 }
