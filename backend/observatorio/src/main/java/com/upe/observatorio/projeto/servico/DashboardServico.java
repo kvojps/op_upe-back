@@ -1,35 +1,26 @@
 package com.upe.observatorio.projeto.servico;
 
-import java.util.HashMap;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DashboardServico {
 
-	@Autowired
-	CampusServico campusServico;
-
-	@Autowired
-	CursoServico cursoServico;
-
-	@Autowired
-	ProjetoServico projetoServico;
-
-	@Autowired
-	UsuarioServico usuarioServico;
-
-	@Autowired
-	CursoProjetoServico cursoProjetoServico;
+	private final CampusServico campusServico;
+	private final CursoServico cursoServico;
+	private final ProjetoServico projetoServico;
+	private final UsuarioServico usuarioServico;
+	private final CursoProjetoServico cursoProjetoServico;
 
 	public DashboardVO gerarDashboard() throws ObservatorioExcecao {
 		DashboardVO dashboard = new DashboardVO();
@@ -75,7 +66,7 @@ public class DashboardServico {
 	}
 
 	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCampus() {
-		HashMap<String, Integer> resultado = new HashMap<String, Integer>();
+		HashMap<String, Integer> resultado = new HashMap<>();
 		List<Campus> campi = campusServico.listarCampus();
 
 		for (Campus campus : campi) {

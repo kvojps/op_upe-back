@@ -1,25 +1,24 @@
 package com.upe.observatorio.projeto.controlador;
 
-import java.util.HashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
+import com.upe.observatorio.projeto.servico.DashboardServico;
+import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
-import com.upe.observatorio.projeto.servico.DashboardServico;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/dashboard")
 @CrossOrigin
+@RequiredArgsConstructor
 public class DashboardAPI {
 
-	@Autowired
-	DashboardServico servico;
+	private final DashboardServico servico;
 
 	@GetMapping
 	public ResponseEntity<DashboardVO> obterDashboard() throws ObservatorioExcecao {
