@@ -1,22 +1,5 @@
 package com.upe.observatorio.projeto.servico;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
@@ -24,18 +7,25 @@ import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class PlanilhaServico {
-	
-	@Autowired
-	private ProjetoRepositorio repositorio;
-	
-	@Autowired
-	private ProjetoServico projetoServico;
-	
-	@Autowired
-	private CursoProjetoServico cursoProjetoServico;
+
+	private final ProjetoRepositorio repositorio;
+	private final ProjetoServico projetoServico;
+	private final CursoProjetoServico cursoProjetoServico;
 	
 	public void carregarProjetosPlanilha(MultipartFile file) throws IOException, ObservatorioExcecao {
 		InputStream input = file.getInputStream();
@@ -103,15 +93,11 @@ public class PlanilhaServico {
 	}
 	
 	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
-		AreaTematicaEnum areaTematicaResponse = AreaTematicaEnum.valueOf(areaTematica);
-		
-		return areaTematicaResponse;
+		return AreaTematicaEnum.valueOf(areaTematica);
 	}
 	
 	private ModalidadeEnum obterModalidade(String modalidade) {
-		ModalidadeEnum modalidadeResponse = ModalidadeEnum.valueOf(modalidade);
-		
-		return modalidadeResponse;
+		return ModalidadeEnum.valueOf(modalidade);
 	}
 	
 	private void corrigirTipoColunaData(Workbook workbook, Row row, int nRow) {
