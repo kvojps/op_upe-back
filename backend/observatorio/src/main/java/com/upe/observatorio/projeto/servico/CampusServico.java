@@ -1,24 +1,21 @@
 package com.upe.observatorio.projeto.servico;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
 import com.upe.observatorio.projeto.repositorio.CampusRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CampusServico {
 
-	@Autowired
-	private CampusRepositorio repositorio;
+	private final CampusRepositorio repositorio;
 
 	public List<Campus> listarCampus() {
 		return repositorio.findAll();
@@ -66,15 +63,5 @@ public class CampusServico {
 		}
 
 		repositorio.deleteById(id);
-
 	}
-
-	public Page<Campus> filtrarCampusPorNome(String nome, Pageable pageable) {
-		return repositorio.findAllByNomeContainingIgnoreCase(nome, pageable);
-	}
-
-	public Page<Campus> filtrarCampusPorCidade(String cidade, Pageable pageable) {
-		return repositorio.findAllByCidadeContainingIgnoreCase(cidade, pageable);
-	}
-
 }

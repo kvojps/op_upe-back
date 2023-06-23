@@ -1,56 +1,51 @@
 package com.upe.observatorio.projeto.controlador;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.upe.observatorio.projeto.controlador.modelo.CampusRepresentacao;
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
 import com.upe.observatorio.projeto.servico.CampusServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/campus")
 @CrossOrigin
+@RequiredArgsConstructor
 public class CampusAPI {
 
-	@Autowired
-	private CampusServico servico;
+	private final CampusServico servico;
 
 	@GetMapping
 	public ResponseEntity<List<CampusRepresentacao>> listarCampus() {
 		return ResponseEntity
-				.ok(servico.listarCampus().stream().map(campus -> convert(campus)).collect(Collectors.toList()));
+				.ok(servico.listarCampus().stream().map(CampusRepresentacao::new).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CampusRepresentacao> buscarCampusPorId(@PathVariable("id") Long id)
-			throws ObservatorioExcecao {
-		CampusRepresentacao resultado = convert(servico.buscarCampusPorId(id).get());
+	public ResponseEntity<?> buscarCampusPorId(@PathVariable("id") Long id) {
+		ResponseEntity<?> resposta;
+		try {
+			Campus campus = servico.buscarCampusPorId(id).orElseThrow();
+			CampusRepresentacao resultado = new CampusRepresentacao(campus);
+			resposta = ResponseEntity.ok(resultado);
+		} catch (ObservatorioExcecao e) {
+			resposta = ResponseEntity.badRequest().body(e.getMessage());
+		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(resultado);
+		return resposta;
 	}
 
 	@PostMapping
 	public ResponseEntity<?> adicionarCampus(@RequestBody @Valid CampusDTO campus) {
 		try {
-			CampusRepresentacao resultado = convert(servico.adicionarCampus(campus));
+			CampusRepresentacao resultado = new CampusRepresentacao(servico.adicionarCampus(campus));
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 
@@ -79,12 +74,5 @@ public class CampusAPI {
 		}
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-
-	private CampusRepresentacao convert(Campus entidade) {
-		ModelMapper modelMapper = new ModelMapper();
-		CampusRepresentacao resultado = modelMapper.map(entidade, CampusRepresentacao.class);
-
-		return resultado;
 	}
 }
