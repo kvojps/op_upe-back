@@ -1,14 +1,5 @@
 package com.upe.observatorio.usuario.servico;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.upe.observatorio.config.JwtService;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;
@@ -18,27 +9,32 @@ import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.dominio.enums.Perfil;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioServico {
-	
-	@Autowired
-	private UsuarioRepositorio repositorio;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private JwtService jwtService;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	private final UsuarioRepositorio repositorio;
+	private final PasswordEncoder passwordEncoder;
+	private final JwtService jwtService;
+	private final AuthenticationManager authenticationManager;
 
 	public List<Usuario> listarUsuarios() {
 		return repositorio.findAll();
 	}
 
-	public Optional<Usuario> buscarUsuarioPorId(Long id) {
+	public Optional<Usuario> buscarUsuarioPorId(Long id) throws ObservatorioExcecao {
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe um usuário associado a este id");
+		}
 		return repositorio.findById(id);
 	}
 	
