@@ -46,9 +46,15 @@ public class UsuarioAPI {
     }
 
     @PostMapping("/auth/cadastrar")
-    public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@RequestBody CadastroRequestDTO request)
-            throws ObservatorioExcecao {
-        return ResponseEntity.ok(servico.cadastrarUsuario(request));
+    public ResponseEntity<?> cadastrarUsuario(@Valid @RequestBody CadastroRequestDTO request) {
+        ResponseEntity<?> resposta;
+        try {
+            resposta = ResponseEntity.ok(servico.cadastrarUsuario(request));
+        } catch (ObservatorioExcecao e) {
+            resposta = ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return resposta;
     }
 
     @PostMapping("/auth/login")
