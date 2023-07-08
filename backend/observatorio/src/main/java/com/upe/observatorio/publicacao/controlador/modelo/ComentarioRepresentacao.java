@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.upe.observatorio.publicacao.dominio.Comentario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -21,7 +22,11 @@ public class ComentarioRepresentacao implements Serializable {
 	
 	@Schema(example="Projeto bastante interessante", description="Texto referente ao comentário de uma publicação")
 	private String mensagem;
-	
-	@JsonIgnore
-	private PublicacaoRepresentacao publicacao;
+
+	public ComentarioRepresentacao(Comentario comentario) {
+		this.id = comentario.getId();
+		this.curtidas = comentario.getCurtidas();
+		this.descurtidas = comentario.getDescurtidas();
+		this.mensagem = comentario.getMensagem();
+	}
 }

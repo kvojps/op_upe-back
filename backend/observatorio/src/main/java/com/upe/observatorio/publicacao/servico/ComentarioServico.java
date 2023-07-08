@@ -1,32 +1,28 @@
 package com.upe.observatorio.publicacao.servico;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.upe.observatorio.publicacao.dominio.Comentario;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.publicacao.dominio.dto.AtualizarComentarioDTO;
 import com.upe.observatorio.publicacao.dominio.dto.ComentarioDTO;
 import com.upe.observatorio.publicacao.repositorio.ComentarioRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ComentarioServico {
 
-	@Autowired
-	private ComentarioRepositorio repositorio;
+	private final ComentarioRepositorio repositorio;
+	private final PublicacaoServico publicacaoServico;
 	
-	@Autowired
-	private PublicacaoServico publicacaoServico;
-	
-	public List<Comentario> listarComentarios() {
-		return repositorio.findAll();
-	}
-	
-	public Optional<Comentario> buscarComentarioPorId(Long id) {
+	public Optional<Comentario> buscarComentarioPorId(Long id) throws ObservatorioExcecao {
+		if (repositorio.findById(id).isEmpty()) {
+			throw new ObservatorioExcecao("Não existe um comentário associado a este id!");
+		}
+
 		return repositorio.findById(id);
 	}
 	

@@ -1,22 +1,21 @@
 package com.upe.observatorio.publicacao.servico;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
 import com.upe.observatorio.publicacao.repositorio.PublicacaoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PublicacaoServico {
-	
-	@Autowired
-	private PublicacaoRepositorio repositorio;
+
+	private final PublicacaoRepositorio repositorio;
 	
 	public List<Publicacao> listarPublicacoes() {
 		return repositorio.findAll();
@@ -32,8 +31,9 @@ public class PublicacaoServico {
 		if (repositorio.findById(id).isEmpty()) {
 			throw new ObservatorioExcecao("Não existe uma publicação associada a este id!");
 		}
-		
-		publicacao.get().setVisualizacoes(publicacao.get().getVisualizacoes() + 1);
+
+		int visualizacoes = publicacao.orElseThrow().getVisualizacoes();
+		publicacao.orElseThrow().setVisualizacoes(visualizacoes + 1);
 		repositorio.save(publicacao.get());
 		
 		return repositorio.findById(id);
@@ -60,28 +60,28 @@ public class PublicacaoServico {
 	}
 	
 	public void adicionarCurtida(Long id) throws ObservatorioExcecao {
-		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).orElseThrow();
 		publicacaoToSave.setCurtidas(publicacaoToSave.getCurtidas() + 1);
 		
 		repositorio.save(publicacaoToSave);
 	}
 	
 	public void adicionarDescurtida(Long id) throws ObservatorioExcecao {
-		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).orElseThrow();
 		publicacaoToSave.setDescurtidas(publicacaoToSave.getDescurtidas() + 1);
 		
 		repositorio.save(publicacaoToSave);
 	}
 	
 	public void removerCurtida(Long id) throws ObservatorioExcecao {
-		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).orElseThrow();
 		publicacaoToSave.setCurtidas(publicacaoToSave.getCurtidas() - 1);
 		
 		repositorio.save(publicacaoToSave);
 	}
 	
 	public void removerDescurtida(Long id) throws ObservatorioExcecao {
-		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).get();
+		Publicacao publicacaoToSave = buscarPublicacaoPorId(id).orElseThrow();
 		publicacaoToSave.setDescurtidas(publicacaoToSave.getDescurtidas() - 1);
 		
 		repositorio.save(publicacaoToSave);

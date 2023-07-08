@@ -2,17 +2,19 @@ package com.upe.observatorio.publicacao.controlador.modelo;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upe.observatorio.projeto.controlador.modelo.ProjetoRepresentacao;
+import com.upe.observatorio.publicacao.dominio.Comentario;
+import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.usuario.controlador.model.UsuarioRepresentacao;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class PublicacaoRepresentacao implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class PublicacaoRepresentacao {
 
 	private Long id;
 	
@@ -25,10 +27,20 @@ public class PublicacaoRepresentacao implements Serializable{
 	@Schema(example="1000", description="Quantidade de visualizações de uma publicação")
 	private Integer visualizacoes;
 
-	@JsonIgnore
-	private UsuarioRepresentacao usuario;
-
 	private ProjetoRepresentacao projeto;
 	
 	public List<ComentarioRepresentacao> comentarios;
+
+	public PublicacaoRepresentacao(Publicacao publicacao) {
+		this.id = publicacao.getId();
+		this.curtidas = publicacao.getCurtidas();
+		this.descurtidas = publicacao.getDescurtidas();
+		this.visualizacoes = publicacao.getDescurtidas();
+		this.projeto = new ProjetoRepresentacao(publicacao.getProjeto());
+		this.comentarios = converterComentarios(publicacao.getComentarios());
+	}
+
+	private List<ComentarioRepresentacao> converterComentarios(List<Comentario> comentarios) {
+		return comentarios.stream().map(ComentarioRepresentacao::new).collect(Collectors.toList());
+	}
 }
