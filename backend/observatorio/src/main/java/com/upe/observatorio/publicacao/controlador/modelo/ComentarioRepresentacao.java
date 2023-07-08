@@ -1,16 +1,11 @@
 package com.upe.observatorio.publicacao.controlador.modelo;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.upe.observatorio.publicacao.dominio.Comentario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class ComentarioRepresentacao implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ComentarioRepresentacao {
 
 	private Long id;
 	

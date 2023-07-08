@@ -1,17 +1,13 @@
 package com.upe.observatorio.publicacao.controlador.modelo;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upe.observatorio.projeto.controlador.modelo.ProjetoRepresentacao;
 import com.upe.observatorio.publicacao.dominio.Comentario;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
-import com.upe.observatorio.usuario.controlador.model.UsuarioRepresentacao;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class PublicacaoRepresentacao {
