@@ -2,11 +2,8 @@ package com.upe.observatorio.projeto.dominio.dto;
 
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
-
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 @Builder
