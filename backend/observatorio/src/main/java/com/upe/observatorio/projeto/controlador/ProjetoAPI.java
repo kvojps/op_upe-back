@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,10 +117,10 @@ public class ProjetoAPI {
             @RequestParam(value = "dataInicio", required = false) String dataInicio,
             @RequestParam(value = "dataFim", required = false) String dataFim,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) throws ParseException {
+            @RequestParam(value = "size", defaultValue = "10") int size) {
         ProjetoFiltroDTO dto = ProjetoFiltroDTO.builder().titulo(titulo).areaTematica(areaTematica)
                 .modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).page(page).size(size).build();
-        Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(dto);
+        Page<Projeto> projetosPagina = servico.filtrarProjetoComTodosFiltros(dto, page, size);
         Map<String, Object> resposta = gerarPaginacao(projetosPagina);
 
         return ResponseEntity.ok(resposta);

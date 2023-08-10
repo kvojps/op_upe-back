@@ -6,6 +6,8 @@ import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Builder
 public class ProjetoFiltroDTO {
