@@ -31,33 +31,33 @@ public class DashboardAPI {
 		return ResponseEntity.ok(servico.gerarDashboardResumo());
 	}
 
-	@GetMapping("/projeto/total")
-	public ResponseEntity<Integer> obterQuantidadeTotalDeProjetos() {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetos());
-	}
-
-	@GetMapping("/projeto/areaTematica")
-	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorAreaTematica() {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorAreaTematica());
-	}
-
-	@GetMapping("/projeto/modalidade")
-	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorModalidade() {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorModalidade());
-	}
-
-	@GetMapping("projeto/curso")
-	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorCurso() throws ObservatorioExcecao {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCurso());
-	}
-
-	@GetMapping("projeto/campus")
-	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorCampus() {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCampus());
-	}
-
-	@GetMapping("/usuario/total")
-	public ResponseEntity<Integer> obterQuantidadeTotalDeUsuarios() {
-		return ResponseEntity.ok(servico.obterQuantidadeTotalDeUsuarios());
-	}
+//	@GetMapping("/projeto/total")
+//	public ResponseEntity<Integer> obterQuantidadeTotalDeProjetos() {
+//		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetos());
+//	}
+//
+//	@GetMapping("/projeto/areaTematica")
+//	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorAreaTematica() {
+//		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorAreaTematica());
+//	}
+//
+//	@GetMapping("/projeto/modalidade")
+//	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorModalidade() {
+//		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorModalidade());
+//	}
+//
+//	@GetMapping("projeto/curso")
+//	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorCurso() throws ObservatorioExcecao {
+//		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCurso());
+//	}
+//
+//	@GetMapping("projeto/campus")
+//	public ResponseEntity<HashMap<String, Integer>> obterQuantidadeDeProjetosPorCampus() {
+//		return ResponseEntity.ok(servico.obterQuantidadeTotalDeProjetosPorCampus());
+//	}
+//
+//	@GetMapping("/usuario/total")
+//	public ResponseEntity<Integer> obterQuantidadeTotalDeUsuarios() {
+//		return ResponseEntity.ok(servico.obterQuantidadeTotalDeUsuarios());
+//	}
 }

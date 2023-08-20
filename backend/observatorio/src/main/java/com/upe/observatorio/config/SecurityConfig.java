@@ -26,7 +26,8 @@ public class SecurityConfig {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .antMatchers("/api/usuario/auth/**", "/v3/**", "/swagger-ui/**")
+        //"/api/usuario/auth/**",
+        .antMatchers("/v3/**", "/swagger-ui/**")
         .permitAll()
 //        .anyRequest()
 //        .authenticated()

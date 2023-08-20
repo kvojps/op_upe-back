@@ -2,7 +2,6 @@ package com.upe.observatorio.projeto.controlador;
 
 import com.upe.observatorio.projeto.controlador.modelo.ProjetoRepresentacao;
 import com.upe.observatorio.projeto.dominio.Projeto;
-import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
@@ -11,12 +10,10 @@ import com.upe.observatorio.projeto.servico.ProjetoServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,18 +35,18 @@ public class ProjetoAPI {
                 .ok(servico.listarProjetos().stream().map(ProjetoRepresentacao::new).collect(Collectors.toList()));
     }
 
-    @GetMapping("/privado")
-    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivados() {
-        return ResponseEntity.ok(servico.listarProjetosPrivados().stream().map(ProjetoRepresentacao::new)
-                .collect(Collectors.toList()));
-    }
-
-    @GetMapping("/privado/{id}")
-    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivadosPorUsuario(@PathVariable("id") Long id)
-            throws ObservatorioExcecao {
-        return ResponseEntity.ok(servico.listarProjetosPrivadosPorUsuario(id).stream().map(ProjetoRepresentacao::new)
-                .collect(Collectors.toList()));
-    }
+//    @GetMapping("/privado")
+//    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivados() {
+//        return ResponseEntity.ok(servico.listarProjetosPrivados().stream().map(ProjetoRepresentacao::new)
+//                .collect(Collectors.toList()));
+//    }
+//
+//    @GetMapping("/privado/{id}")
+//    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivadosPorUsuario(@PathVariable("id") Long id)
+//            throws ObservatorioExcecao {
+//        return ResponseEntity.ok(servico.listarProjetosPrivadosPorUsuario(id).stream().map(ProjetoRepresentacao::new)
+//                .collect(Collectors.toList()));
+//    }
 
     @GetMapping("/paginado")
     public ResponseEntity<Map<String, Object>> listarProjetosPaginado(
@@ -75,39 +72,39 @@ public class ProjetoAPI {
 		return resposta;
     }
 
-    @PostMapping
-    public ResponseEntity<?> adicionarProjeto(@RequestBody @Valid ProjetoDTO projeto) {
-        try {
-            ProjetoRepresentacao resultado = new ProjetoRepresentacao(servico.adicionarProjeto(projeto));
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
-
-        } catch (ObservatorioExcecao e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
-        try {
-            servico.atualizarProjeto(projeto, id);
-        } catch (ObservatorioExcecao e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> removerProjeto(@PathVariable("id") Long id) {
-        try {
-            servico.removerProjeto(id);
-        } catch (ObservatorioExcecao e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+//    @PostMapping
+//    public ResponseEntity<?> adicionarProjeto(@RequestBody @Valid ProjetoDTO projeto) {
+//        try {
+//            ProjetoRepresentacao resultado = new ProjetoRepresentacao(servico.adicionarProjeto(projeto));
+//
+//            return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
+//
+//        } catch (ObservatorioExcecao e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
+//        try {
+//            servico.atualizarProjeto(projeto, id);
+//        } catch (ObservatorioExcecao e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> removerProjeto(@PathVariable("id") Long id) {
+//        try {
+//            servico.removerProjeto(id);
+//        } catch (ObservatorioExcecao e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//    }
 
     @GetMapping("/filtro")
     public ResponseEntity<Map<String, Object>> filtrarProjetoComTodosFiltros(
@@ -126,16 +123,16 @@ public class ProjetoAPI {
         return ResponseEntity.ok(resposta);
     }
 
-    @GetMapping("/filtro/titulo")
-    public ResponseEntity<Map<String, Object>> filtrarProjetoPorTitulo(
-            @RequestParam(value = "titulo") String titulo,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Projeto> projetosPagina = servico.filtrarProjetoPorTitulo(titulo, page, size);
-        Map<String, Object> resposta = gerarPaginacao(projetosPagina);
-
-        return ResponseEntity.ok(resposta);
-    }
+//    @GetMapping("/filtro/titulo")
+//    public ResponseEntity<Map<String, Object>> filtrarProjetoPorTitulo(
+//            @RequestParam(value = "titulo") String titulo,
+//            @RequestParam(value = "page", defaultValue = "0") int page,
+//            @RequestParam(value = "size", defaultValue = "10") int size) {
+//        Page<Projeto> projetosPagina = servico.filtrarProjetoPorTitulo(titulo, page, size);
+//        Map<String, Object> resposta = gerarPaginacao(projetosPagina);
+//
+//        return ResponseEntity.ok(resposta);
+//    }
 
     @GetMapping("/recentes")
     public ResponseEntity<List<ProjetoRepresentacao>> filtrarProjetosRecentes() {

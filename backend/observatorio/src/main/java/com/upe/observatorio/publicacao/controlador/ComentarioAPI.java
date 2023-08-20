@@ -19,52 +19,52 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class ComentarioAPI {
 
-	private final ComentarioServico servico;
-
-	@GetMapping("/{id}")
-	public ResponseEntity<?> buscarComentarioPorId(@PathVariable("id") Long id) {
-		ResponseEntity<?> resposta;
-		try {
-			Comentario comentario = servico.buscarComentarioPorId(id).orElseThrow();
-			ComentarioRepresentacao resultado = new ComentarioRepresentacao(comentario);
-			resposta = ResponseEntity.ok(resultado);
-		} catch (ObservatorioExcecao e) {
-			resposta = ResponseEntity.badRequest().body(e.getMessage());
-		}
-
-		return resposta;
-	}
-	
-	@PostMapping
-	public ResponseEntity<?> adicionarComentario(@RequestBody @Valid ComentarioDTO comentario) {
-		try {
-			ComentarioRepresentacao resultado = new ComentarioRepresentacao(servico.adicionarComentario(comentario));
-			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
-
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizarComentario(@RequestBody @Valid AtualizarComentarioDTO comentario, @PathVariable Long id) {
-		try {
-			servico.atualizarComentario(comentario, id);
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> removerComentario(@PathVariable("id") Long id) {
-		try {
-			servico.removerComentario(id);
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
+//	private final ComentarioServico servico;
+//
+//	@GetMapping("/{id}")
+//	public ResponseEntity<?> buscarComentarioPorId(@PathVariable("id") Long id) {
+//		ResponseEntity<?> resposta;
+//		try {
+//			Comentario comentario = servico.buscarComentarioPorId(id).orElseThrow();
+//			ComentarioRepresentacao resultado = new ComentarioRepresentacao(comentario);
+//			resposta = ResponseEntity.ok(resultado);
+//		} catch (ObservatorioExcecao e) {
+//			resposta = ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//
+//		return resposta;
+//	}
+//
+//	@PostMapping
+//	public ResponseEntity<?> adicionarComentario(@RequestBody @Valid ComentarioDTO comentario) {
+//		try {
+//			ComentarioRepresentacao resultado = new ComentarioRepresentacao(servico.adicionarComentario(comentario));
+//			return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
+//
+//		} catch (ObservatorioExcecao e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//	}
+//
+//	@PutMapping("/{id}")
+//	public ResponseEntity<?> atualizarComentario(@RequestBody @Valid AtualizarComentarioDTO comentario, @PathVariable Long id) {
+//		try {
+//			servico.atualizarComentario(comentario, id);
+//		} catch (ObservatorioExcecao e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//
+//		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//	}
+//
+//	@DeleteMapping("/{id}")
+//	public ResponseEntity<?> removerComentario(@PathVariable("id") Long id) {
+//		try {
+//			servico.removerComentario(id);
+//		} catch (ObservatorioExcecao e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//
+//		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//	}
 }
