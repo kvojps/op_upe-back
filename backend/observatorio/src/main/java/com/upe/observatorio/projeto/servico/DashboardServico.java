@@ -2,6 +2,7 @@ package com.upe.observatorio.projeto.servico;
 
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Curso;
+import com.upe.observatorio.projeto.dominio.envelopes.DashboardResumoVO;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
@@ -35,6 +36,16 @@ public class DashboardServico {
 		dashboard.setProjectsPerThematicArea(obterQuantidadeTotalDeProjetosPorAreaTematica());
 
 		return dashboard;
+	}
+
+	public DashboardResumoVO gerarDashboardResumo() {
+		DashboardResumoVO dashboardResumo = new DashboardResumoVO();
+
+		dashboardResumo.setTotalCourses(obterQuantidadeTotalDeCurso());
+		dashboardResumo.setTotalCampuses(obterQuantidadeTotalDeCampus());
+		dashboardResumo.setTotalProjects(obterQuantidadeTotalDeProjetos());
+
+		return dashboardResumo;
 	}
 
 	public Integer obterQuantidadeTotalDeCampus() {
