@@ -1,5 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
+import com.upe.observatorio.projeto.dominio.envelopes.DashboardResumoVO;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
 import com.upe.observatorio.projeto.servico.DashboardServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
@@ -23,6 +24,11 @@ public class DashboardAPI {
 	@GetMapping
 	public ResponseEntity<DashboardVO> obterDashboard() throws ObservatorioExcecao {
 		return ResponseEntity.ok(servico.gerarDashboard());
+	}
+
+	@GetMapping("/resumo")
+	public ResponseEntity<DashboardResumoVO> obterDashboardResumo() {
+		return ResponseEntity.ok(servico.gerarDashboardResumo());
 	}
 
 	@GetMapping("/projeto/total")
