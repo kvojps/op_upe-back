@@ -26,11 +26,11 @@ public class ProjetoAPI {
     private final ProjetoServico servico;
 //    private final PlanilhaServico planilhaServico;
 
-    @GetMapping
-    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetos() {
-        return ResponseEntity
-                .ok(servico.listarProjetos().stream().map(ProjetoRepresentacao::new).collect(Collectors.toList()));
-    }
+//    @GetMapping
+//    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetos() {
+//        return ResponseEntity
+//                .ok(servico.listarProjetos().stream().map(ProjetoRepresentacao::new).collect(Collectors.toList()));
+//    }
 
 //    @GetMapping("/privado")
 //    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivados() {
