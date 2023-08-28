@@ -5,16 +5,13 @@ import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
-import com.upe.observatorio.projeto.servico.PlanilhaServico;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +24,7 @@ import java.util.stream.Collectors;
 public class ProjetoAPI {
 
     private final ProjetoServico servico;
-    private final PlanilhaServico planilhaServico;
+//    private final PlanilhaServico planilhaServico;
 
     @GetMapping
     public ResponseEntity<List<ProjetoRepresentacao>> listarProjetos() {
@@ -140,14 +137,14 @@ public class ProjetoAPI {
                 .collect(Collectors.toList()));
     }
 
-    @PostMapping("/planilha")
-    public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
-        try {
-            planilhaServico.carregarProjetosPlanilha(planilha);
-        } catch (IOException | ObservatorioExcecao e) {
-            e.printStackTrace();
-        }
-    }
+//    @PostMapping("/planilha")
+//    public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
+//        try {
+//            planilhaServico.carregarProjetosPlanilha(planilha);
+//        } catch (IOException | ObservatorioExcecao e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private Map<String, Object> gerarPaginacao(Page<Projeto> projetosPagina) {
         List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream()
