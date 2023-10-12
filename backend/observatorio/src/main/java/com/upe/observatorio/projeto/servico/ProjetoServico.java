@@ -14,7 +14,7 @@ import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,10 +34,8 @@ public class ProjetoServico {
     private final PublicacaoServico publicacaoServico;
 
     public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioExcecao {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-
-        Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
+        Projeto projetoSalvar = new Projeto();
+        BeanUtils.copyProperties(projeto, projetoSalvar);
 
         Usuario usuarioExistente = usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId());
         Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId());
@@ -95,68 +93,9 @@ public class ProjetoServico {
         }
 
         Projeto projetoExistente = repositorio.findById(id).get();
-        if (!projetoExistente.getAreaTematica().equals(projeto.getAreaTematica())) {
-            projetoExistente.setAreaTematica(projeto.getAreaTematica());
-        }
-
-        if (!projetoExistente.getModalidade().equals(projeto.getModalidade())) {
-            projetoExistente.setModalidade(projeto.getModalidade());
-        }
-
-        if (!projetoExistente.getTitulo().equals(projeto.getTitulo())) {
-            projetoExistente.setTitulo(projeto.getTitulo());
-        }
-
-        if (!projetoExistente.getResumo().equals(projeto.getResumo())) {
-            projetoExistente.setResumo(projeto.getResumo());
-        }
-
-        if (!projetoExistente.getIntroducao().equals(projeto.getIntroducao())) {
-            projetoExistente.setIntroducao(projeto.getIntroducao());
-        }
-
-        if (!projetoExistente.getFundamentacao().equals(projeto.getFundamentacao())) {
-            projetoExistente.setFundamentacao(projeto.getFundamentacao());
-        }
-
-        if (!projetoExistente.getObjetivos().equals(projeto.getObjetivos())) {
-            projetoExistente.setObjetivos(projeto.getObjetivos());
-        }
-
-        if (!projetoExistente.getConclusao().equals(projeto.getConclusao())) {
-            projetoExistente.setConclusao(projeto.getConclusao());
-        }
-
-        if (!projetoExistente.getMemoriaVisual().equals(projeto.getMemoriaVisual())) {
-            projetoExistente.setMemoriaVisual(projeto.getMemoriaVisual());
-        }
-
-        if (!projetoExistente.getDataInicio().equals(projeto.getDataInicio())) {
-            projetoExistente.setDataInicio(projeto.getDataInicio());
-        }
-
-        if (!projetoExistente.getDataFim().equals(projeto.getDataFim())) {
-            projetoExistente.setDataFim(projeto.getDataFim());
-        }
-
-        if (!projetoExistente.getDataFim().equals(projeto.getDataFim())) {
-            projetoExistente.setDataFim(projeto.getDataFim());
-        }
-
-        if (!projetoExistente.getPublicoAlvo().equals(projeto.getPublicoAlvo())) {
-            projetoExistente.setPublicoAlvo(projeto.getPublicoAlvo());
-        }
-
-        if (!projetoExistente.getPessoasAtendidas().equals(projeto.getPessoasAtendidas())) {
-            projetoExistente.setPessoasAtendidas(projeto.getPessoasAtendidas());
-        }
-
-        if (!projetoExistente.getSuporteFinanceiro().equals(projeto.getSuporteFinanceiro())) {
-            projetoExistente.setSuporteFinanceiro(projeto.getSuporteFinanceiro());
-        }
+        BeanUtils.copyProperties(projeto, projetoExistente);
 
         repositorio.save(projetoExistente);
-
     }
 
     public void removerProjeto(@NotNull Long id) throws ObservatorioExcecao {
