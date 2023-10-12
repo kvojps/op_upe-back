@@ -40,21 +40,10 @@ public class ProjetoServico {
 
         Projeto projetoSalvo = repositorio.save(projetoSalvar);
         if (projeto.isVisibilidade()) {
-            projetoSalvo = adicionarPublicacao(projetoSalvo, usuarioExistente);
+            projetoSalvo = publicarProjeto(projetoSalvo, usuarioExistente);
         }
 
         return projetoSalvo;
-    }
-
-    private Projeto adicionarPublicacao(Projeto projeto, Usuario usuario) throws ObservatorioExcecao{
-        PublicacaoDTO publicacaoSalvar = new PublicacaoDTO();
-        publicacaoSalvar.setProjeto(projeto);
-        publicacaoSalvar.setUsuario(usuario);
-
-        Publicacao publicacaoSalvo = publicacaoServico.adicionarPublicacao(publicacaoSalvar);
-        projeto.setPublicacao(publicacaoSalvo);
-
-        return repositorio.save(projeto);
     }
 
     public Page<Projeto> listarProjetos(ProjetoFiltroDTO dto, int page, int size) {
@@ -96,5 +85,16 @@ public class ProjetoServico {
         }
 
         repositorio.deleteById(id);
+    }
+
+    private Projeto publicarProjeto(Projeto projeto, Usuario usuario) throws ObservatorioExcecao{
+        PublicacaoDTO publicacaoSalvar = new PublicacaoDTO();
+        publicacaoSalvar.setProjeto(projeto);
+        publicacaoSalvar.setUsuario(usuario);
+
+        Publicacao publicacaoSalvo = publicacaoServico.adicionarPublicacao(publicacaoSalvar);
+        projeto.setPublicacao(publicacaoSalvo);
+
+        return repositorio.save(projeto);
     }
 }
