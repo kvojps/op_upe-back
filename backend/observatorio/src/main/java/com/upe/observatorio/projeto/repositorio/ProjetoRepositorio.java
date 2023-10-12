@@ -14,12 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
-
-	List<Projeto> findAllByAreaTematica(AreaTematicaEnum areaTematica);
+	Long countByAreaTematica(AreaTematicaEnum areaTematica);
 
 	List<Projeto> findAllByModalidade(ModalidadeEnum modalidade);
 
-	Page<Projeto> findAllByTituloContainingIgnoreCase(String titulo, Pageable pageable);
+	Long countByModalidade(ModalidadeEnum modalidade);
 
 	@Query("SELECT p FROM Projeto p WHERE (DATE(:dataInicio) IS NULL OR p.dataInicio >= DATE(:dataInicio))" +
 			"AND (DATE(:dataFim) IS NULL OR p.dataFim <= DATE(:dataFim)) " +
@@ -37,9 +36,6 @@ public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 			);
 
 	Optional<Projeto> findByTitulo(String titulo);
-	
-	@Query("SELECT p FROM Projeto p ORDER BY p.dataFim DESC")
-	List<Projeto> findAllOrderByDataFimDesc();
 
 	@Query("SELECT p FROM Projeto p WHERE p.publicacao IS NULL AND (p.usuario = :usuario OR :usuario IS NULL)")
 	Page<Projeto> findProjetosWithPublicacaoNullAndUsuario(Pageable pageable, @Param("usuario") Usuario usuario);

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,5 +62,16 @@ public class CampusServico {
 		}
 
 		repositorio.deleteById(id);
+	}
+
+	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCampus() {
+		HashMap<String, Integer> resultado = new HashMap<>();
+		List<Campus> campi = listarCampus();
+
+		for (Campus campus : campi) {
+			resultado.put(campus.getNome(), campus.getProjetos().size());
+		}
+
+		return resultado;
 	}
 }

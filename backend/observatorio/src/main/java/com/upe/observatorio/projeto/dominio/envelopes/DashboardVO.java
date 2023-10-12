@@ -1,25 +1,25 @@
 package com.upe.observatorio.projeto.dominio.envelopes;
 
-import java.util.HashMap;
-
 import lombok.Data;
+
+import java.util.HashMap;
 
 @Data
 public class DashboardVO {
 	
-	private Integer totalCourses;
+	private Long totalCourses;
 	
-	private Integer totalCampuses;
+	private Long totalCampuses;
 	
-	private Integer totalProjects;
+	private Long totalProjects;
 	
-	private Integer totalUsers;
+	private Long totalUsers;
 	
 	private HashMap<String, Integer> projectsPerCourses;
 	
 	private HashMap<String, Integer> projectsPerCampuses;
 	
-	private HashMap<String, Integer> projectsPerModalities;
+	private HashMap<String, Long> projectsPerModalities;
 	
-	private HashMap<String, Integer> projectsPerThematicArea;
+	private HashMap<String, Long> projectsPerThematicArea;
 }

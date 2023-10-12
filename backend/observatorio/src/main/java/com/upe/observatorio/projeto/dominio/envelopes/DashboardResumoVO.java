@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 public class DashboardResumoVO {
-	private Integer totalCourses;
+	private Long totalCourses;
 	
-	private Integer totalCampuses;
+	private Long totalCampuses;
 	
-	private Integer totalProjects;
+	private Long totalProjects;
 }
