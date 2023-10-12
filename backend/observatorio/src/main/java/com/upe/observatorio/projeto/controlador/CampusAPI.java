@@ -29,7 +29,7 @@ public class CampusAPI {
 	public ResponseEntity<?> buscarCampusPorId(@PathVariable("id") Long id) {
 		ResponseEntity<?> resposta;
 		try {
-			Campus campus = servico.buscarCampusPorId(id).orElseThrow();
+			Campus campus = servico.buscarCampusPorId(id);
 			CampusRepresentacao resultado = new CampusRepresentacao(campus);
 			resposta = ResponseEntity.ok(resultado);
 		} catch (ObservatorioExcecao e) {

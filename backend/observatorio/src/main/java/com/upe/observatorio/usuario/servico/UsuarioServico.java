@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +32,9 @@ public class UsuarioServico {
 		return repositorio.findAll();
 	}
 
-	public Optional<Usuario> buscarUsuarioPorId(Long id) throws ObservatorioExcecao {
-		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um usuário associado a este id");
-		}
-		return repositorio.findById(id);
+	public Usuario buscarUsuarioPorId(@NotNull Long id) throws ObservatorioExcecao {
+		return repositorio.findById(id).orElseThrow(() -> new
+				ObservatorioExcecao("Não existe um usuário associado a este id"));
 	}
 	
 	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request) throws ObservatorioExcecao {

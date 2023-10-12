@@ -21,11 +21,9 @@ public class CampusServico {
 		return repositorio.findAll();
 	}
 
-	public Optional<Campus> buscarCampusPorId(Long id) throws ObservatorioExcecao {
-		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um campus associado a este id " + id);
-		}
-		return repositorio.findById(id);
+	public Campus buscarCampusPorId(Long id) throws ObservatorioExcecao {
+		return repositorio.findById(id).orElseThrow(() ->
+				new ObservatorioExcecao("Não existe um campus associado a este id "));
 	}
 
 	public Campus adicionarCampus(CampusDTO campus) throws ObservatorioExcecao {

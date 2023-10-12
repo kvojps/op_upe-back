@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,32 +39,28 @@ public class ProjetoServico {
 
         Projeto projetoSalvar = modelMapper.map(projeto, Projeto.class);
 
-        if (usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId()).isEmpty()) {
-            throw new ObservatorioExcecao("Não existe um usuário associado a este id");
-        }
-        Usuario usuarioExistente = usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId()).get();
+        Usuario usuarioExistente = usuarioServico.buscarUsuarioPorId(projeto.getUsuarioId());
+        Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId());
         projetoSalvar.setUsuario(usuarioExistente);
-
-        if (campusServico.buscarCampusPorId(projeto.getCampusId()).isEmpty()) {
-            throw new ObservatorioExcecao("Não existe um campus associado a este id" + projeto.getCampusId());
-        }
-        Campus campusExistente = campusServico.buscarCampusPorId(projeto.getCampusId()).get();
         projetoSalvar.setCampus(campusExistente);
 
         Projeto projetoSalvo = repositorio.save(projetoSalvar);
-
         if (projeto.isVisibilidade()) {
-            PublicacaoDTO publicacaoSalvar = new PublicacaoDTO();
-            publicacaoSalvar.setProjeto(projetoSalvar);
-            publicacaoSalvar.setUsuario(usuarioExistente);
-
-            Publicacao publicacaoSalvo = publicacaoServico.adicionarPublicacao(publicacaoSalvar);
-            projetoSalvo.setPublicacao(publicacaoSalvo);
-
-            repositorio.save(projetoSalvo);
+            projetoSalvo = adicionarPublicacao(projetoSalvo, usuarioExistente);
         }
 
         return projetoSalvo;
+    }
+
+    private Projeto adicionarPublicacao(Projeto projeto, Usuario usuario) throws ObservatorioExcecao{
+        PublicacaoDTO publicacaoSalvar = new PublicacaoDTO();
+        publicacaoSalvar.setProjeto(projeto);
+        publicacaoSalvar.setUsuario(usuario);
+
+        Publicacao publicacaoSalvo = publicacaoServico.adicionarPublicacao(publicacaoSalvar);
+        projeto.setPublicacao(publicacaoSalvo);
+
+        return repositorio.save(projeto);
     }
 
     public Page<Projeto> listarProjetos(ProjetoFiltroDTO dto, int page, int size) {
@@ -81,8 +76,8 @@ public class ProjetoServico {
             return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, null);
         }
 
-        Optional<Usuario> usuario = usuarioServico.buscarUsuarioPorId(usuarioId);
-        return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, usuario.get());
+        Usuario usuario = usuarioServico.buscarUsuarioPorId(usuarioId);
+        return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, usuario);
     }
 
     public List<Projeto> listarProjetosRecentes() {
