@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -32,41 +33,6 @@ public class ProjetoServico {
     private final UsuarioServico usuarioServico;
     private final CampusServico campusServico;
     private final PublicacaoServico publicacaoServico;
-
-    public List<Projeto> listarProjetos() {
-        return repositorio.findAll();
-    }
-
-    public List<Projeto> listarProjetosPrivados() {
-        return repositorio.findProjetosWithPublicacaoNull();
-    }
-
-    public List<Projeto> listarProjetosPrivadosPorUsuario(Long usuarioId) throws ObservatorioExcecao {
-        Optional<Usuario> usuario = usuarioServico.buscarUsuarioPorId(usuarioId);
-
-        if (usuario.isEmpty()) {
-            throw new ObservatorioExcecao("O usuário não existe!");
-        }
-
-        return repositorio.findByPublicacaoIsNullAndUsuario(usuario.get());
-    }
-
-    public Page<Projeto> listarProjetosPaginado(int page, int size) {
-        Pageable requestedPage = PageRequest.of(page, size);
-
-        return repositorio.findAll(requestedPage);
-    }
-
-    public Optional<Projeto> buscarProjetoPorId(Long id) throws ObservatorioExcecao {
-        if (id == null) {
-            throw new ObservatorioExcecao("O id do projeto não pode ser nulo!");
-        }
-        if (repositorio.findById(id).isEmpty()) {
-            throw new ObservatorioExcecao("Não existe um projeto associado a este id!");
-        }
-
-        return repositorio.findById(id);
-    }
 
     public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioExcecao {
         ModelMapper modelMapper = new ModelMapper();
@@ -102,7 +68,33 @@ public class ProjetoServico {
         return projetoSalvo;
     }
 
-    public void atualizarProjeto(ProjetoDTO projeto, Long id) throws ObservatorioExcecao {
+    public Page<Projeto> listarProjetos(ProjetoFiltroDTO dto, int page, int size) {
+        Pageable requestedPage = PageRequest.of(page, size);
+        return repositorio.findWithFilters(dto.getDataInicio(), dto.getDataFim(),
+                dto.getTitulo(), dto.getAreaTematica(), dto.getModalidade(), requestedPage);
+    }
+
+    public Page<Projeto> listarProjetosPrivados(Long usuarioId, int page, int size) throws ObservatorioExcecao {
+        Pageable requestedPage = PageRequest.of(page, size);
+
+        if (usuarioId == null) {
+            return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, null);
+        }
+
+        Optional<Usuario> usuario = usuarioServico.buscarUsuarioPorId(usuarioId);
+        return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, usuario.get());
+    }
+
+    public List<Projeto> listarProjetosRecentes() {
+        return repositorio.findAllOrderByDataFimDesc();
+    }
+
+    public Projeto buscarProjetoPorId(@NotNull Long id) throws ObservatorioExcecao {
+        return repositorio.findById(id).orElseThrow(() ->
+                new ObservatorioExcecao("Não existe um projeto associado a este id!"));
+    }
+
+    public void atualizarProjeto(ProjetoDTO projeto, @NotNull Long id) throws ObservatorioExcecao {
         if (repositorio.findById(id).isEmpty()) {
             throw new ObservatorioExcecao("Não existe um projeto associado a este id");
         }
@@ -172,32 +164,12 @@ public class ProjetoServico {
 
     }
 
-    public void removerProjeto(Long id) throws ObservatorioExcecao {
-        if (id == null) {
-            throw new ObservatorioExcecao("O id do projeto a ser apagado não pode ser nulo!");
-        }
+    public void removerProjeto(@NotNull Long id) throws ObservatorioExcecao {
         if (repositorio.findById(id).isEmpty()) {
             throw new ObservatorioExcecao("Não existe um projeto associado a este id!");
         }
 
         repositorio.deleteById(id);
-    }
-
-    public Page<Projeto> filtrarProjetoComTodosFiltros(ProjetoFiltroDTO dto, int page, int size) {
-        Pageable requestedPage = PageRequest.of(page, size);
-        return repositorio.findWithFilters(dto.getDataInicio(), dto.getDataFim(),
-                dto.getTitulo(), dto.getAreaTematica(), dto.getModalidade(), requestedPage);
-
-    }
-
-    public Page<Projeto> filtrarProjetoPorTitulo(String titulo, int page, int size) {
-        Pageable requestedPage = PageRequest.of(page, size);
-
-        return repositorio.findAllByTituloContainingIgnoreCase(titulo, requestedPage);
-    }
-
-    public List<Projeto> filtrarProjetosRecentes() {
-        return repositorio.findAllOrderByDataFimDesc();
     }
 
     public int obterQuantidadeTotalDeProjetos() {

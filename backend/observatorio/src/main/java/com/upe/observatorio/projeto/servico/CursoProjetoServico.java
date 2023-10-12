@@ -39,19 +39,16 @@ public class CursoProjetoServico {
             throw new ObservatorioExcecao("O curso informado não existe: ");
         }
 
-        Optional<Projeto> projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
-        if (projetoExistente.isEmpty()) {
-            throw new ObservatorioExcecao("O projeto informado não existe");
-        }
+        Projeto projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
 
-        Optional<CursoProjeto> cursoProjetoExistente = repositorio.findByCursoAndProjeto(cursoExistente.get(), projetoExistente.get());
+        Optional<CursoProjeto> cursoProjetoExistente = repositorio.findByCursoAndProjeto(cursoExistente.get(), projetoExistente);
         if (cursoProjetoExistente.isPresent()) {
             throw new ObservatorioExcecao("Já existe um relacionamento criado entre o curso e o projeto informado");
         }
 
         CursoProjeto cursoProjetoSalvar = new CursoProjeto();
         cursoProjetoSalvar.setCurso(cursoExistente.get());
-        cursoProjetoSalvar.setProjeto(projetoExistente.get());
+        cursoProjetoSalvar.setProjeto(projetoExistente);
 
         return repositorio.save(cursoProjetoSalvar);
     }

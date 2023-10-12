@@ -40,9 +40,7 @@ public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
 	
 	@Query("SELECT p FROM Projeto p ORDER BY p.dataFim DESC")
 	List<Projeto> findAllOrderByDataFimDesc();
-	
-    @Query("SELECT p FROM Projeto p WHERE p.publicacao IS NULL")
-    List<Projeto> findProjetosWithPublicacaoNull();
-    
-    List<Projeto> findByPublicacaoIsNullAndUsuario(Usuario usuario);
+
+	@Query("SELECT p FROM Projeto p WHERE p.publicacao IS NULL AND (p.usuario = :usuario OR :usuario IS NULL)")
+	Page<Projeto> findProjetosWithPublicacaoNullAndUsuario(Pageable pageable, @Param("usuario") Usuario usuario);
 }
