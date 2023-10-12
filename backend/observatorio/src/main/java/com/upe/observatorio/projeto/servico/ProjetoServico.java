@@ -78,10 +78,6 @@ public class ProjetoServico {
         return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, usuario);
     }
 
-    public List<Projeto> listarProjetosRecentes() {
-        return repositorio.findAllOrderByDataFimDesc();
-    }
-
     public Projeto buscarProjetoPorId(@NotNull Long id) throws ObservatorioExcecao {
         return repositorio.findById(id).orElseThrow(() ->
                 new ObservatorioExcecao("Não existe um projeto associado a este id!"));

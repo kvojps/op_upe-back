@@ -70,12 +70,6 @@ public class ProjetoAPI {
                 .map(ProjetoRepresentacao::new).collect(Collectors.toList()));
     }
 
-    @GetMapping("/recentes")
-    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosRecentes() {
-        return ResponseEntity.ok(servico.listarProjetosRecentes().stream().map(ProjetoRepresentacao::new)
-                .collect(Collectors.toList()));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarProjetoPorId(@PathVariable("id") Long id) {
         ResponseEntity<?> resposta;
