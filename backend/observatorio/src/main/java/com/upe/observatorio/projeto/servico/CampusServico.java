@@ -63,15 +63,4 @@ public class CampusServico {
 
 		repositorio.deleteById(id);
 	}
-
-	public HashMap<String, Integer> obterQuantidadeTotalDeProjetosPorCampus() {
-		HashMap<String, Integer> resultado = new HashMap<>();
-		List<Campus> campi = listarCampus();
-
-		for (Campus campus : campi) {
-			resultado.put(campus.getNome(), campus.getProjetos().size());
-		}
-
-		return resultado;
-	}
 }

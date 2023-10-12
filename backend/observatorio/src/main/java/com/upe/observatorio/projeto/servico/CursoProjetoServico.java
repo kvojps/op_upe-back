@@ -60,23 +60,4 @@ public class CursoProjetoServico {
 
         repositorio.deleteById(id);
     }
-
-    public HashMap<String, Integer> obterQuantidadeDeProjetosPorCurso() throws ObservatorioExcecao {
-        HashMap<String, Integer> resultado = new HashMap<>();
-        List<CursoProjeto> cursoProjetos = repositorio.findAll();
-
-        for (CursoProjeto cursoProjeto : cursoProjetos) {
-            Curso curso = cursoServico.buscarCursoPorId(cursoProjeto.getCurso().getId()).orElseThrow();
-
-            if (resultado.containsKey(curso.getNome())) {
-                Integer qtdProjetos = resultado.get(curso.getNome());
-                resultado.put(curso.getNome(), qtdProjetos + 1);
-            } else {
-                resultado.put(curso.getNome(), 1);
-            }
-        }
-
-        return resultado;
-    }
-
 }
