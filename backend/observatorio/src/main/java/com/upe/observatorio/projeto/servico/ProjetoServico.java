@@ -4,8 +4,6 @@ import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
-import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
-import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
@@ -21,8 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -100,41 +96,5 @@ public class ProjetoServico {
         }
 
         repositorio.deleteById(id);
-    }
-
-    public int obterQuantidadeTotalDeProjetos() {
-        return repositorio.findAll().size();
-    }
-
-    public HashMap<String, Integer> obterQuantidadeDeProjetosPorAreaTematica() {
-        HashMap<String, Integer> resultado = new HashMap<>();
-
-        int qtdProjetosPesquisa = repositorio.findAllByAreaTematica(AreaTematicaEnum.PESQUISA).size();
-        int qtdProjetosExtensao = repositorio.findAllByAreaTematica(AreaTematicaEnum.EXTENSAO).size();
-        int qtdProjetosInovacao = repositorio.findAllByAreaTematica(AreaTematicaEnum.INOVACAO).size();
-
-        resultado.put("Pesquisa", qtdProjetosPesquisa);
-        resultado.put("Extensão", qtdProjetosExtensao);
-        resultado.put("Inovação", qtdProjetosInovacao);
-
-        return resultado;
-    }
-
-    public HashMap<String, Integer> obterQuantidadeDeProjetosPorModalidade() {
-        HashMap<String, Integer> resultado = new HashMap<>();
-
-        int qtdPrograma = repositorio.findAllByModalidade(ModalidadeEnum.PROGRAMA).size();
-        int qtdProjeto = repositorio.findAllByModalidade(ModalidadeEnum.PROJETO).size();
-        int qtdCurso = repositorio.findAllByModalidade(ModalidadeEnum.CURSO).size();
-        int qtdOficina = repositorio.findAllByModalidade(ModalidadeEnum.OFICINA).size();
-        int qtdEvento = repositorio.findAllByModalidade(ModalidadeEnum.EVENTO).size();
-
-        resultado.put("Programa", qtdPrograma);
-        resultado.put("Projeto", qtdProjeto);
-        resultado.put("Curso", qtdCurso);
-        resultado.put("Oficina", qtdOficina);
-        resultado.put("Evento", qtdEvento);
-
-        return resultado;
     }
 }
