@@ -18,7 +18,6 @@ public class CursoProjetoServico {
     private final ProjetoServico projetoServico;
 
     public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) throws ObservatorioExcecao {
-
         Curso cursoExistente = cursoServico.buscarCursoPorId(cursoProjeto.getCursoId());
         Projeto projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
 
