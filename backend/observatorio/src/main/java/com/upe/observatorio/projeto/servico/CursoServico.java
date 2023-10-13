@@ -16,6 +16,13 @@ public class CursoServico {
 
 	private final CursoRepositorio repositorio;
 
+	public Curso adicionarCurso(CursoDTO curso) {
+		Curso cursoSalvar = new Curso();
+		BeanUtils.copyProperties(curso, cursoSalvar);
+
+		return repositorio.save(cursoSalvar);
+	}
+
 	public List<Curso> listarCursos() {
 		return repositorio.findAll();
 	}
@@ -23,13 +30,6 @@ public class CursoServico {
 	public Curso buscarCursoPorId(Long id) throws ObservatorioExcecao {
 		return repositorio.findById(id).orElseThrow(() ->
 				new ObservatorioExcecao("Não existe um curso associado a este id: " + id));
-	}
-
-	public Curso adicionarCurso(CursoDTO curso) {
-		Curso cursoSalvar = new Curso();
-		BeanUtils.copyProperties(curso, cursoSalvar);
-
-		return repositorio.save(cursoSalvar);
 	}
 
 	public void atualizarCurso(CursoDTO curso, Long id) throws ObservatorioExcecao {
