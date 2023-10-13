@@ -34,20 +34,17 @@ public class CursoProjetoServico {
 
     public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) throws ObservatorioExcecao {
 
-        Optional<Curso> cursoExistente = cursoServico.buscarCursoPorId(cursoProjeto.getCursoId());
-        if (cursoExistente.isEmpty()) {
-            throw new ObservatorioExcecao("O curso informado não existe: ");
-        }
+        Curso cursoExistente = cursoServico.buscarCursoPorId(cursoProjeto.getCursoId());
 
         Projeto projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
 
-        Optional<CursoProjeto> cursoProjetoExistente = repositorio.findByCursoAndProjeto(cursoExistente.get(), projetoExistente);
+        Optional<CursoProjeto> cursoProjetoExistente = repositorio.findByCursoAndProjeto(cursoExistente, projetoExistente);
         if (cursoProjetoExistente.isPresent()) {
             throw new ObservatorioExcecao("Já existe um relacionamento criado entre o curso e o projeto informado");
         }
 
         CursoProjeto cursoProjetoSalvar = new CursoProjeto();
-        cursoProjetoSalvar.setCurso(cursoExistente.get());
+        cursoProjetoSalvar.setCurso(cursoExistente);
         cursoProjetoSalvar.setProjeto(projetoExistente);
 
         return repositorio.save(cursoProjetoSalvar);

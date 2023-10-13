@@ -5,11 +5,10 @@ import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
 import com.upe.observatorio.projeto.repositorio.CursoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,16 +20,14 @@ public class CursoServico {
 		return repositorio.findAll();
 	}
 
-	public Optional<Curso> buscarCursoPorId(Long id) throws ObservatorioExcecao {
-		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um curso associado a este id: " + id);
-		}
-		return repositorio.findById(id);
+	public Curso buscarCursoPorId(Long id) throws ObservatorioExcecao {
+		return repositorio.findById(id).orElseThrow(() ->
+				new ObservatorioExcecao("Não existe um curso associado a este id: " + id));
 	}
 
-	public Curso adicionarCurso(CursoDTO curso) throws ObservatorioExcecao {
-		ModelMapper modelMapper = new ModelMapper();
-		Curso cursoSalvar = modelMapper.map(curso, Curso.class);
+	public Curso adicionarCurso(CursoDTO curso) {
+		Curso cursoSalvar = new Curso();
+		BeanUtils.copyProperties(curso, cursoSalvar);
 
 		return repositorio.save(cursoSalvar);
 	}
@@ -41,9 +38,7 @@ public class CursoServico {
 		}
 		
 		Curso cursoExistente = repositorio.findById(id).get();
-		if (!cursoExistente.getNome().equals(curso.getNome())) {
-			cursoExistente.setNome(curso.getNome());
-		}
+		BeanUtils.copyProperties(curso, cursoExistente);
 		
 		repositorio.save(cursoExistente);
 	}
@@ -55,5 +50,4 @@ public class CursoServico {
 		
 		repositorio.deleteById(id);
 	}
-
 }

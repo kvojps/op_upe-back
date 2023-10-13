@@ -35,19 +35,16 @@ public class CampusCursoServico {
 	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ObservatorioExcecao {
 		Campus campusExistente = campusServico.buscarCampusPorId(campusCurso.getCampusId());
 
-		Optional<Curso> cursoExistente = cursoServico.buscarCursoPorId(campusCurso.getCursoId());
-		if (cursoExistente.isEmpty()) {
-			throw new ObservatorioExcecao("O curso informado não existe");
-		}
+		Curso cursoExistente = cursoServico.buscarCursoPorId(campusCurso.getCursoId());
 		
-		Optional<CampusCurso> campusCursoExistente = repositorio.findByCampusAndCurso(campusExistente, cursoExistente.get());
+		Optional<CampusCurso> campusCursoExistente = repositorio.findByCampusAndCurso(campusExistente, cursoExistente);
 		if (campusCursoExistente.isPresent()) {
 			throw new ObservatorioExcecao("Já existe um relacionamento criado entre o campus e o curso informado");
 		}
 		
 		CampusCurso campusCursoSalvar = new CampusCurso();
 		campusCursoSalvar.setCampus(campusExistente);
-		campusCursoSalvar.setCurso(cursoExistente.get());
+		campusCursoSalvar.setCurso(cursoExistente);
 
 		return repositorio.save(campusCursoSalvar);
 	}
