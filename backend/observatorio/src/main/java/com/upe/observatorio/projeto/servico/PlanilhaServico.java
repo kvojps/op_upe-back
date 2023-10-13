@@ -48,28 +48,27 @@ public class PlanilhaServico {
 					
 					adicionarCursoProjeto(cursoId, projetoSalvo.getId());
 				} catch (IllegalStateException | IllegalArgumentException e) {
-					e.printStackTrace();
+					System.err.println(e.getMessage());
 				}
 			}
 		}
 	}
-	
-	private void adicionarCursoProjeto(Long cursoId, Long projetoId) {
-		try {
-			CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
-			cursoProjeto.setCursoId(cursoId);	
-			cursoProjeto.setProjetoId(projetoId);		
-			
-			cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
-		} catch (ObservatorioExcecao e) {
-			e.printStackTrace();
-		}
+
+	private void corrigirTipoColunaData(Workbook workbook, Row row, int nRow) {
+		DataFormatter dataFormatter = new DataFormatter();
+		Cell cell = row.getCell(nRow);
+		String cellValue = dataFormatter.formatCellValue(cell);
+		CellStyle stringCellStyle = workbook.createCellStyle();
+
+		stringCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("@"));
+		cell.setCellStyle(stringCellStyle);
+		cell.setCellValue(cellValue);
 	}
-	
+
 	private ProjetoDTO criarProjetoPorLinha(Row row) {
 		String dataInicio = row.getCell(9).getStringCellValue();
 		String dataFim = row.getCell(10).getStringCellValue();
-	
+
 		ProjetoDTO projeto = new ProjetoDTO();
 		if(row.getCell(0) != null) projeto.setAreaTematica(obterAreaTematica(row.getCell(0).getStringCellValue()));
 		if(row.getCell(1) != null) projeto.setModalidade(obterModalidade(row.getCell(1).getStringCellValue()));
@@ -88,8 +87,20 @@ public class PlanilhaServico {
 		if(row.getCell(14) != null) projeto.setUsuarioId(1L);
 		if(row.getCell(15) != null) projeto.setCampusId((long) (row.getCell(15).getNumericCellValue()));
 		projeto.setVisibilidade(true);
-			
+
 		return projeto;
+	}
+
+	private void adicionarCursoProjeto(Long cursoId, Long projetoId) {
+		try {
+			CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
+			cursoProjeto.setCursoId(cursoId);	
+			cursoProjeto.setProjetoId(projetoId);		
+			
+			cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
+		} catch (ObservatorioExcecao e) {
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
@@ -100,17 +111,6 @@ public class PlanilhaServico {
 		return ModalidadeEnum.valueOf(modalidade);
 	}
 	
-	private void corrigirTipoColunaData(Workbook workbook, Row row, int nRow) {
-		DataFormatter dataFormatter = new DataFormatter();
-		Cell cell = row.getCell(nRow);
-		String cellValue = dataFormatter.formatCellValue(cell);
-	    CellStyle stringCellStyle = workbook.createCellStyle();
-	    
-	    stringCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("@"));
-	    cell.setCellStyle(stringCellStyle);
-	    cell.setCellValue(cellValue);
-	}
-	
 	private Date converterStringData(String data) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -118,7 +118,7 @@ public class PlanilhaServico {
         try {
             date = format.parse(data);
         } catch (ParseException e) {
-            e.printStackTrace();
+			System.err.println(e.getMessage());
         }
         
         return date;
