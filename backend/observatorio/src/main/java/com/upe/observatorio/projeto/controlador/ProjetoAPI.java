@@ -33,18 +33,12 @@ public class ProjetoAPI {
     private final PlanilhaServico planilhaServico;
 
     @PostMapping
-    public ResponseEntity<?> adicionarProjeto(@RequestBody @Valid ProjetoDTO projeto) {
-        try {
-            ProjetoRepresentacao resultado = new ProjetoRepresentacao(servico.adicionarProjeto(projeto));
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
-
-        } catch (ObservatorioExcecao e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<ProjetoRepresentacao> adicionarProjeto(@RequestBody @Valid ProjetoDTO projeto) {
+        return ResponseEntity.status(HttpStatus.CREATED).
+                body(new ProjetoRepresentacao(servico.adicionarProjeto(projeto)));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Map<String, Object>> listarProjetos(
             @RequestParam(value = "titulo", required = false) String titulo,
             @RequestParam(value = "areaTematica", required = false) AreaTematicaEnum areaTematica,
@@ -53,55 +47,30 @@ public class ProjetoAPI {
             @RequestParam(value = "dataFim", required = false) String dataFim,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        ProjetoFiltroDTO dto = ProjetoFiltroDTO.builder().titulo(titulo).areaTematica(areaTematica).
+        ProjetoFiltroDTO filtro = ProjetoFiltroDTO.builder().titulo(titulo).areaTematica(areaTematica).
                 modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).page(page).size(size).build();
-        Page<Projeto> projetosPagina = servico.listarProjetos(dto, page, size);
-        Map<String, Object> resposta = gerarPaginacao(projetosPagina);
+        Page<Projeto> projetosPagina = servico.listarProjetos(filtro, page, size);
 
-        return ResponseEntity.ok(resposta);
-    }
-
-    @GetMapping("/privados")
-    public ResponseEntity<List<ProjetoRepresentacao>> listarProjetosPrivadosPorUsuario(
-            @RequestParam(value = "id", required = false) Long id,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) throws ObservatorioExcecao {
-        return ResponseEntity.ok(servico.listarProjetosPrivados(id, page, size).stream()
-                .map(ProjetoRepresentacao::new).collect(Collectors.toList()));
+        return ResponseEntity.ok(gerarPaginacao(projetosPagina));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarProjetoPorId(@PathVariable("id") Long id) {
-        ResponseEntity<?> resposta;
-        try {
-            Projeto projeto = servico.buscarProjetoPorId(id);
-            ProjetoRepresentacao resultado = new ProjetoRepresentacao(projeto);
-            resposta = ResponseEntity.ok(resultado);
-        } catch (ObservatorioExcecao e) {
-            resposta = ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<ProjetoRepresentacao> buscarProjetoPorId(@PathVariable("id") Long id) {
+        Projeto projeto = servico.buscarProjetoPorId(id);
 
-        return resposta;
+        return ResponseEntity.ok(new ProjetoRepresentacao(projeto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
-        try {
-            servico.atualizarProjeto(projeto, id);
-        } catch (ObservatorioExcecao e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        servico.atualizarProjeto(projeto, id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerProjeto(@PathVariable("id") Long id) {
-        try {
-            servico.removerProjeto(id);
-        } catch (ObservatorioExcecao e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        servico.removerProjeto(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -111,7 +80,7 @@ public class ProjetoAPI {
         try {
             planilhaServico.carregarProjetosPlanilha(planilha);
         } catch (IOException | ObservatorioExcecao e) {
-            e.printStackTrace();
+            System.err.println();
         }
     }
 

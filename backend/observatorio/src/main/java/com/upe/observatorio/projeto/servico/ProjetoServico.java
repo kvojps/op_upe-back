@@ -52,17 +52,6 @@ public class ProjetoServico {
                 dto.getTitulo(), dto.getAreaTematica(), dto.getModalidade(), requestedPage);
     }
 
-    public Page<Projeto> listarProjetosPrivados(Long usuarioId, int page, int size) throws ObservatorioExcecao {
-        Pageable requestedPage = PageRequest.of(page, size);
-
-        if (usuarioId == null) {
-            return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, null);
-        }
-
-        Usuario usuario = usuarioServico.buscarUsuarioPorId(usuarioId);
-        return repositorio.findProjetosWithPublicacaoNullAndUsuario(requestedPage, usuario);
-    }
-
     public Projeto buscarProjetoPorId(@NotNull Long id) throws ObservatorioExcecao {
         return repositorio.findById(id).orElseThrow(() ->
                 new ObservatorioExcecao("Não existe um projeto associado a este id!"));
