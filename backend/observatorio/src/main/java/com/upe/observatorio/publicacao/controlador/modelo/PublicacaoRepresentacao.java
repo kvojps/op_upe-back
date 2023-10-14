@@ -1,6 +1,6 @@
 package com.upe.observatorio.publicacao.controlador.modelo;
 
-import com.upe.observatorio.projeto.controlador.modelo.ProjetoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.ProjetoRepresentacao;
 import com.upe.observatorio.publicacao.dominio.Comentario;
 import com.upe.observatorio.publicacao.dominio.Publicacao;
 import io.swagger.v3.oas.annotations.media.Schema;

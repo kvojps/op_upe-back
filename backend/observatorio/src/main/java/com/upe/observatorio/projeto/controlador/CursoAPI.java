@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.modelo.CursoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CursoRepresentacao;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
 import com.upe.observatorio.projeto.servico.CursoServico;

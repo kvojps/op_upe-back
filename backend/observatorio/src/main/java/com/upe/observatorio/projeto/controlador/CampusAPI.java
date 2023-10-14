@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.modelo.CampusRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CampusRepresentacao;
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
 import com.upe.observatorio.projeto.servico.CampusServico;

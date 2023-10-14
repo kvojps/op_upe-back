@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.modelo.CampusCursoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CampusCursoRepresentacao;
 import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.servico.CampusCursoServico;
 import lombok.RequiredArgsConstructor;
