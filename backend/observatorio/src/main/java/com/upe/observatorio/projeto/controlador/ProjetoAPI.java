@@ -38,6 +38,15 @@ public class ProjetoAPI {
                 body(new ProjetoRepresentacao(servico.adicionarProjeto(projeto)));
     }
 
+    @PostMapping("/planilha")
+    public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
+        try {
+            planilhaServico.carregarProjetosPlanilha(planilha);
+        } catch (IOException | ObservatorioExcecao e) {
+            System.err.println();
+        }
+    }
+
     @GetMapping
     public ResponseEntity<Map<String, Object>> listarProjetos(
             @RequestParam(value = "titulo", required = false) String titulo,
@@ -73,15 +82,6 @@ public class ProjetoAPI {
         servico.removerProjeto(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @PostMapping("/planilha")
-    public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
-        try {
-            planilhaServico.carregarProjetosPlanilha(planilha);
-        } catch (IOException | ObservatorioExcecao e) {
-            System.err.println();
-        }
     }
 
     private Map<String, Object> gerarPaginacao(Page<Projeto> projetosPagina) {
