@@ -65,23 +65,21 @@ public class ProjetoAPI {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjetoRepresentacao> buscarProjetoPorId(@PathVariable("id") Long id) {
-        Projeto projeto = servico.buscarProjetoPorId(id);
-
-        return ResponseEntity.ok(new ProjetoRepresentacao(projeto));
+        return ResponseEntity.ok(new ProjetoRepresentacao(servico.buscarProjetoPorId(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
+    public ResponseEntity<Void> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
         servico.atualizarProjeto(projeto, id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removerProjeto(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> removerProjeto(@PathVariable("id") Long id) {
         servico.removerProjeto(id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     private Map<String, Object> gerarPaginacao(Page<Projeto> projetosPagina) {

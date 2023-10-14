@@ -4,7 +4,6 @@ import com.upe.observatorio.projeto.controlador.modelo.CursoRepresentacao;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
 import com.upe.observatorio.projeto.servico.CursoServico;
-import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,11 @@ public class CursoAPI {
 
 	private final CursoServico servico;
 
+	@PostMapping
+	public ResponseEntity<CursoRepresentacao> adicionarCurso(@RequestBody @Valid CursoDTO curso) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(new CursoRepresentacao(servico.adicionarCurso(curso)));
+	}
+
 	@GetMapping
 	public ResponseEntity<List<CursoRepresentacao>> listarCursos() {
 		return ResponseEntity
@@ -29,44 +33,23 @@ public class CursoAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> buscarCursoPorId(@PathVariable("id") Long id) {
-		ResponseEntity<?> resposta;
-		try {
-			Curso curso = servico.buscarCursoPorId(id);
-			CursoRepresentacao resultado = new CursoRepresentacao(curso);
-			resposta = ResponseEntity.ok(resultado);
-		} catch (ObservatorioExcecao e) {
-			resposta = ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<CursoRepresentacao> buscarCursoPorId(@PathVariable("id") Long id) {
+		Curso curso = servico.buscarCursoPorId(id);
 
-		return resposta;
-	}
-
-	@PostMapping
-	public ResponseEntity<?> adicionarCurso(@RequestBody @Valid CursoDTO curso) {
-		CursoRepresentacao resultado = new CursoRepresentacao(servico.adicionarCurso(curso));
-		return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
+		return ResponseEntity.ok(new CursoRepresentacao(curso));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizarCurso(@RequestBody @Valid CursoDTO curso, @PathVariable Long id) {
-		try {
-			servico.atualizarCurso(curso, id);
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<Void> atualizarCurso(@RequestBody @Valid CursoDTO curso, @PathVariable Long id) {
+		servico.atualizarCurso(curso, id);
 
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> removerCurso(@PathVariable("id") Long id) {
-		try {
-			servico.removerCurso(id);
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<Void> removerCurso(@PathVariable("id") Long id) {
+		servico.removerCurso(id);
 
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.noContent().build();
 	}
 }

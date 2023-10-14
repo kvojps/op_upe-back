@@ -4,7 +4,6 @@ import com.upe.observatorio.projeto.controlador.modelo.CampusRepresentacao;
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
 import com.upe.observatorio.projeto.servico.CampusServico;
-import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,11 @@ public class CampusAPI {
 
 	private final CampusServico servico;
 
+	@PostMapping
+	public ResponseEntity<CampusRepresentacao> adicionarCampus(@RequestBody @Valid CampusDTO campus) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(new CampusRepresentacao(servico.adicionarCampus(campus)));
+	}
+
 	@GetMapping
 	public ResponseEntity<List<CampusRepresentacao>> listarCampus() {
 		return ResponseEntity
@@ -29,44 +33,22 @@ public class CampusAPI {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> buscarCampusPorId(@PathVariable("id") Long id) {
-		ResponseEntity<?> resposta;
-		try {
-			Campus campus = servico.buscarCampusPorId(id);
-			CampusRepresentacao resultado = new CampusRepresentacao(campus);
-			resposta = ResponseEntity.ok(resultado);
-		} catch (ObservatorioExcecao e) {
-			resposta = ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<CampusRepresentacao> buscarCampusPorId(@PathVariable("id") Long id) {
+		Campus campus = servico.buscarCampusPorId(id);
 
-		return resposta;
+		return ResponseEntity.ok(new CampusRepresentacao(campus));
 	}
-
-	@PostMapping
-	public ResponseEntity<?> adicionarCampus(@RequestBody @Valid CampusDTO campus) {
-		CampusRepresentacao resultado = new CampusRepresentacao(servico.adicionarCampus(campus));
-		return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
-	}
-
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizarCampus(@RequestBody @Valid CampusDTO campus, @PathVariable Long id) {
-		try {
-			servico.atualizarCampus(campus, id);
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<Void> atualizarCampus(@RequestBody @Valid CampusDTO campus, @PathVariable Long id) {
+		servico.atualizarCampus(campus, id);
 
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> removerCampus(@PathVariable("id") Long id) {
-		try {
-			servico.removerCampus(id);
-		} catch (ObservatorioExcecao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<Void> removerCampus(@PathVariable("id") Long id) {
+		servico.removerCampus(id);
 
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.noContent().build();
 	}
 }
