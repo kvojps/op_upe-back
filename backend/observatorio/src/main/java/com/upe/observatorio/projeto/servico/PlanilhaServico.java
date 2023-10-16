@@ -5,6 +5,7 @@ import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.dominio.envelopes.StatusExecucaoVO;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +30,11 @@ public class PlanilhaServico {
 	private final ProjetoServico projetoServico;
 	private final CursoProjetoServico cursoProjetoServico;
 	
-	public void carregarProjetosPlanilha(MultipartFile file) throws IOException, ObservatorioExcecao {
-		InputStream input = file.getInputStream();
-		try (Workbook workbook = new XSSFWorkbook(input)) {
+	public List<StatusExecucaoVO> carregarProjetosPlanilha(MultipartFile file)  {
+		List<StatusExecucaoVO> statusList = new ArrayList<>();
+
+		try (InputStream input = file.getInputStream()) {
+			Workbook workbook = new XSSFWorkbook(input);
 			Sheet sheet = workbook.getSheetAt(0);
 			
 			for (Row row : sheet) {
@@ -40,18 +45,24 @@ public class PlanilhaServico {
 				
 				corrigirTipoColunaData(workbook, row, 9);
 				corrigirTipoColunaData(workbook, row, 10);
-			    
+
 				try {
 					ProjetoDTO projeto = criarProjetoPorLinha(row);
 					Projeto projetoSalvo = projetoServico.adicionarProjeto(projeto);
 					long cursoId = (long) (row.getCell(16).getNumericCellValue());
 					
 					adicionarCursoProjeto(cursoId, projetoSalvo.getId());
-				} catch (IllegalStateException | IllegalArgumentException e) {
-					System.err.println(e.getMessage());
+				} catch (IllegalStateException | IllegalArgumentException | ObservatorioExcecao | ParseException e) {
+					statusList.add(new StatusExecucaoVO("Erro (" +
+							row.getCell(2).getStringCellValue() + ") : " + e.getMessage(),
+							e.getClass().getSimpleName()));
 				}
 			}
+		} catch (IOException e) {
+			statusList.add(new StatusExecucaoVO("Erro: " + e.getMessage(), e.getClass().getSimpleName()));
 		}
+
+		return statusList;
 	}
 
 	private void corrigirTipoColunaData(Workbook workbook, Row row, int nRow) {
@@ -65,7 +76,7 @@ public class PlanilhaServico {
 		cell.setCellValue(cellValue);
 	}
 
-	private ProjetoDTO criarProjetoPorLinha(Row row) {
+	private ProjetoDTO criarProjetoPorLinha(Row row) throws ParseException {
 		String dataInicio = row.getCell(9).getStringCellValue();
 		String dataFim = row.getCell(10).getStringCellValue();
 
@@ -91,16 +102,12 @@ public class PlanilhaServico {
 		return projeto;
 	}
 
-	private void adicionarCursoProjeto(Long cursoId, Long projetoId) {
-		try {
-			CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
-			cursoProjeto.setCursoId(cursoId);	
-			cursoProjeto.setProjetoId(projetoId);		
-			
-			cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
-		} catch (ObservatorioExcecao e) {
-			System.err.println(e.getMessage());
-		}
+	private void adicionarCursoProjeto(Long cursoId, Long projetoId) throws ObservatorioExcecao{
+		CursoProjetoDTO cursoProjeto = new CursoProjetoDTO();
+		cursoProjeto.setCursoId(cursoId);
+		cursoProjeto.setProjetoId(projetoId);
+
+		cursoProjetoServico.adicionarCursoProjeto(cursoProjeto);
 	}
 	
 	private AreaTematicaEnum obterAreaTematica(String areaTematica) {
@@ -111,16 +118,9 @@ public class PlanilhaServico {
 		return ModalidadeEnum.valueOf(modalidade);
 	}
 	
-	private Date converterStringData(String data) {
+	private Date converterStringData(String data) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        
-        try {
-            date = format.parse(data);
-        } catch (ParseException e) {
-			System.err.println(e.getMessage());
-        }
-        
-        return date;
+
+        return format.parse(data);
 	}
 }

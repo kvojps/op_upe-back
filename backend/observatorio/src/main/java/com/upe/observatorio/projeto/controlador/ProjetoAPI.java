@@ -6,9 +6,9 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.dominio.envelopes.StatusExecucaoVO;
 import com.upe.observatorio.projeto.servico.PlanilhaServico;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
-import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,14 +38,10 @@ public class ProjetoAPI {
     }
 
     @PostMapping("/planilha")
-    public ResponseEntity<Void> carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
-        try {
-            planilhaServico.carregarProjetosPlanilha(planilha);
-        } catch (IOException | ObservatorioExcecao e) {
-            System.err.println(e.getMessage());
-        }
+    public ResponseEntity<List<StatusExecucaoVO>> carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
+        List<StatusExecucaoVO> statusExec = planilhaServico.carregarProjetosPlanilha(planilha);
 
-        return ResponseEntity.status(HttpStatus.MULTI_STATUS).build();
+        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(statusExec);
     }
 
     @GetMapping
