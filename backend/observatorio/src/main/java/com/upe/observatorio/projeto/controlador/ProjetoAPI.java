@@ -39,12 +39,14 @@ public class ProjetoAPI {
     }
 
     @PostMapping("/planilha")
-    public void carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
+    public ResponseEntity<Void> carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
         try {
             planilhaServico.carregarProjetosPlanilha(planilha);
         } catch (IOException | ObservatorioExcecao e) {
-            System.err.println();
+            System.err.println(e.getMessage());
         }
+
+        return ResponseEntity.status(HttpStatus.MULTI_STATUS).build();
     }
 
     @GetMapping
