@@ -5,12 +5,16 @@ import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
 import com.upe.observatorio.publicacao.repositorio.PublicacaoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Data
 @Service
 @RequiredArgsConstructor
 public class PublicacaoServico {
