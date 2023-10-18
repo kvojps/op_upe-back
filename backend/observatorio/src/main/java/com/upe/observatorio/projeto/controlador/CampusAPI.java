@@ -4,9 +4,12 @@ import com.upe.observatorio.projeto.controlador.representacao.CampusRepresentaca
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
 import com.upe.observatorio.projeto.servico.CampusServico;
+import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -22,7 +25,15 @@ public class CampusAPI {
 	private final CampusServico servico;
 
 	@PostMapping
-	public ResponseEntity<CampusRepresentacao> adicionarCampus(@RequestBody @Valid CampusDTO campus) {
+	public ResponseEntity<CampusRepresentacao> adicionarCampus(
+			@RequestBody @Valid CampusDTO campus,
+			BindingResult bindingResult
+	) {
+		if (bindingResult.hasErrors()) {
+			throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
+		}
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(new CampusRepresentacao(servico.adicionarCampus(campus)));
 	}
 
@@ -39,7 +50,16 @@ public class CampusAPI {
 		return ResponseEntity.ok(new CampusRepresentacao(campus));
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> atualizarCampus(@RequestBody @Valid CampusDTO campus, @PathVariable Long id) {
+	public ResponseEntity<Void> atualizarCampus(
+			@RequestBody @Valid CampusDTO campus,
+			@PathVariable Long id,
+			BindingResult bindingResult
+	) {
+		if (bindingResult.hasErrors()) {
+			throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
+		}
+
 		servico.atualizarCampus(campus, id);
 
 		return ResponseEntity.noContent().build();

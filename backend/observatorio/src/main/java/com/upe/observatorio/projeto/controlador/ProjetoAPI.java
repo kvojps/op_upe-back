@@ -9,10 +9,13 @@ import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.dominio.envelopes.StatusExecucaoVO;
 import com.upe.observatorio.projeto.servico.PlanilhaServico;
 import com.upe.observatorio.projeto.servico.ProjetoServico;
+import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +35,15 @@ public class ProjetoAPI {
     private final PlanilhaServico planilhaServico;
 
     @PostMapping
-    public ResponseEntity<ProjetoRepresentacao> adicionarProjeto(@RequestBody @Valid ProjetoDTO projeto) {
+    public ResponseEntity<ProjetoRepresentacao> adicionarProjeto(
+            @RequestBody @Valid ProjetoDTO projeto,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).
                 body(new ProjetoRepresentacao(servico.adicionarProjeto(projeto)));
     }
@@ -66,7 +77,16 @@ public class ProjetoAPI {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarProjeto(@RequestBody @Valid ProjetoDTO projeto, @PathVariable Long id) {
+    public ResponseEntity<Void> atualizarProjeto(
+            @RequestBody @Valid ProjetoDTO projeto,
+            @PathVariable Long id,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
+        }
+
         servico.atualizarProjeto(projeto, id);
 
         return ResponseEntity.noContent().build();
