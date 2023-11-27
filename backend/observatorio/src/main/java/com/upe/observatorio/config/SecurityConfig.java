@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,33 +23,21 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf()
-        .disable()
-        .authorizeHttpRequests()
-        //"/api/usuario/auth/**",
-        .antMatchers("/v3/**", "/swagger-ui/**")
-        .permitAll()
-//        .anyRequest()
-//        .authenticated()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authenticationProvider(authenticationProvider)
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        .cors();
+    http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorizationManagerRequest ->
+            authorizationManagerRequest.requestMatchers("/api/auth/**", "/v3/**", "/swagger-ui/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+    )
+            .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                    httpSecuritySessionManagementConfigurer
+                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configure(http));
 
     return http.build();
   }
-  
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-      return (web) -> web.ignoring().antMatchers("/v2/api-docs",
-              "/configuration/ui",
-              "/swagger-resources/**",
-              "/configuration/security",
-              "/swagger-ui.html",
-              "/webjars/**");
-  }
+
 }

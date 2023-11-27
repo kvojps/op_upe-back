@@ -1,8 +1,8 @@
 package com.upe.observatorio.projeto.dominio.dto;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
 
 import com.upe.observatorio.projeto.dominio.enums.TipoCursoEnum;
 
