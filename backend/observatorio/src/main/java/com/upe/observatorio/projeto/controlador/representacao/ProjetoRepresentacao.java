@@ -1,6 +1,5 @@
 package com.upe.observatorio.projeto.controlador.representacao;
 
-import com.upe.observatorio.projeto.dominio.CursoProjeto;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
@@ -8,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class ProjetoRepresentacao {
@@ -63,8 +61,6 @@ public class ProjetoRepresentacao {
     @Schema(example = "Jose", description = "Autor do projeto")
     private String autor;
 
-    private List<CursoProjetoRepresentacao> cursoProjetos;
-
     public ProjetoRepresentacao(Projeto projeto) {
         this.id = projeto.getId();
         this.areaTematica = projeto.getAreaTematica();
@@ -82,10 +78,5 @@ public class ProjetoRepresentacao {
         this.pessoasAtendidas = projeto.getPessoasAtendidas();
         this.suporteFinanceiro = projeto.getSuporteFinanceiro();
         this.autor = projeto.getUsuario().getNome();
-        this.cursoProjetos = converterCursoProjetos(projeto.getCursoProjetos());
     }
-
-	private List<CursoProjetoRepresentacao> converterCursoProjetos(List<CursoProjeto> cursoProjetos) {
-		return cursoProjetos.stream().map(CursoProjetoRepresentacao::new).toList();
-	}
 }
