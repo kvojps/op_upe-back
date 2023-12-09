@@ -16,7 +16,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.upe.observatorio.projeto.dominio.Projeto;
-import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.usuario.dominio.enums.Perfil;
 
 import lombok.AllArgsConstructor;
@@ -50,9 +49,6 @@ public class Usuario implements UserDetails {
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Projeto> projetos;
-
-	@OneToMany(mappedBy = "usuario")
-	private List<Publicacao> publicacoes;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

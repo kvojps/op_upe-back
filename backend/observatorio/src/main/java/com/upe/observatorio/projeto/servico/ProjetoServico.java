@@ -5,9 +5,6 @@ import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
-import com.upe.observatorio.publicacao.dominio.Publicacao;
-import com.upe.observatorio.publicacao.dominio.dto.PublicacaoDTO;
-import com.upe.observatorio.publicacao.servico.PublicacaoServico;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatorioExcecao;
@@ -27,7 +24,6 @@ public class ProjetoServico {
     private final ProjetoRepositorio repositorio;
     private final UsuarioServico usuarioServico;
     private final CampusServico campusServico;
-    private final PublicacaoServico publicacaoServico;
 
     public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioExcecao {
         Projeto projetoSalvar = new Projeto();
@@ -38,12 +34,7 @@ public class ProjetoServico {
         projetoSalvar.setUsuario(usuarioExistente);
         projetoSalvar.setCampus(campusExistente);
 
-        Projeto projetoSalvo = repositorio.save(projetoSalvar);
-        if (projeto.isVisibilidade()) {
-            projetoSalvo = publicarProjeto(projetoSalvo, usuarioExistente);
-        }
-
-        return projetoSalvo;
+        return repositorio.save(projetoSalvar);
     }
 
     public Page<Projeto> listarProjetos(ProjetoFiltroDTO dto, int page, int size) {
@@ -74,16 +65,5 @@ public class ProjetoServico {
         }
 
         repositorio.deleteById(id);
-    }
-
-    private Projeto publicarProjeto(Projeto projeto, Usuario usuario) throws ObservatorioExcecao{
-        PublicacaoDTO publicacaoSalvar = new PublicacaoDTO();
-        publicacaoSalvar.setProjeto(projeto);
-        publicacaoSalvar.setUsuario(usuario);
-
-        Publicacao publicacaoSalvo = publicacaoServico.adicionarPublicacao(publicacaoSalvar);
-        projeto.setPublicacao(publicacaoSalvo);
-
-        return repositorio.save(projeto);
     }
 }

@@ -1,30 +1,16 @@
 package com.upe.observatorio.projeto.dominio;
 
-import java.util.Date;
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
-import com.upe.observatorio.publicacao.dominio.Publicacao;
 import com.upe.observatorio.usuario.dominio.Usuario;
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -75,9 +61,6 @@ public class Projeto {
 	private Integer pessoasAtendidas;
 
 	private String suporteFinanceiro;
-	
-	@OneToOne
-	private Publicacao publicacao;
 
 	@OneToMany(mappedBy = "projeto")
 	private List<CursoProjeto> cursoProjetos;
