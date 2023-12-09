@@ -1,8 +1,6 @@
 package com.upe.observatorio.usuario.controlador;
 
 import com.upe.observatorio.usuario.controlador.model.UsuarioRepresentacao;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
@@ -46,11 +44,6 @@ public class UsuarioAPI {
         }
 
         return ResponseEntity.ok(servico.cadastrarUsuario(request));
-    }
-
-    @PostMapping("/auth/login")
-    public ResponseEntity<AutenticacaoResponseDTO> loginUsuario(@RequestBody AutenticacaoRequestDTO request) {
-        return ResponseEntity.ok(servico.loginUsuario(request));
     }
 
     @PutMapping("/{id}")
