@@ -27,4 +27,9 @@ public class GerenciadorExcecaoGlobal {
     public ResponseEntity<Object> handleCampusCursoRelationException(CampusCursoRelationExistsException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
+
+    @ExceptionHandler(ProjectResourceNotFoundException.class)
+    public ResponseEntity<Object> handleProjectResourceNotFoundException(ProjectResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }

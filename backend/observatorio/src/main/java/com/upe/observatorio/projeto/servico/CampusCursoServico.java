@@ -6,7 +6,7 @@ import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repositorio.CampusCursoRepositorio;
 import com.upe.observatorio.utils.CampusCursoRelationExistsException;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +33,9 @@ public class CampusCursoServico {
 		return repositorio.save(campusCursoSalvar);
 	}
 
-	public void removerCampusCurso(Long id) throws ObservatorioExcecao {
+	public void removerCampusCurso(Long id) {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um relacionamento entre campus e curso associado a este id");
+			throw new ProjectResourceNotFoundException("CampusCurso not found");
 		}
 
 		repositorio.deleteById(id);
