@@ -9,15 +9,15 @@ import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.dominio.enums.Perfil;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.UserNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,12 +32,11 @@ public class UsuarioServico {
 		return repositorio.findAll();
 	}
 
-	public Usuario buscarUsuarioPorId(@NotNull Long id) throws ObservatorioExcecao {
-		return repositorio.findById(id).orElseThrow(() -> new
-				ObservatorioExcecao("Não existe um usuário associado a este id"));
+	public Usuario buscarUsuarioPorId(@NotNull Long id) {
+		return repositorio.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
 	
-	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request) throws ObservatorioExcecao {
+	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request)  {
 		if (repositorio.findByEmail(request.getEmail()).isPresent()) {
 			throw new ObservatorioExcecao("Já existe um usuário cadastrado com esse e-mail!");
 		}
@@ -63,9 +62,9 @@ public class UsuarioServico {
 		return AutenticacaoResponseDTO.builder().token(jwtToken).build();
 	}
 
-	public void atualizarUsuario(UsuarioDTO usuario, Long id) throws ObservatorioExcecao{
+	public void atualizarUsuario(UsuarioDTO usuario, Long id) {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um curso associado a este id");
+			throw new UserNotFoundException("User not found");
 		}
 		
 		Usuario usuarioExistente = repositorio.findById(id).get();
@@ -85,9 +84,9 @@ public class UsuarioServico {
 		repositorio.save(usuarioExistente);
 	}
 
-	public void removerUsuario(Long id) throws ObservatorioExcecao {
+	public void removerUsuario(Long id) {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um usuário associado a este id");
+			throw new UserNotFoundException("User not found");
 		}
 		
 		repositorio.deleteById(id);
