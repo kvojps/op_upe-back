@@ -8,6 +8,7 @@ import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.dominio.enums.Perfil;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.utils.InvalidPasswordException;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import com.upe.observatorio.utils.UserNotFoundException;
 import jakarta.validation.constraints.NotNull;
@@ -92,11 +93,11 @@ public class UsuarioServico {
 		repositorio.deleteById(id);
 	}
 
-	private void validarSenha(String senha) throws ObservatorioExcecao {
+	private void validarSenha(String senha) {
 		boolean comMaiuscula = false, comMinuscula = false, comNumerico = false, comEspecial = false;
 
 		if (senha.length() < 8) {
-			throw new ObservatorioExcecao("A senha informada deve ter 8 ou mais caracteres!");
+			throw new InvalidPasswordException("Password must be longer than 8 characters");
 		}
 
 		for (char caracteres : senha.toCharArray()) {
@@ -127,7 +128,7 @@ public class UsuarioServico {
 				error.append(" especiais;");
 			}
 
-			throw new ObservatorioExcecao(error.toString());
+			throw new InvalidPasswordException(error.toString());
 		}
 	}
 }

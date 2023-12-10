@@ -17,4 +17,9 @@ public class GerenciadorExcecaoGlobal {
     public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<Object> handleInvalidPasswordException(InvalidPasswordException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }
