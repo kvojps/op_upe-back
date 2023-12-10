@@ -18,10 +18,12 @@ public class ProjetoDTO {
 	
 	@Schema(example = "PESQUISA", description = "Área temática de um projeto")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private AreaTematicaEnum areaTematica;
 	
 	@Schema(example = "OFICINA", description = "Modalidade de um projeto")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private ModalidadeEnum modalidade;
 	
 	@Schema(example = "Observatório de projetos de pesquisa, extensão e inovação da Universidade de Pernambuco", 
@@ -34,15 +36,18 @@ public class ProjetoDTO {
 	private String resumo;
 	
 	@Schema(example = "A transparência da informação...", description = "Introducão do projeto")
+	@NotBlank
 	private String introducao;
 	
 	@Schema(example = "Foi necessário uma pesquisa bibliográfica...", description = "Fundamentação do projeto")
 	private String fundamentacao;
 	
 	@Schema(example = "Compartilhar as experiências obtidas nos projetos...", description = "Objetivos do projeto")
+	@NotBlank
 	private String objetivos;
 	
 	@Schema(example = "Diante disso, é possível evidenciar...", description = "Conclusão do projeto")
+	@NotBlank
 	private String conclusao;
 	
 	@Schema(example = "https://www.youtube.com/", description = "Memória visual do projeto")
@@ -60,12 +65,12 @@ public class ProjetoDTO {
 	@Schema(example = "1000", description = "Pessoas atendidas pelo projeto")
 	private int pessoasAtendidas;
 	
-	@Schema(example = "S/N", description = "Suporte financeiro do projeto")
+	@Schema(example = "S/N + descrição caso tenha", description = "Suporte financeiro do projeto")
 	private String suporteFinanceiro;
 	
 	@Schema(example = "true", description = "Visibilidade de um projeto")
 	@NotNull
-	private boolean visibilidade;
+	private Boolean visibilidade;
 	
 	private Long usuarioId;
 	

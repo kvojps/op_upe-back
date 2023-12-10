@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +42,7 @@ public class ProjetoAPI {
     ) {
         if (bindingResult.hasErrors()) {
             throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
+                    .map(ObjectError::toString).toList()));
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).
