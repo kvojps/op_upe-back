@@ -5,7 +5,7 @@ import com.upe.observatorio.projeto.dominio.CampusCurso;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repositorio.CampusCursoRepositorio;
-import com.upe.observatorio.utils.CampusCursoRelationExistsException;
+import com.upe.observatorio.utils.RelationExistsException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class CampusCursoServico {
 		
 
 		repositorio.findByCampusAndCurso(campusExistente, cursoExistente).orElseThrow(() ->
-				new CampusCursoRelationExistsException("Campus and curso relation already exists"));
+				new RelationExistsException("Campus and curso relation already exists"));
 		
 		CampusCurso campusCursoSalvar = new CampusCurso();
 		campusCursoSalvar.setCampus(campusExistente);

@@ -23,8 +23,8 @@ public class GerenciadorExcecaoGlobal {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
-    @ExceptionHandler(CampusCursoRelationExistsException.class)
-    public ResponseEntity<Object> handleCampusCursoRelationException(CampusCursoRelationExistsException ex) {
+    @ExceptionHandler(RelationExistsException.class)
+    public ResponseEntity<Object> handleCampusCursoRelationException(RelationExistsException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

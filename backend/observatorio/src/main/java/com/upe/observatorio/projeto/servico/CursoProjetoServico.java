@@ -5,8 +5,8 @@ import com.upe.observatorio.projeto.dominio.CursoProjeto;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.repositorio.CursoProjetoRepositorio;
-import com.upe.observatorio.utils.ObservatorioExcecao;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
+import com.upe.observatorio.utils.RelationExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class CursoProjetoServico {
         Projeto projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
 
         repositorio.findByCursoAndProjeto(cursoExistente, projetoExistente).orElseThrow(() ->
-                new ObservatorioExcecao("Já existe um relacionamento criado entre o curso e o projeto informado"));
+                new RelationExistsException("Curso and projeto relation already exists"));
 
 
         CursoProjeto cursoProjetoSalvar = new CursoProjeto();
