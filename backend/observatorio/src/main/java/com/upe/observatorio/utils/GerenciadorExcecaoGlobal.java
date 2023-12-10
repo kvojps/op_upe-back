@@ -22,4 +22,9 @@ public class GerenciadorExcecaoGlobal {
     public ResponseEntity<Object> handleInvalidPasswordException(InvalidPasswordException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
+
+    @ExceptionHandler(CampusCursoRelationExistsException.class)
+    public ResponseEntity<Object> handleCampusCursoRelationException(CampusCursoRelationExistsException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }

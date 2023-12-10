@@ -5,6 +5,7 @@ import com.upe.observatorio.projeto.dominio.CampusCurso;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repositorio.CampusCursoRepositorio;
+import com.upe.observatorio.utils.CampusCursoRelationExistsException;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,13 @@ public class CampusCursoServico {
 	private final CampusServico campusServico;
 	private final CursoServico cursoServico;
 
-	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso) throws ObservatorioExcecao {
+	public CampusCurso adicionarCampusCurso(CampusCursoDTO campusCurso)  {
 		Campus campusExistente = campusServico.buscarCampusPorId(campusCurso.getCampusId());
 		Curso cursoExistente = cursoServico.buscarCursoPorId(campusCurso.getCursoId());
 		
 
 		repositorio.findByCampusAndCurso(campusExistente, cursoExistente).orElseThrow(() ->
-				new ObservatorioExcecao("Já existe um relacionamento criado entre o campuse e o curso informado"));
+				new CampusCursoRelationExistsException("Campus and curso relation already exists"));
 		
 		CampusCurso campusCursoSalvar = new CampusCurso();
 		campusCursoSalvar.setCampus(campusExistente);
