@@ -4,6 +4,7 @@ import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
 import com.upe.observatorio.projeto.repositorio.CursoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,14 @@ public class CursoServico {
 		return repositorio.findAll();
 	}
 
-	public Curso buscarCursoPorId(Long id) throws ObservatorioExcecao {
+	public Curso buscarCursoPorId(Long id) {
 		return repositorio.findById(id).orElseThrow(() ->
-				new ObservatorioExcecao("Não existe um curso associado a este id: " + id));
+				new ProjectResourceNotFoundException("Curso not found"));
 	}
 
 	public void atualizarCurso(CursoDTO curso, Long id) throws ObservatorioExcecao {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um curso associado a este id");
+			throw new ProjectResourceNotFoundException("Curso not found");
 		}
 		
 		Curso cursoExistente = repositorio.findById(id).get();
@@ -45,7 +46,7 @@ public class CursoServico {
 
 	public void removerCurso(Long id) throws ObservatorioExcecao {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um curso associado a este id");
+			throw new ProjectResourceNotFoundException("Curso not found");
 		}
 		
 		repositorio.deleteById(id);

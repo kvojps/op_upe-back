@@ -12,7 +12,7 @@ import com.upe.observatorio.projeto.repositorio.CursoProjetoRepositorio;
 import com.upe.observatorio.projeto.repositorio.CursoRepositorio;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class DashboardServico {
 	private final CursoProjetoRepositorio cursoProjetoRepositorio;
 	private final UsuarioRepositorio usuarioRepositorio;
 
-	public DashboardVO gerarDashboard() throws ObservatorioExcecao {
+	public DashboardVO gerarDashboard() {
 		DashboardVO dashboard = new DashboardVO();
 
 		dashboard.setTotalCampuses(campusRepositorio.count());
@@ -54,13 +54,13 @@ public class DashboardServico {
 		return dashboardResumo;
 	}
 
-	private HashMap<String, Integer> obterTotalProjetosPorCurso() throws ObservatorioExcecao {
+	private HashMap<String, Integer> obterTotalProjetosPorCurso() {
 		HashMap<String, Integer> resultado = new HashMap<>();
 		List<CursoProjeto> cursoProjetos = cursoProjetoRepositorio.findAll();
 
 		for (CursoProjeto cursoProjeto : cursoProjetos) {
 			Curso curso = cursoRepositorio.findById(cursoProjeto.getCurso().getId()).orElseThrow(() ->
-					new ObservatorioExcecao("Não existe um curso associado a este id"));
+					new ProjectResourceNotFoundException("Não existe um curso associado a este id"));
 			if (resultado.containsKey(curso.getNome())) {
 				Integer qtdProjetos = resultado.get(curso.getNome());
 				resultado.put(curso.getNome(), qtdProjetos + 1);

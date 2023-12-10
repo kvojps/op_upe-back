@@ -6,6 +6,7 @@ import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.repositorio.CursoProjetoRepositorio;
 import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class CursoProjetoServico {
     private final CursoServico cursoServico;
     private final ProjetoServico projetoServico;
 
-    public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) throws ObservatorioExcecao {
+    public CursoProjeto adicionarCursoProjeto(CursoProjetoDTO cursoProjeto) {
         Curso cursoExistente = cursoServico.buscarCursoPorId(cursoProjeto.getCursoId());
         Projeto projetoExistente = projetoServico.buscarProjetoPorId(cursoProjeto.getProjetoId());
 
@@ -32,9 +33,9 @@ public class CursoProjetoServico {
         return repositorio.save(cursoProjetoSalvar);
     }
 
-    public void removerCursoProjeto(Long id) throws ObservatorioExcecao {
+    public void removerCursoProjeto(Long id) {
         if (repositorio.findById(id).isEmpty()) {
-            throw new ObservatorioExcecao("Não existe um relacionamento entre curso e projeto associado a este id");
+            throw new ProjectResourceNotFoundException("Curso Projeto not found");
         }
 
         repositorio.deleteById(id);

@@ -7,15 +7,14 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ProjectResourceNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import jakarta.validation.constraints.NotNull;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class ProjetoServico {
     private final UsuarioServico usuarioServico;
     private final CampusServico campusServico;
 
-    public Projeto adicionarProjeto(ProjetoDTO projeto) throws ObservatorioExcecao {
+    public Projeto adicionarProjeto(ProjetoDTO projeto) {
         Projeto projetoSalvar = new Projeto();
         BeanUtils.copyProperties(projeto, projetoSalvar);
 
@@ -43,14 +42,14 @@ public class ProjetoServico {
                 dto.getTitulo(), dto.getAreaTematica(), dto.getModalidade(), requestedPage);
     }
 
-    public Projeto buscarProjetoPorId(@NotNull Long id) throws ObservatorioExcecao {
+    public Projeto buscarProjetoPorId(@NotNull Long id) {
         return repositorio.findById(id).orElseThrow(() ->
-                new ObservatorioExcecao("Não existe um projeto associado a este id!"));
+                new ProjectResourceNotFoundException("Project not found"));
     }
 
-    public void atualizarProjeto(ProjetoDTO projeto, @NotNull Long id) throws ObservatorioExcecao {
+    public void atualizarProjeto(ProjetoDTO projeto, @NotNull Long id) {
         if (repositorio.findById(id).isEmpty()) {
-            throw new ObservatorioExcecao("Não existe um projeto associado a este id");
+            throw new ProjectResourceNotFoundException("Project not found");
         }
 
         Projeto projetoExistente = repositorio.findById(id).get();
@@ -59,9 +58,9 @@ public class ProjetoServico {
         repositorio.save(projetoExistente);
     }
 
-    public void removerProjeto(@NotNull Long id) throws ObservatorioExcecao {
+    public void removerProjeto(@NotNull Long id) {
         if (repositorio.findById(id).isEmpty()) {
-            throw new ObservatorioExcecao("Não existe um projeto associado a este id!");
+            throw new ProjectResourceNotFoundException("Project not found");
         }
 
         repositorio.deleteById(id);

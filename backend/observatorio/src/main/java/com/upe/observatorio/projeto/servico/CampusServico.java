@@ -3,7 +3,7 @@ package com.upe.observatorio.projeto.servico;
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
 import com.upe.observatorio.projeto.repositorio.CampusRepositorio;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,14 +27,14 @@ public class CampusServico {
 		return repositorio.findAll();
 	}
 
-	public Campus buscarCampusPorId(Long id) throws ObservatorioExcecao {
+	public Campus buscarCampusPorId(Long id) {
 		return repositorio.findById(id).orElseThrow(() ->
-				new ObservatorioExcecao("Não existe um campus associado a este id "));
+				new ProjectResourceNotFoundException("Campus not found"));
 	}
 
-	public void atualizarCampus(CampusDTO campus, Long id) throws ObservatorioExcecao {
+	public void atualizarCampus(CampusDTO campus, Long id) {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um campus associado a este id");
+			throw new ProjectResourceNotFoundException("Campus not found");
 		}
 
 		Campus campusExistente = repositorio.findById(id).get();
@@ -43,9 +43,9 @@ public class CampusServico {
 		repositorio.save(campusExistente);
 	}
 
-	public void removerCampus(Long id) throws ObservatorioExcecao {
+	public void removerCampus(Long id) {
 		if (repositorio.findById(id).isEmpty()) {
-			throw new ObservatorioExcecao("Não existe um curso associado a este id");
+			throw new ProjectResourceNotFoundException("Campus not found");
 		}
 
 		repositorio.deleteById(id);
