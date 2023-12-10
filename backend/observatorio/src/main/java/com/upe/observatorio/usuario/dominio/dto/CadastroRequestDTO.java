@@ -1,5 +1,6 @@
 package com.upe.observatorio.usuario.dominio.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +14,12 @@ import jakarta.validation.constraints.Email;
 @NoArgsConstructor
 public class CadastroRequestDTO {
 
+	@NotBlank(message = "Name not be empty")
 	private String nome;
 
 	@Email(message = "Email inválido")
 	private String email;
-	
+
+	@NotBlank(message = "Password not be empty")
 	private String senha;
 }
