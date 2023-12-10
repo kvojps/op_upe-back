@@ -24,10 +24,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorizationManagerRequest ->
-                        authorizationManagerRequest.requestMatchers("/api/auth/**", "/v3/**", "/swagger-ui/**")
-                                .permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/usuarios")
-                                .permitAll()
+                        authorizationManagerRequest
+                                .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/campus/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/campus/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/campus/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/cursos/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/cursos/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/cursos/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/campus-curso/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/campus-curso/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/projetos/**").hasAnyAuthority("ADMIN", "COORDENADOR")
+                                .requestMatchers(HttpMethod.PUT, "/api/projetos/**").hasAnyAuthority("ADMIN", "COORDENADOR")
+                                .requestMatchers(HttpMethod.DELETE, "/api/projetos/**").hasAnyAuthority("ADMIN", "COORDENADOR")
+                                .requestMatchers("/api/auth/**", "/v3/**", "/swagger-ui/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).exceptionHandling(httpSecurityExceptionHandlingConfigurer ->

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -20,8 +20,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             throws IOException {
         HttpStatus statusCode = HttpStatus.FORBIDDEN;
 
-        if (authException instanceof InsufficientAuthenticationException) {
-            statusCode = HttpStatus.UNAUTHORIZED;
+        if (authException instanceof BadCredentialsException) {
+            statusCode = HttpStatus.BAD_REQUEST;
         }
 
         response.setContentType("application/json;charset=UTF-8");
