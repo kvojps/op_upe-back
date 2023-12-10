@@ -2,7 +2,6 @@ package com.upe.observatorio.usuario.servico;
 
 import com.upe.observatorio.config.JwtService;
 import com.upe.observatorio.usuario.dominio.Usuario;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
@@ -13,8 +12,6 @@ import com.upe.observatorio.utils.ObservatorioExcecao;
 import com.upe.observatorio.utils.UserNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +24,6 @@ public class UsuarioServico {
 	private final UsuarioRepositorio repositorio;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
-	private final AuthenticationManager authenticationManager;
 
 	public List<Usuario> listarUsuarios() {
 		return repositorio.findAll();
@@ -50,15 +46,6 @@ public class UsuarioServico {
 		usuario.setPerfil(Perfil.USUARIO);
 		repositorio.save(usuario);
 
-		var jwtToken = jwtService.generateToken(usuario);
-		return AutenticacaoResponseDTO.builder().token(jwtToken).build();
-	}
-	
-	public AutenticacaoResponseDTO loginUsuario(AutenticacaoRequestDTO request) {
-		authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha()));
-
-		Usuario usuario = repositorio.findByEmail(request.getEmail()).orElseThrow();
 		var jwtToken = jwtService.generateToken(usuario);
 		return AutenticacaoResponseDTO.builder().token(jwtToken).build();
 	}
