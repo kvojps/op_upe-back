@@ -1,6 +1,8 @@
 package com.upe.observatorio.usuario.controlador;
 
 import com.upe.observatorio.usuario.controlador.model.UsuarioRepresentacao;
+import com.upe.observatorio.usuario.dominio.Usuario;
+import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
@@ -10,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,14 +34,22 @@ public class UsuarioAPI {
                 .ok(servico.listarUsuarios().stream().map(UsuarioRepresentacao::new).collect(Collectors.toList()));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UsuarioRepresentacao> buscarUsuarioPorPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) authentication.getPrincipal();
+
+        return ResponseEntity.ok(new UsuarioRepresentacao(servico.buscarUsuarioPorId(user.getId())));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarUsuarioPorId(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(servico.buscarUsuarioPorId(id));
+    public ResponseEntity<UsuarioRepresentacao> buscarUsuarioPorId(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(new UsuarioRepresentacao(servico.buscarUsuarioPorId(id)));
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrarUsuario(@Valid @RequestBody CadastroRequestDTO request,
-                                              BindingResult bindingResult) {
+    public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@Valid @RequestBody CadastroRequestDTO request,
+                                                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
@@ -47,14 +59,14 @@ public class UsuarioAPI {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarUsuario(@RequestBody @Valid UsuarioDTO usuario, @PathVariable Long id) {
+    public ResponseEntity<Void> atualizarUsuario(@RequestBody @Valid UsuarioDTO usuario, @PathVariable Long id) {
         servico.atualizarUsuario(usuario, id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removerUsuario(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> removerUsuario(@PathVariable("id") Long id) {
         servico.removerUsuario(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
