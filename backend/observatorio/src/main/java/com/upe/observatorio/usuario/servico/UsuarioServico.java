@@ -80,7 +80,7 @@ public class UsuarioServico {
 		repositorio.deleteById(id);
 	}
 
-	private void validarSenha(String senha) {
+	public static void validarSenha(String senha) {
 		boolean comMaiuscula = false, comMinuscula = false, comNumerico = false, comEspecial = false;
 
 		if (senha.length() < 8) {
