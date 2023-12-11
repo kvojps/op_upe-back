@@ -28,7 +28,7 @@ public class AuthAPI {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<Void> forgotPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
         servico.resetPassword(resetPasswordDTO);
         return ResponseEntity.noContent().build();
     }
