@@ -19,4 +19,10 @@ public class AuthAPI {
     public ResponseEntity<AutenticacaoResponseDTO> loginUsuario(@RequestBody AutenticacaoRequestDTO request) {
         return ResponseEntity.ok(servico.loginUsuario(request));
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestParam String email) {
+        servico.forgotPassword(email);
+        return ResponseEntity.noContent().build();
+    }
 }
