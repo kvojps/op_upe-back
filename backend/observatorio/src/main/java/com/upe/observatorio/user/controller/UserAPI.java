@@ -5,7 +5,7 @@ import com.upe.observatorio.user.model.Usuario;
 import com.upe.observatorio.user.model.dto.AuthResponseDTO;
 import com.upe.observatorio.user.model.dto.RegisterRequestDTO;
 import com.upe.observatorio.user.model.dto.UserDTO;
-import com.upe.observatorio.user.servico.UsuarioServico;
+import com.upe.observatorio.user.service.UserService;
 import com.upe.observatorio.utils.ObservatoryException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserAPI {
 
-    private final UsuarioServico service;
+    private final UserService service;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> readUsers() {
         return ResponseEntity
-                .ok(service.listarUsuarios().stream().map(UserResponse::new).collect(Collectors.toList()));
+                .ok(service.readUsers().stream().map(UserResponse::new).collect(Collectors.toList()));
     }
 
     @GetMapping("/me")
@@ -39,12 +39,12 @@ public class UserAPI {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new UserResponse(service.buscarUsuarioPorId(user.getId())));
+        return ResponseEntity.ok(new UserResponse(service.findUserById(user.getId())));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findUserById(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(new UserResponse(service.buscarUsuarioPorId(id)));
+		return ResponseEntity.ok(new UserResponse(service.findUserById(id)));
     }
 
     @PostMapping
@@ -55,19 +55,19 @@ public class UserAPI {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 
-        return ResponseEntity.ok(service.cadastrarUsuario(request));
+        return ResponseEntity.ok(service.createUser(request));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@RequestBody @Valid UserDTO user, @PathVariable Long id) {
-        service.atualizarUsuario(user, id);
+        service.updateUser(user, id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
-        service.removerUsuario(id);
+        service.deleteUser(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

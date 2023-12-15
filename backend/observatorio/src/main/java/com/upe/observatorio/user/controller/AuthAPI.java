@@ -3,7 +3,7 @@ package com.upe.observatorio.user.controller;
 import com.upe.observatorio.user.model.dto.AuthRequestDTO;
 import com.upe.observatorio.user.model.dto.AuthResponseDTO;
 import com.upe.observatorio.user.model.dto.ResetPasswordDTO;
-import com.upe.observatorio.user.servico.AuthService;
+import com.upe.observatorio.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class AuthAPI {
 
     @PostMapping
     public ResponseEntity<AuthResponseDTO> submitUserLogin(@RequestBody AuthRequestDTO request) {
-        return ResponseEntity.ok(service.loginUsuario(request));
+        return ResponseEntity.ok(service.submitUserLogin(request));
     }
 
     @PostMapping("/forgot-password")

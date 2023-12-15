@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.servico;
+package com.upe.observatorio.user.service;
 
 import com.upe.observatorio.config.JwtService;
 import com.upe.observatorio.project.model.dto.EmailDTO;
@@ -35,12 +35,12 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthResponseDTO loginUsuario(AuthRequestDTO request) {
+    public AuthResponseDTO submitUserLogin(AuthRequestDTO request) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha()));
 
-        Usuario usuario = repositorio.findByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(usuario);
+        Usuario user = repositorio.findByEmail(request.getEmail()).orElseThrow();
+        var jwtToken = jwtService.generateToken(user);
         return AuthResponseDTO.builder().token(jwtToken).build();
     }
 
@@ -81,7 +81,7 @@ public class AuthService {
             throw new ObservatoryException("Invalid token_type");
         }
 
-        UsuarioServico.validarSenha(resetPasswordDTO.getNewPassword());
+        UserService.validatePassword(resetPasswordDTO.getNewPassword());
         Usuario userToUpdate = repositorio.findByEmail(tokenUserEmail).orElseThrow(
                 () -> new UserNotFoundException("User not found"));
         userToUpdate.setSenha(passwordEncoder.encode(resetPasswordDTO.getNewPassword()));

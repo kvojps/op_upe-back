@@ -6,7 +6,7 @@ import com.upe.observatorio.project.model.dto.ProjectDTO;
 import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
 import com.upe.observatorio.project.repository.ProjectRepository;
 import com.upe.observatorio.user.model.Usuario;
-import com.upe.observatorio.user.servico.UsuarioServico;
+import com.upe.observatorio.user.service.UserService;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +21,14 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
 
     private final ProjectRepository repository;
-    private final UsuarioServico userService;
+    private final UserService userService;
     private final CampusService campusService;
 
     public Projeto createProject(ProjectDTO project) {
         Projeto projectToSave = new Projeto();
         BeanUtils.copyProperties(project, projectToSave);
 
-        Usuario existentUser = userService.buscarUsuarioPorId(project.getUsuarioId());
+        Usuario existentUser = userService.findUserById(project.getUsuarioId());
         Campus existentCampus = campusService.findCampusById(project.getCampusId());
         projectToSave.setUsuario(existentUser);
         projectToSave.setCampus(existentCampus);
