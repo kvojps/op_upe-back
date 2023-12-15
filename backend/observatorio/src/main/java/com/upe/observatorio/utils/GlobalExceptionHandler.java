@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice(basePackages = "com.upe.observatorio.project.service")
+@ControllerAdvice(basePackages = {"com.upe.observatorio.project.service",
+                                  "com.upe.observatorio.usuario.service"})
 public class GlobalExceptionHandler {
     @ExceptionHandler(ObservatoryException.class)
     public ResponseEntity<Object> handleAcsException(ObservatoryException ex) {
