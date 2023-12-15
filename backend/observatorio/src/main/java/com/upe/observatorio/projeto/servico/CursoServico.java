@@ -2,7 +2,7 @@ package com.upe.observatorio.projeto.servico;
 
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
-import com.upe.observatorio.projeto.repositorio.CursoRepositorio;
+import com.upe.observatorio.projeto.repositorio.CourseRepository;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CursoServico {
 
-	private final CursoRepositorio repositorio;
+	private final CourseRepository repositorio;
 
 	public Curso adicionarCurso(CursoDTO curso) {
 		Curso cursoSalvar = new Curso();

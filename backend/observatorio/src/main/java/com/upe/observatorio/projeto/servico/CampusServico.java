@@ -2,7 +2,7 @@ package com.upe.observatorio.projeto.servico;
 
 import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
-import com.upe.observatorio.projeto.repositorio.CampusRepositorio;
+import com.upe.observatorio.projeto.repositorio.CampusRepository;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CampusServico {
 
-	private final CampusRepositorio repositorio;
+	private final CampusRepository repositorio;
 
 	public Campus adicionarCampus(CampusDTO campus) {
 		Campus campusSalvar = new Campus();

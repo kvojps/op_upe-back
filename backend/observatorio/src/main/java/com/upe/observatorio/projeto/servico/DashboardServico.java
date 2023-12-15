@@ -7,10 +7,10 @@ import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardResumoVO;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
-import com.upe.observatorio.projeto.repositorio.CampusRepositorio;
-import com.upe.observatorio.projeto.repositorio.CursoProjetoRepositorio;
-import com.upe.observatorio.projeto.repositorio.CursoRepositorio;
-import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
+import com.upe.observatorio.projeto.repositorio.CampusRepository;
+import com.upe.observatorio.projeto.repositorio.CourseProjectRepository;
+import com.upe.observatorio.projeto.repositorio.CourseRepository;
+import com.upe.observatorio.projeto.repositorio.ProjectRepository;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,18 +23,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DashboardServico {
 
-	private final CampusRepositorio campusRepositorio;
-	private final CursoRepositorio cursoRepositorio;
-	private final ProjetoRepositorio projetoRepositorio;
-	private final CursoProjetoRepositorio cursoProjetoRepositorio;
+	private final CampusRepository campusRepository;
+	private final CourseRepository courseRepository;
+	private final ProjectRepository projectRepository;
+	private final CourseProjectRepository courseProjectRepository;
 	private final UsuarioRepositorio usuarioRepositorio;
 
 	public DashboardVO gerarDashboard() {
 		DashboardVO dashboard = new DashboardVO();
 
-		dashboard.setTotalCampuses(campusRepositorio.count());
-		dashboard.setTotalCourses(cursoRepositorio.count());
-		dashboard.setTotalProjects(projetoRepositorio.count());
+		dashboard.setTotalCampuses(campusRepository.count());
+		dashboard.setTotalCourses(courseRepository.count());
+		dashboard.setTotalProjects(projectRepository.count());
 		dashboard.setTotalUsers(usuarioRepositorio.count());
 		dashboard.setProjectsPerCourses(obterTotalProjetosPorCurso());
 		dashboard.setProjectsPerCampuses(obterTotalProjetosPorCampus());
@@ -47,19 +47,19 @@ public class DashboardServico {
 	public DashboardResumoVO gerarDashboardResumo() {
 		DashboardResumoVO dashboardResumo = new DashboardResumoVO();
 
-		dashboardResumo.setTotalCampuses(campusRepositorio.count());
-		dashboardResumo.setTotalCourses(cursoRepositorio.count());
-		dashboardResumo.setTotalProjects(projetoRepositorio.count());
+		dashboardResumo.setTotalCampuses(campusRepository.count());
+		dashboardResumo.setTotalCourses(courseRepository.count());
+		dashboardResumo.setTotalProjects(projectRepository.count());
 
 		return dashboardResumo;
 	}
 
 	private HashMap<String, Integer> obterTotalProjetosPorCurso() {
 		HashMap<String, Integer> resultado = new HashMap<>();
-		List<CursoProjeto> cursoProjetos = cursoProjetoRepositorio.findAll();
+		List<CursoProjeto> cursoProjetos = courseProjectRepository.findAll();
 
 		for (CursoProjeto cursoProjeto : cursoProjetos) {
-			Curso curso = cursoRepositorio.findById(cursoProjeto.getCurso().getId()).orElseThrow(() ->
+			Curso curso = courseRepository.findById(cursoProjeto.getCurso().getId()).orElseThrow(() ->
 					new ProjectResourceNotFoundException("Não existe um curso associado a este id"));
 			if (resultado.containsKey(curso.getNome())) {
 				Integer qtdProjetos = resultado.get(curso.getNome());
@@ -74,7 +74,7 @@ public class DashboardServico {
 
 	private HashMap<String, Integer> obterTotalProjetosPorCampus() {
 		HashMap<String, Integer> resultado = new HashMap<>();
-		List<Campus> campi = campusRepositorio.findAll();
+		List<Campus> campi = campusRepository.findAll();
 
 		for (Campus campus : campi) {
 			resultado.put(campus.getNome(), campus.getProjetos().size());
@@ -86,11 +86,11 @@ public class DashboardServico {
 	private HashMap<String, Long> obterTotalProjetosPorModalidade() {
 		HashMap<String, Long> resultado = new HashMap<>();
 
-		resultado.put("Programa", projetoRepositorio.countByModalidade(ModalidadeEnum.PROGRAMA));
-		resultado.put("Projeto", projetoRepositorio.countByModalidade(ModalidadeEnum.PROJETO));
-		resultado.put("Curso", projetoRepositorio.countByModalidade(ModalidadeEnum.CURSO));
-		resultado.put("Oficina", projetoRepositorio.countByModalidade(ModalidadeEnum.OFICINA));
-		resultado.put("Evento", projetoRepositorio.countByModalidade(ModalidadeEnum.EVENTO));
+		resultado.put("Programa", projectRepository.countByModalidade(ModalidadeEnum.PROGRAMA));
+		resultado.put("Projeto", projectRepository.countByModalidade(ModalidadeEnum.PROJETO));
+		resultado.put("Curso", projectRepository.countByModalidade(ModalidadeEnum.CURSO));
+		resultado.put("Oficina", projectRepository.countByModalidade(ModalidadeEnum.OFICINA));
+		resultado.put("Evento", projectRepository.countByModalidade(ModalidadeEnum.EVENTO));
 
 		return resultado;
 	}
@@ -98,9 +98,9 @@ public class DashboardServico {
 	private HashMap<String, Long> obterTotalProjetosPorAreaTematica() {
 		HashMap<String, Long> resultado = new HashMap<>();
 
-		resultado.put("Pesquisa", projetoRepositorio.countByAreaTematica(AreaTematicaEnum.PESQUISA));
-		resultado.put("Extensão", projetoRepositorio.countByAreaTematica(AreaTematicaEnum.EXTENSAO));
-		resultado.put("Inovação", projetoRepositorio.countByAreaTematica(AreaTematicaEnum.INOVACAO));
+		resultado.put("Pesquisa", projectRepository.countByAreaTematica(AreaTematicaEnum.PESQUISA));
+		resultado.put("Extensão", projectRepository.countByAreaTematica(AreaTematicaEnum.EXTENSAO));
+		resultado.put("Inovação", projectRepository.countByAreaTematica(AreaTematicaEnum.INOVACAO));
 
 		return resultado;
 	}

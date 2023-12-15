@@ -6,7 +6,7 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.dominio.envelopes.StatusExecucaoVO;
-import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
+import com.upe.observatorio.projeto.repositorio.ProjectRepository;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlanilhaServico {
 
-	private final ProjetoRepositorio repositorio;
+	private final ProjectRepository repositorio;
 	private final ProjetoServico projetoServico;
 	private final CursoProjetoServico cursoProjetoServico;
 	

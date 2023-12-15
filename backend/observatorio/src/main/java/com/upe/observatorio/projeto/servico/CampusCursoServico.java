@@ -4,7 +4,7 @@ import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.CampusCurso;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
-import com.upe.observatorio.projeto.repositorio.CampusCursoRepositorio;
+import com.upe.observatorio.projeto.repositorio.CampusCourseRepository;
 import com.upe.observatorio.utils.RelationExistsException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CampusCursoServico {
 
-	private final CampusCursoRepositorio repositorio;
+	private final CampusCourseRepository repositorio;
 	private final CampusServico campusServico;
 	private final CursoServico cursoServico;
 

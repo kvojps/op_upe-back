@@ -8,6 +8,6 @@ import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.CampusCurso;
 import com.upe.observatorio.projeto.dominio.Curso;
 
-public interface CampusCursoRepositorio extends JpaRepository<CampusCurso, Long>{
+public interface CampusCourseRepository extends JpaRepository<CampusCurso, Long>{
 	Optional<CampusCurso> findByCampusAndCurso(Campus campus, Curso curso);
 }

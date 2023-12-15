@@ -4,7 +4,7 @@ import com.upe.observatorio.projeto.dominio.Campus;
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
-import com.upe.observatorio.projeto.repositorio.ProjetoRepositorio;
+import com.upe.observatorio.projeto.repositorio.ProjectRepository;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProjetoServico {
 
-    private final ProjetoRepositorio repositorio;
+    private final ProjectRepository repositorio;
     private final UsuarioServico usuarioServico;
     private final CampusServico campusServico;
 

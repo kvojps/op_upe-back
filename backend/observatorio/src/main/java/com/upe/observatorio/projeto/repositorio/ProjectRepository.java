@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface ProjetoRepositorio extends JpaRepository<Projeto, Long> {
+public interface ProjectRepository extends JpaRepository<Projeto, Long> {
 	Long countByAreaTematica(AreaTematicaEnum areaTematica);
 
 	Long countByModalidade(ModalidadeEnum modalidade);
