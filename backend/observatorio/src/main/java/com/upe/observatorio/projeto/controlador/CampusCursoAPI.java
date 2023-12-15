@@ -2,7 +2,7 @@ package com.upe.observatorio.projeto.controlador;
 
 import com.upe.observatorio.projeto.controlador.representacao.CampusCursoRepresentacao;
 import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
-import com.upe.observatorio.projeto.servico.CampusCursoServico;
+import com.upe.observatorio.projeto.servico.CampusCourseService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 public class CampusCursoAPI {
 
-    private final CampusCursoServico servico;
+    private final CampusCourseService servico;
 
     @PostMapping
     public ResponseEntity<CampusCursoRepresentacao> adicionarCampusCurso(
@@ -32,12 +32,12 @@ public class CampusCursoAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CampusCursoRepresentacao(servico.adicionarCampusCurso(campusCurso)));
+                .body(new CampusCursoRepresentacao(servico.createCampusCourse(campusCurso)));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerCampusCurso(@PathVariable("id") Long id) {
-        servico.removerCampusCurso(id);
+        servico.deleteCampusCourse(id);
 
         return ResponseEntity.noContent().build();
     }

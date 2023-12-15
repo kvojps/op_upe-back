@@ -7,8 +7,8 @@ import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.dominio.envelopes.StatusExecucaoVO;
-import com.upe.observatorio.projeto.servico.PlanilhaServico;
-import com.upe.observatorio.projeto.servico.ProjetoServico;
+import com.upe.observatorio.projeto.servico.SheetService;
+import com.upe.observatorio.projeto.servico.ProjectService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjetoAPI {
 
-    private final ProjetoServico servico;
-    private final PlanilhaServico planilhaServico;
+    private final ProjectService servico;
+    private final SheetService sheetService;
 
     @PostMapping
     public ResponseEntity<ProjetoRepresentacao> adicionarProjeto(
@@ -46,12 +46,12 @@ public class ProjetoAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).
-                body(new ProjetoRepresentacao(servico.adicionarProjeto(projeto)));
+                body(new ProjetoRepresentacao(servico.createProject(projeto)));
     }
 
     @PostMapping("/planilha")
     public ResponseEntity<List<StatusExecucaoVO>> carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
-        List<StatusExecucaoVO> statusExec = planilhaServico.carregarProjetosPlanilha(planilha);
+        List<StatusExecucaoVO> statusExec = sheetService.batchCreateProjects(planilha);
 
         return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(statusExec);
     }
@@ -67,14 +67,14 @@ public class ProjetoAPI {
             @RequestParam(value = "size", defaultValue = "10") int size) {
         ProjetoFiltroDTO filtro = ProjetoFiltroDTO.builder().titulo(titulo).areaTematica(areaTematica).
                 modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).page(page).size(size).build();
-        Page<Projeto> projetosPagina = servico.listarProjetos(filtro, page, size);
+        Page<Projeto> projetosPagina = servico.readProjects(filtro, page, size);
 
         return ResponseEntity.ok(gerarPaginacao(projetosPagina));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjetoRepresentacao> buscarProjetoPorId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(new ProjetoRepresentacao(servico.buscarProjetoPorId(id)));
+        return ResponseEntity.ok(new ProjetoRepresentacao(servico.findProjectById(id)));
     }
 
     @PutMapping("/{id}")
@@ -88,14 +88,14 @@ public class ProjetoAPI {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 
-        servico.atualizarProjeto(projeto, id);
+        servico.updateProject(projeto, id);
 
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerProjeto(@PathVariable("id") Long id) {
-        servico.removerProjeto(id);
+        servico.deleteProject(id);
 
         return ResponseEntity.noContent().build();
     }

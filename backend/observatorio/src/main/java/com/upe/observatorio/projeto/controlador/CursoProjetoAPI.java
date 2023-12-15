@@ -2,7 +2,7 @@ package com.upe.observatorio.projeto.controlador;
 
 import com.upe.observatorio.projeto.controlador.representacao.CursoProjetoRepresentacao;
 import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
-import com.upe.observatorio.projeto.servico.CursoProjetoServico;
+import com.upe.observatorio.projeto.servico.CourseProjectService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 public class CursoProjetoAPI {
 
-    private final CursoProjetoServico servico;
+    private final CourseProjectService servico;
 
     @PostMapping
     public ResponseEntity<CursoProjetoRepresentacao> adicionarCursoProjeto(
@@ -32,12 +32,12 @@ public class CursoProjetoAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CursoProjetoRepresentacao(servico.adicionarCursoProjeto(cursoProjeto)));
+                .body(new CursoProjetoRepresentacao(servico.createCourseProject(cursoProjeto)));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerCursoProjeto(@PathVariable("id") Long id) {
-        servico.removerCursoProjeto(id);
+        servico.deleteCourseProject(id);
 
         return ResponseEntity.noContent().build();
     }
