@@ -7,13 +7,14 @@ import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
 import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
 import com.upe.observatorio.project.model.enums.ModalityEnum;
 import com.upe.observatorio.project.model.vos.StatusExecutionVO;
-import com.upe.observatorio.project.service.SheetService;
+import com.upe.observatorio.project.SheetService;
 import com.upe.observatorio.project.service.ProjectService;
 import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -49,8 +50,8 @@ public class ProjectAPI {
                 body(new ProjectResponse(service.createProject(projectDTO)));
     }
 
-    @PostMapping("/planilha")
-    public ResponseEntity<List<StatusExecutionVO>> batchCreateProjects(@RequestPart MultipartFile sheet) {
+    @PostMapping(value = "/planilha", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<List<StatusExecutionVO>> batchCreateProjects(@RequestPart("sheet") MultipartFile sheet) {
         List<StatusExecutionVO> statusExec = sheetService.batchCreateProjects(sheet);
 
         return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(statusExec);
@@ -69,7 +70,7 @@ public class ProjectAPI {
                 modalidade(modality).dataInicio(initialDate).dataFim(finalDate).page(page).size(size).build();
         Page<Projeto> projectsPage = service.readProjects(projectFilter, page, size);
 
-        return ResponseEntity.ok(gerarPaginacao(projectsPage));
+        return ResponseEntity.ok(getPagination(projectsPage));
     }
 
     @GetMapping("/{id}")
@@ -94,21 +95,21 @@ public class ProjectAPI {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerProjeto(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteProject(@PathVariable("id") Long id) {
         service.deleteProject(id);
 
         return ResponseEntity.noContent().build();
     }
 
-    private Map<String, Object> gerarPaginacao(Page<Projeto> projetosPagina) {
-        List<ProjectResponse> projetosContent = projetosPagina.getContent().stream().map(ProjectResponse::new).collect(Collectors.toList());
+    private Map<String, Object> getPagination(Page<Projeto> projetosPagina) {
+        List<ProjectResponse> projectsContent = projetosPagina.getContent().stream().map(ProjectResponse::new).collect(Collectors.toList());
 
-        Map<String, Object> resposta = new HashMap<>();
-        resposta.put("projetos", projetosContent);
-        resposta.put("paginaAtual", projetosPagina.getNumber());
-        resposta.put("totalItens", projetosPagina.getTotalElements());
-        resposta.put("totalPaginas", projetosPagina.getTotalPages());
+        Map<String, Object> response = new HashMap<>();
+        response.put("projetos", projectsContent);
+        response.put("paginaAtual", projetosPagina.getNumber());
+        response.put("totalItens", projetosPagina.getTotalElements());
+        response.put("totalPaginas", projetosPagina.getTotalPages());
 
-        return resposta;
+        return response;
     }
 }

@@ -1,12 +1,14 @@
-package com.upe.observatorio.project.service;
+package com.upe.observatorio.project;
 
 import com.upe.observatorio.project.model.Projeto;
 import com.upe.observatorio.project.model.dto.CourseProjectDTO;
 import com.upe.observatorio.project.model.dto.ProjectDTO;
-import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
 import com.upe.observatorio.project.model.enums.ModalityEnum;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
 import com.upe.observatorio.project.model.vos.StatusExecutionVO;
 import com.upe.observatorio.project.repository.ProjectRepository;
+import com.upe.observatorio.project.service.CourseProjectService;
+import com.upe.observatorio.project.service.ProjectService;
 import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
@@ -52,7 +54,7 @@ public class SheetService {
 					long courseId = (long) (row.getCell(16).getNumericCellValue());
 					
 					addProjectToCourse(courseId, projectSaved.getId());
-				} catch (IllegalStateException | IllegalArgumentException | ObservatoryException | ParseException e) {
+				} catch (ParseException | RuntimeException e) {
 					statusList.add(new StatusExecutionVO("Erro (" +
 							row.getCell(2).getStringCellValue() + ") : " + e.getMessage(),
 							e.getClass().getSimpleName()));
