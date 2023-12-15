@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.controlador;
+package com.upe.observatorio.projeto.controller;
 
 import com.upe.observatorio.projeto.model.vos.DashboardResumoVO;
 import com.upe.observatorio.projeto.model.vos.DashboardVO;

@@ -1,8 +1,8 @@
-package com.upe.observatorio.projeto.controlador;
+package com.upe.observatorio.projeto.controller;
 
-import com.upe.observatorio.projeto.controlador.representacao.CampusCourseResponse;
-import com.upe.observatorio.projeto.model.dto.CampusCursoDTO;
-import com.upe.observatorio.projeto.service.CampusCourseService;
+import com.upe.observatorio.projeto.controller.response.CourseProjectResponse;
+import com.upe.observatorio.projeto.model.dto.CursoProjetoDTO;
+import com.upe.observatorio.projeto.service.CourseProjectService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/campus-curso")
+@RequestMapping("api/curso-projeto")
 @CrossOrigin
 @RequiredArgsConstructor
-public class CampusCourseAPI {
+public class CourseProjectApi {
 
-    private final CampusCourseService servico;
+    private final CourseProjectService service;
 
     @PostMapping
-    public ResponseEntity<CampusCourseResponse> adicionarCampusCurso(
-            @RequestBody @Valid CampusCursoDTO campusCurso,
+    public ResponseEntity<CourseProjectResponse> createCourseProject(
+            @RequestBody @Valid CursoProjetoDTO courseProject,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
@@ -32,12 +32,12 @@ public class CampusCourseAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CampusCourseResponse(servico.createCampusCourse(campusCurso)));
+                .body(new CourseProjectResponse(service.createCourseProject(courseProject)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerCampusCurso(@PathVariable("id") Long id) {
-        servico.deleteCampusCourse(id);
+    public ResponseEntity<Void> deleteCourseProject(@PathVariable("id") Long id) {
+        service.deleteCourseProject(id);
 
         return ResponseEntity.noContent().build();
     }

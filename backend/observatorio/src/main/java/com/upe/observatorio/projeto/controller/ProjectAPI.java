@@ -1,6 +1,6 @@
-package com.upe.observatorio.projeto.controlador;
+package com.upe.observatorio.projeto.controller;
 
-import com.upe.observatorio.projeto.controlador.representacao.ProjectResponse;
+import com.upe.observatorio.projeto.controller.response.ProjectResponse;
 import com.upe.observatorio.projeto.model.Projeto;
 import com.upe.observatorio.projeto.model.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.model.dto.ProjetoFiltroDTO;

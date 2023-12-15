@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.controlador.representacao;
+package com.upe.observatorio.projeto.controller.response;
 
 import com.upe.observatorio.projeto.model.CampusCurso;
 import com.upe.observatorio.projeto.model.Curso;
