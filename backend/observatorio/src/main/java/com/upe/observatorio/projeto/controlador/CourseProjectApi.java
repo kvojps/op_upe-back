@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.representacao.CursoProjetoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CourseProjectResponse;
 import com.upe.observatorio.projeto.model.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.service.CourseProjectService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
@@ -17,13 +17,13 @@ import jakarta.validation.Valid;
 @RequestMapping("api/curso-projeto")
 @CrossOrigin
 @RequiredArgsConstructor
-public class CursoProjetoAPI {
+public class CourseProjectApi {
 
-    private final CourseProjectService servico;
+    private final CourseProjectService service;
 
     @PostMapping
-    public ResponseEntity<CursoProjetoRepresentacao> adicionarCursoProjeto(
-            @RequestBody @Valid CursoProjetoDTO cursoProjeto,
+    public ResponseEntity<CourseProjectResponse> createCourseProject(
+            @RequestBody @Valid CursoProjetoDTO courseProject,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
@@ -32,12 +32,12 @@ public class CursoProjetoAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CursoProjetoRepresentacao(servico.createCourseProject(cursoProjeto)));
+                .body(new CourseProjectResponse(service.createCourseProject(courseProject)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerCursoProjeto(@PathVariable("id") Long id) {
-        servico.deleteCourseProject(id);
+    public ResponseEntity<Void> deleteCourseProject(@PathVariable("id") Long id) {
+        service.deleteCourseProject(id);
 
         return ResponseEntity.noContent().build();
     }

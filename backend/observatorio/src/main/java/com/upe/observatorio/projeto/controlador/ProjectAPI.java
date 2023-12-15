@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.representacao.ProjetoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.ProjectResponse;
 import com.upe.observatorio.projeto.model.Projeto;
 import com.upe.observatorio.projeto.model.dto.ProjetoDTO;
 import com.upe.observatorio.projeto.model.dto.ProjetoFiltroDTO;
@@ -30,14 +30,14 @@ import java.util.stream.Collectors;
 @RequestMapping("api/projetos")
 @CrossOrigin
 @RequiredArgsConstructor
-public class ProjetoAPI {
+public class ProjectAPI {
 
-    private final ProjectService servico;
+    private final ProjectService service;
     private final SheetService sheetService;
 
     @PostMapping
-    public ResponseEntity<ProjetoRepresentacao> adicionarProjeto(
-            @RequestBody @Valid ProjetoDTO projeto,
+    public ResponseEntity<ProjectResponse> createProject(
+            @RequestBody @Valid ProjetoDTO projectDTO,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
@@ -46,40 +46,40 @@ public class ProjetoAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).
-                body(new ProjetoRepresentacao(servico.createProject(projeto)));
+                body(new ProjectResponse(service.createProject(projectDTO)));
     }
 
     @PostMapping("/planilha")
-    public ResponseEntity<List<StatusExecucaoVO>> carregarProjetoPlanilhas(@RequestPart MultipartFile planilha) {
-        List<StatusExecucaoVO> statusExec = sheetService.batchCreateProjects(planilha);
+    public ResponseEntity<List<StatusExecucaoVO>> batchCreateProjects(@RequestPart MultipartFile sheet) {
+        List<StatusExecucaoVO> statusExec = sheetService.batchCreateProjects(sheet);
 
         return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(statusExec);
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> listarProjetos(
-            @RequestParam(value = "titulo", required = false) String titulo,
-            @RequestParam(value = "areaTematica", required = false) AreaTematicaEnum areaTematica,
-            @RequestParam(value = "modalidade", required = false) ModalidadeEnum modalidade,
-            @RequestParam(value = "dataInicio", required = false) String dataInicio,
-            @RequestParam(value = "dataFim", required = false) String dataFim,
+    public ResponseEntity<Map<String, Object>> readProjects(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "thematicArea", required = false) AreaTematicaEnum thematicArea,
+            @RequestParam(value = "modality", required = false) ModalidadeEnum modality,
+            @RequestParam(value = "initialDate", required = false) String initialDate,
+            @RequestParam(value = "finalDate", required = false) String finalDate,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        ProjetoFiltroDTO filtro = ProjetoFiltroDTO.builder().titulo(titulo).areaTematica(areaTematica).
-                modalidade(modalidade).dataInicio(dataInicio).dataFim(dataFim).page(page).size(size).build();
-        Page<Projeto> projetosPagina = servico.readProjects(filtro, page, size);
+        ProjetoFiltroDTO projectFilter = ProjetoFiltroDTO.builder().titulo(title).areaTematica(thematicArea).
+                modalidade(modality).dataInicio(initialDate).dataFim(finalDate).page(page).size(size).build();
+        Page<Projeto> projectsPage = service.readProjects(projectFilter, page, size);
 
-        return ResponseEntity.ok(gerarPaginacao(projetosPagina));
+        return ResponseEntity.ok(gerarPaginacao(projectsPage));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjetoRepresentacao> buscarProjetoPorId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(new ProjetoRepresentacao(servico.findProjectById(id)));
+    public ResponseEntity<ProjectResponse> findProjectById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(new ProjectResponse(service.findProjectById(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarProjeto(
-            @RequestBody @Valid ProjetoDTO projeto,
+    public ResponseEntity<Void> updateProject(
+            @RequestBody @Valid ProjetoDTO project,
             @PathVariable Long id,
             BindingResult bindingResult
     ) {
@@ -88,20 +88,20 @@ public class ProjetoAPI {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 
-        servico.updateProject(projeto, id);
+        service.updateProject(project, id);
 
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerProjeto(@PathVariable("id") Long id) {
-        servico.deleteProject(id);
+        service.deleteProject(id);
 
         return ResponseEntity.noContent().build();
     }
 
     private Map<String, Object> gerarPaginacao(Page<Projeto> projetosPagina) {
-        List<ProjetoRepresentacao> projetosContent = projetosPagina.getContent().stream().map(ProjetoRepresentacao::new).collect(Collectors.toList());
+        List<ProjectResponse> projetosContent = projetosPagina.getContent().stream().map(ProjectResponse::new).collect(Collectors.toList());
 
         Map<String, Object> resposta = new HashMap<>();
         resposta.put("projetos", projetosContent);

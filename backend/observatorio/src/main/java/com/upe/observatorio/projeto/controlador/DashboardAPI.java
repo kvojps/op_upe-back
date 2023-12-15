@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DashboardAPI {
 
-	private final DashboardService servico;
+	private final DashboardService service;
 
 	@GetMapping
-	public ResponseEntity<DashboardVO> obterDashboard() throws ObservatorioExcecao {
-		return ResponseEntity.ok(servico.getDashboard());
+	public ResponseEntity<DashboardVO> getDashboard() throws ObservatorioExcecao {
+		return ResponseEntity.ok(service.getDashboard());
 	}
 
 	@GetMapping("/resumo")
-	public ResponseEntity<DashboardResumoVO> obterDashboardResumo() {
-		return ResponseEntity.ok(servico.getDashboardOverview());
+	public ResponseEntity<DashboardResumoVO> getDashboardOverview() {
+		return ResponseEntity.ok(service.getDashboardOverview());
 	}
 }

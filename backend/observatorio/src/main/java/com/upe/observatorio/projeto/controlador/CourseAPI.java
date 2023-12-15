@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.representacao.CursoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CourseResponse;
 import com.upe.observatorio.projeto.model.Curso;
 import com.upe.observatorio.projeto.model.dto.CursoDTO;
 import com.upe.observatorio.projeto.service.CourseService;
@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 @RequestMapping("api/cursos")
 @CrossOrigin
 @RequiredArgsConstructor
-public class CursoAPI {
+public class CourseAPI {
 
-	private final CourseService servico;
+	private final CourseService service;
 
 	@PostMapping
-	public ResponseEntity<CursoRepresentacao> adicionarCurso(
-			@RequestBody @Valid CursoDTO curso,
+	public ResponseEntity<CourseResponse> createCourse(
+			@RequestBody @Valid CursoDTO course,
 			BindingResult bindingResult
 			) {
 		if (bindingResult.hasErrors()) {
@@ -34,25 +34,25 @@ public class CursoAPI {
 					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
 		}
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new CursoRepresentacao(servico.createCourse(curso)));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new CourseResponse(service.createCourse(course)));
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CursoRepresentacao>> listarCursos() {
+	public ResponseEntity<List<CourseResponse>> readCourses() {
 		return ResponseEntity
-				.ok(servico.readCourses().stream().map(CursoRepresentacao::new).collect(Collectors.toList()));
+				.ok(service.readCourses().stream().map(CourseResponse::new).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CursoRepresentacao> buscarCursoPorId(@PathVariable("id") Long id) {
-		Curso curso = servico.findCourseById(id);
+	public ResponseEntity<CourseResponse> findCourseById(@PathVariable("id") Long id) {
+		Curso curso = service.findCourseById(id);
 
-		return ResponseEntity.ok(new CursoRepresentacao(curso));
+		return ResponseEntity.ok(new CourseResponse(curso));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> atualizarCurso(
-			@RequestBody @Valid CursoDTO curso,
+	public ResponseEntity<Void> updateCourse(
+			@RequestBody @Valid CursoDTO course,
 			@PathVariable Long id,
 			BindingResult bindingResult
 	) {
@@ -61,14 +61,14 @@ public class CursoAPI {
 					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
 		}
 
-		servico.updateCourse(curso, id);
+		service.updateCourse(course, id);
 
 		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> removerCurso(@PathVariable("id") Long id) {
-		servico.deleteCourse(id);
+	public ResponseEntity<Void> deleteCourse(@PathVariable("id") Long id) {
+		service.deleteCourse(id);
 
 		return ResponseEntity.noContent().build();
 	}

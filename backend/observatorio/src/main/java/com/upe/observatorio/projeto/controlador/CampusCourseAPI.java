@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.representacao.CampusCursoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CampusCourseResponse;
 import com.upe.observatorio.projeto.model.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.service.CampusCourseService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
@@ -17,12 +17,12 @@ import jakarta.validation.Valid;
 @RequestMapping("api/campus-curso")
 @CrossOrigin
 @RequiredArgsConstructor
-public class CampusCursoAPI {
+public class CampusCourseAPI {
 
     private final CampusCourseService servico;
 
     @PostMapping
-    public ResponseEntity<CampusCursoRepresentacao> adicionarCampusCurso(
+    public ResponseEntity<CampusCourseResponse> adicionarCampusCurso(
             @RequestBody @Valid CampusCursoDTO campusCurso,
             BindingResult bindingResult
     ) {
@@ -32,7 +32,7 @@ public class CampusCursoAPI {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CampusCursoRepresentacao(servico.createCampusCourse(campusCurso)));
+                .body(new CampusCourseResponse(servico.createCampusCourse(campusCurso)));
     }
 
     @DeleteMapping("/{id}")

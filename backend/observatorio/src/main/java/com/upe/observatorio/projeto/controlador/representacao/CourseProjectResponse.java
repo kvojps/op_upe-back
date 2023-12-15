@@ -5,12 +5,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class CursoProjetoRepresentacao {
+public class CourseProjectResponse {
 
 	@Schema(example = "1", description = "Id referente ao cursoProjeto")
 	private Long id;
 
-	public CursoProjetoRepresentacao(CursoProjeto cursoProjeto) {
+	public CourseProjectResponse(CursoProjeto cursoProjeto) {
 		this.id = cursoProjeto.getId();
 	}
 }

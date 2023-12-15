@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ProjetoRepresentacao {
+public class ProjectResponse {
 
     @Schema(example = "1", description = "Id referente ao projeto")
     private Long id;
@@ -61,7 +61,7 @@ public class ProjetoRepresentacao {
     @Schema(example = "Jose", description = "Autor do projeto")
     private String autor;
 
-    public ProjetoRepresentacao(Projeto projeto) {
+    public ProjectResponse(Projeto projeto) {
         this.id = projeto.getId();
         this.areaTematica = projeto.getAreaTematica();
         this.modalidade = projeto.getModalidade();

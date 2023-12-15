@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CampusRepresentacao {
+public class CampusResponse {
 
 	@Schema(example = "1", description = "Id referente ao campus")
 	private Long id;
@@ -26,11 +26,11 @@ public class CampusRepresentacao {
 	@Schema(example = "Capitão Pedro Rodrigues", description = "Rua onde o campus está localizado")
 	private String rua;
 
-	private List<CampusCursoRepresentacao> campusCurso;
+	private List<CampusCourseResponse> campusCurso;
 	
-	private List<ProjetoRepresentacao> projetos;
+	private List<ProjectResponse> projetos;
 
-	public CampusRepresentacao(Campus campus) {
+	public CampusResponse(Campus campus) {
 		this.id = campus.getId();
 		this.nome = campus.getNome();
 		this.cidade = campus.getCidade();
@@ -40,11 +40,11 @@ public class CampusRepresentacao {
 		this.projetos = converterProjetos(campus.getProjetos());
 	}
 
-	private List<CampusCursoRepresentacao> converterCampusCursos(List<CampusCurso> campusCursos) {
-		return campusCursos.stream().map(CampusCursoRepresentacao::new).toList();
+	private List<CampusCourseResponse> converterCampusCursos(List<CampusCurso> campusCursos) {
+		return campusCursos.stream().map(CampusCourseResponse::new).toList();
 	}
 
-	private List<ProjetoRepresentacao> converterProjetos(List<Projeto> projetos) {
-		return projetos.stream().map(ProjetoRepresentacao::new).toList();
+	private List<ProjectResponse> converterProjetos(List<Projeto> projetos) {
+		return projetos.stream().map(ProjectResponse::new).toList();
 	}
 }

@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.controlador.representacao.CampusRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.CampusResponse;
 import com.upe.observatorio.projeto.model.Campus;
 import com.upe.observatorio.projeto.model.dto.CampusDTO;
 import com.upe.observatorio.projeto.service.CampusService;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CampusAPI {
 
-	private final CampusService servico;
+	private final CampusService service;
 
 	@PostMapping
-	public ResponseEntity<CampusRepresentacao> adicionarCampus(
+	public ResponseEntity<CampusResponse> createCampus(
 			@RequestBody @Valid CampusDTO campus,
 			BindingResult bindingResult
 	) {
@@ -34,23 +34,23 @@ public class CampusAPI {
 					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
 		}
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(new CampusRepresentacao(servico.createCampus(campus)));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new CampusResponse(service.createCampus(campus)));
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CampusRepresentacao>> listarCampus() {
+	public ResponseEntity<List<CampusResponse>> readCampus() {
 		return ResponseEntity
-				.ok(servico.readCampus().stream().map(CampusRepresentacao::new).collect(Collectors.toList()));
+				.ok(service.readCampus().stream().map(CampusResponse::new).collect(Collectors.toList()));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CampusRepresentacao> buscarCampusPorId(@PathVariable("id") Long id) {
-		Campus campus = servico.findCampusById(id);
+	public ResponseEntity<CampusResponse> findCampusById(@PathVariable("id") Long id) {
+		Campus campus = service.findCampusById(id);
 
-		return ResponseEntity.ok(new CampusRepresentacao(campus));
+		return ResponseEntity.ok(new CampusResponse(campus));
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> atualizarCampus(
+	public ResponseEntity<Void> updateCampus(
 			@RequestBody @Valid CampusDTO campus,
 			@PathVariable Long id,
 			BindingResult bindingResult
@@ -60,14 +60,14 @@ public class CampusAPI {
 					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
 		}
 
-		servico.updateCampus(campus, id);
+		service.updateCampus(campus, id);
 
 		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> removerCampus(@PathVariable("id") Long id) {
-		servico.deleteCampus(id);
+	public ResponseEntity<Void> deleteCampus(@PathVariable("id") Long id) {
+		service.deleteCampus(id);
 
 		return ResponseEntity.noContent().build();
 	}

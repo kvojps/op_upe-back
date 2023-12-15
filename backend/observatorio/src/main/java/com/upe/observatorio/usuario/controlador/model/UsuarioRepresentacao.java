@@ -1,6 +1,6 @@
 package com.upe.observatorio.usuario.controlador.model;
 
-import com.upe.observatorio.projeto.controlador.representacao.ProjetoRepresentacao;
+import com.upe.observatorio.projeto.controlador.representacao.ProjectResponse;
 import com.upe.observatorio.projeto.model.Projeto;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,7 +23,7 @@ public class UsuarioRepresentacao {
 	@Schema(example = "20221412", description = "Matrícula de um usuário")
 	private String matricula;
 	
-	private List<ProjetoRepresentacao> projetos;
+	private List<ProjectResponse> projetos;
 	
 	//adicionar perfil
 
@@ -35,7 +35,7 @@ public class UsuarioRepresentacao {
 		this.projetos = converterProjetos(usuario.getProjetos());
 	}
 
-	private List<ProjetoRepresentacao> converterProjetos(List<Projeto> projetos) {
-		return projetos.stream().map(ProjetoRepresentacao::new).toList();
+	private List<ProjectResponse> converterProjetos(List<Projeto> projetos) {
+		return projetos.stream().map(ProjectResponse::new).toList();
 	}
 }

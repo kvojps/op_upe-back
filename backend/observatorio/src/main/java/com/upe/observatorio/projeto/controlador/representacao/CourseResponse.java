@@ -10,7 +10,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CursoRepresentacao {
+public class CourseResponse {
 
 	@Schema(example = "1", description = "Id referente ao curso")
 	private Long id;
@@ -21,11 +21,11 @@ public class CursoRepresentacao {
 	@Schema(example = "BACHARELADO", description = "Tipo do curso")
 	private TipoCursoEnum tipo;
 	
-	private List<CampusCursoRepresentacao> campusCurso;
+	private List<CampusCourseResponse> campusCurso;
 	
-	private List<CursoProjetoRepresentacao> cursoProjeto;
+	private List<CourseProjectResponse> cursoProjeto;
 
-	public CursoRepresentacao(Curso curso) {
+	public CourseResponse(Curso curso) {
 		this.id = curso.getId();
 		this.nome = curso.getNome();
 		this.tipo = curso.getTipo();
@@ -33,10 +33,10 @@ public class CursoRepresentacao {
 		this.cursoProjeto = converterCursoProjetos(curso.getCursoProjeto());
 	}
 
-	private List<CampusCursoRepresentacao> converterCampusCursos(List<CampusCurso> campusCursos) {
-		return campusCursos.stream().map(CampusCursoRepresentacao::new).toList();
+	private List<CampusCourseResponse> converterCampusCursos(List<CampusCurso> campusCursos) {
+		return campusCursos.stream().map(CampusCourseResponse::new).toList();
 	}
-	private List<CursoProjetoRepresentacao> converterCursoProjetos(List<CursoProjeto> cursoProjetos) {
-		return cursoProjetos.stream().map(CursoProjetoRepresentacao::new).toList();
+	private List<CourseProjectResponse> converterCursoProjetos(List<CursoProjeto> cursoProjetos) {
+		return cursoProjetos.stream().map(CourseProjectResponse::new).toList();
 	}
 }
