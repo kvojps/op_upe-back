@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.servico;
+package com.upe.observatorio.projeto.service;
 
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;

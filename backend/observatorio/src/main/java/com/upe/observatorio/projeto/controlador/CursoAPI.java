@@ -3,7 +3,7 @@ package com.upe.observatorio.projeto.controlador;
 import com.upe.observatorio.projeto.controlador.representacao.CursoRepresentacao;
 import com.upe.observatorio.projeto.dominio.Curso;
 import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
-import com.upe.observatorio.projeto.servico.CourseService;
+import com.upe.observatorio.projeto.service.CourseService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;

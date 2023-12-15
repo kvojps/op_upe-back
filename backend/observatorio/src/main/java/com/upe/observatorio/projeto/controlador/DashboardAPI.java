@@ -2,7 +2,7 @@ package com.upe.observatorio.projeto.controlador;
 
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardResumoVO;
 import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
-import com.upe.observatorio.projeto.servico.DashboardService;
+import com.upe.observatorio.projeto.service.DashboardService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
