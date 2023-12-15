@@ -19,11 +19,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-	private final UsuarioRepositorio repositorio;
+	private final UsuarioRepositorio repository;
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return username -> repositorio.findByEmail(username)
+		return username -> repository.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 	}
 
