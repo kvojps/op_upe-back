@@ -1,6 +1,6 @@
 package com.upe.observatorio.user.controller;
 
-import com.upe.observatorio.user.controller.response.UsuarioRepresentacao;
+import com.upe.observatorio.user.controller.response.UserResponse;
 import com.upe.observatorio.user.dominio.Usuario;
 import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
@@ -29,22 +29,22 @@ public class UserAPI {
     private final UsuarioServico service;
 
     @GetMapping
-    public ResponseEntity<List<UsuarioRepresentacao>> readUsers() {
+    public ResponseEntity<List<UserResponse>> readUsers() {
         return ResponseEntity
-                .ok(service.listarUsuarios().stream().map(UsuarioRepresentacao::new).collect(Collectors.toList()));
+                .ok(service.listarUsuarios().stream().map(UserResponse::new).collect(Collectors.toList()));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UsuarioRepresentacao> findUserByPrincipal() {
+    public ResponseEntity<UserResponse> findUserByPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new UsuarioRepresentacao(service.buscarUsuarioPorId(user.getId())));
+        return ResponseEntity.ok(new UserResponse(service.buscarUsuarioPorId(user.getId())));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioRepresentacao> findUserById(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(new UsuarioRepresentacao(service.buscarUsuarioPorId(id)));
+    public ResponseEntity<UserResponse> findUserById(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(new UserResponse(service.buscarUsuarioPorId(id)));
     }
 
     @PostMapping

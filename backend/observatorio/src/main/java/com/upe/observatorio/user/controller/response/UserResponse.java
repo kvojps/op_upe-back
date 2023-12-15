@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class UsuarioRepresentacao {
+public class UserResponse {
 
 	@Schema(example = "1", description = "Id referente ao usuário")
 	private Long id;
@@ -27,7 +27,7 @@ public class UsuarioRepresentacao {
 	
 	//adicionar perfil
 
-	public UsuarioRepresentacao(Usuario usuario) {
+	public UserResponse(Usuario usuario) {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
 		this.email = usuario.getEmail();
