@@ -1,9 +1,9 @@
 package com.upe.observatorio.projeto.service;
 
-import com.upe.observatorio.projeto.dominio.Campus;
-import com.upe.observatorio.projeto.dominio.CampusCurso;
-import com.upe.observatorio.projeto.dominio.Curso;
-import com.upe.observatorio.projeto.dominio.dto.CampusCursoDTO;
+import com.upe.observatorio.projeto.model.Campus;
+import com.upe.observatorio.projeto.model.CampusCurso;
+import com.upe.observatorio.projeto.model.Curso;
+import com.upe.observatorio.projeto.model.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.repository.CampusCourseRepository;
 import com.upe.observatorio.utils.RelationExistsException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;

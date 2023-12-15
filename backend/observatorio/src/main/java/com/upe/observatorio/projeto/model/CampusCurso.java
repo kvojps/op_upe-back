@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.dominio;
+package com.upe.observatorio.projeto.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,21 +14,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "curso_projeto")
+@Table(name = "campus_curso")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CursoProjeto {
+public class CampusCurso {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "id_curso")
-	private Curso curso;
+	@JoinColumn(name = "id_campus")
+	private Campus campus;
 
 	@ManyToOne
-	@JoinColumn(name = "id_projeto")
-	private Projeto projeto;
+	@JoinColumn(name = "id_curso")
+	private Curso curso;
 }

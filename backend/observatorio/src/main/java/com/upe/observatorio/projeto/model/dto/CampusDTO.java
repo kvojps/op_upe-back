@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.dominio.dto;
+package com.upe.observatorio.projeto.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,7 +1,7 @@
 package com.upe.observatorio.usuario.controlador.model;
 
 import com.upe.observatorio.projeto.controlador.representacao.ProjetoRepresentacao;
-import com.upe.observatorio.projeto.dominio.Projeto;
+import com.upe.observatorio.projeto.model.Projeto;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

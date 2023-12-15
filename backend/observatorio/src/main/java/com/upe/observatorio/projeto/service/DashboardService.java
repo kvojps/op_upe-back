@@ -1,12 +1,12 @@
 package com.upe.observatorio.projeto.service;
 
-import com.upe.observatorio.projeto.dominio.Campus;
-import com.upe.observatorio.projeto.dominio.Curso;
-import com.upe.observatorio.projeto.dominio.CursoProjeto;
-import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
-import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
-import com.upe.observatorio.projeto.dominio.envelopes.DashboardResumoVO;
-import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
+import com.upe.observatorio.projeto.model.Campus;
+import com.upe.observatorio.projeto.model.Curso;
+import com.upe.observatorio.projeto.model.CursoProjeto;
+import com.upe.observatorio.projeto.model.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.model.vos.DashboardResumoVO;
+import com.upe.observatorio.projeto.model.vos.DashboardVO;
 import com.upe.observatorio.projeto.repository.CampusRepository;
 import com.upe.observatorio.projeto.repository.CourseProjectRepository;
 import com.upe.observatorio.projeto.repository.CourseRepository;

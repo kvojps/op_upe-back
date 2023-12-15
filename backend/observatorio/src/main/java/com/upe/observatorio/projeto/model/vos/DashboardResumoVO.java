@@ -1,6 +1,4 @@
-package com.upe.observatorio.projeto.dominio.envelopes;
-
-import java.util.HashMap;
+package com.upe.observatorio.projeto.model.vos;
 
 import lombok.Data;
 

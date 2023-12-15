@@ -1,7 +1,7 @@
 package com.upe.observatorio.projeto.service;
 
-import com.upe.observatorio.projeto.dominio.Curso;
-import com.upe.observatorio.projeto.dominio.dto.CursoDTO;
+import com.upe.observatorio.projeto.model.Curso;
+import com.upe.observatorio.projeto.model.dto.CursoDTO;
 import com.upe.observatorio.projeto.repository.CourseRepository;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;

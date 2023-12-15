@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.dominio;
+package com.upe.observatorio.projeto.model;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-import com.upe.observatorio.projeto.dominio.enums.TipoCursoEnum;
+import com.upe.observatorio.projeto.model.enums.TipoCursoEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

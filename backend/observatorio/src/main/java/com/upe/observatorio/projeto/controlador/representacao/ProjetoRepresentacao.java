@@ -1,8 +1,8 @@
 package com.upe.observatorio.projeto.controlador.representacao;
 
-import com.upe.observatorio.projeto.dominio.Projeto;
-import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
-import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.model.Projeto;
+import com.upe.observatorio.projeto.model.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.dominio;
+package com.upe.observatorio.projeto.model;
 
 import java.util.List;
 

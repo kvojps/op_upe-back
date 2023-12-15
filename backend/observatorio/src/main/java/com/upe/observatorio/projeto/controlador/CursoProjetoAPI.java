@@ -1,7 +1,7 @@
 package com.upe.observatorio.projeto.controlador;
 
 import com.upe.observatorio.projeto.controlador.representacao.CursoProjetoRepresentacao;
-import com.upe.observatorio.projeto.dominio.dto.CursoProjetoDTO;
+import com.upe.observatorio.projeto.model.dto.CursoProjetoDTO;
 import com.upe.observatorio.projeto.service.CourseProjectService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;

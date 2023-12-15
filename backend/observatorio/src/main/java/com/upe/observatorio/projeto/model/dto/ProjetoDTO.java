@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.dominio.dto;
+package com.upe.observatorio.projeto.model.dto;
 
 import java.util.Date;
 
@@ -7,8 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
-import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.model.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

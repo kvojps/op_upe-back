@@ -1,9 +1,9 @@
 package com.upe.observatorio.projeto.service;
 
-import com.upe.observatorio.projeto.dominio.Campus;
-import com.upe.observatorio.projeto.dominio.Projeto;
-import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
-import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
+import com.upe.observatorio.projeto.model.Campus;
+import com.upe.observatorio.projeto.model.Projeto;
+import com.upe.observatorio.projeto.model.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.model.dto.ProjetoFiltroDTO;
 import com.upe.observatorio.projeto.repository.ProjectRepository;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;

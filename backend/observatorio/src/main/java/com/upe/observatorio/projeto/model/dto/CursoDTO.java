@@ -1,10 +1,10 @@
-package com.upe.observatorio.projeto.dominio.dto;
+package com.upe.observatorio.projeto.model.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 
-import com.upe.observatorio.projeto.dominio.enums.TipoCursoEnum;
+import com.upe.observatorio.projeto.model.enums.TipoCursoEnum;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.upe.observatorio.projeto.controlador;
 
-import com.upe.observatorio.projeto.dominio.envelopes.DashboardResumoVO;
-import com.upe.observatorio.projeto.dominio.envelopes.DashboardVO;
+import com.upe.observatorio.projeto.model.vos.DashboardResumoVO;
+import com.upe.observatorio.projeto.model.vos.DashboardVO;
 import com.upe.observatorio.projeto.service.DashboardService;
 import com.upe.observatorio.utils.ObservatorioExcecao;
 import lombok.RequiredArgsConstructor;

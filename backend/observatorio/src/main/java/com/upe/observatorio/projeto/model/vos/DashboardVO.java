@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.dominio.envelopes;
+package com.upe.observatorio.projeto.model.vos;
 
 import lombok.Data;
 

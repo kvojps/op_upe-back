@@ -1,7 +1,7 @@
-package com.upe.observatorio.projeto.dominio.dto;
+package com.upe.observatorio.projeto.model.dto;
 
-import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
-import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.model.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
 import lombok.Builder;
 import lombok.Data;
 

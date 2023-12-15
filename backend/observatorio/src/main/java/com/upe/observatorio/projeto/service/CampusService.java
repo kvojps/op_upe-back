@@ -1,7 +1,7 @@
 package com.upe.observatorio.projeto.service;
 
-import com.upe.observatorio.projeto.dominio.Campus;
-import com.upe.observatorio.projeto.dominio.dto.CampusDTO;
+import com.upe.observatorio.projeto.model.Campus;
+import com.upe.observatorio.projeto.model.dto.CampusDTO;
 import com.upe.observatorio.projeto.repository.CampusRepository;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;

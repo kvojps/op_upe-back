@@ -1,12 +1,12 @@
 package com.upe.observatorio.projeto.controlador;
 
 import com.upe.observatorio.projeto.controlador.representacao.ProjetoRepresentacao;
-import com.upe.observatorio.projeto.dominio.Projeto;
-import com.upe.observatorio.projeto.dominio.dto.ProjetoDTO;
-import com.upe.observatorio.projeto.dominio.dto.ProjetoFiltroDTO;
-import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;
-import com.upe.observatorio.projeto.dominio.enums.ModalidadeEnum;
-import com.upe.observatorio.projeto.dominio.envelopes.StatusExecucaoVO;
+import com.upe.observatorio.projeto.model.Projeto;
+import com.upe.observatorio.projeto.model.dto.ProjetoDTO;
+import com.upe.observatorio.projeto.model.dto.ProjetoFiltroDTO;
+import com.upe.observatorio.projeto.model.enums.AreaTematicaEnum;
+import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
+import com.upe.observatorio.projeto.model.vos.StatusExecucaoVO;
 import com.upe.observatorio.projeto.service.SheetService;
 import com.upe.observatorio.projeto.service.ProjectService;
 import com.upe.observatorio.utils.ObservatorioExcecao;

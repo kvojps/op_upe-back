@@ -15,7 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.upe.observatorio.projeto.dominio.Projeto;
+import com.upe.observatorio.projeto.model.Projeto;
 import com.upe.observatorio.usuario.dominio.enums.Perfil;
 
 import lombok.AllArgsConstructor;

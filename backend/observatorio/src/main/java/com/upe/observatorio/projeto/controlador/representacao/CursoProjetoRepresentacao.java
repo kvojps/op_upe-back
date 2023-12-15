@@ -1,6 +1,6 @@
 package com.upe.observatorio.projeto.controlador.representacao;
 
-import com.upe.observatorio.projeto.dominio.CursoProjeto;
+import com.upe.observatorio.projeto.model.CursoProjeto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
