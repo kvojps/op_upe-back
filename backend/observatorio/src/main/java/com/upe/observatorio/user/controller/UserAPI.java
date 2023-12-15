@@ -1,10 +1,10 @@
 package com.upe.observatorio.user.controller;
 
 import com.upe.observatorio.user.controller.response.UserResponse;
-import com.upe.observatorio.user.dominio.Usuario;
-import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
-import com.upe.observatorio.user.dominio.dto.UsuarioDTO;
+import com.upe.observatorio.user.model.Usuario;
+import com.upe.observatorio.user.model.dto.AuthResponseDTO;
+import com.upe.observatorio.user.model.dto.RegisterRequestDTO;
+import com.upe.observatorio.user.model.dto.UserDTO;
 import com.upe.observatorio.user.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatoryException;
 import jakarta.validation.Valid;
@@ -48,8 +48,8 @@ public class UserAPI {
     }
 
     @PostMapping
-    public ResponseEntity<AutenticacaoResponseDTO> createUser(@Valid @RequestBody CadastroRequestDTO request,
-                                                              BindingResult bindingResult) {
+    public ResponseEntity<AuthResponseDTO> createUser(@Valid @RequestBody RegisterRequestDTO request,
+                                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
@@ -59,7 +59,7 @@ public class UserAPI {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@RequestBody @Valid UsuarioDTO user, @PathVariable Long id) {
+    public ResponseEntity<Void> updateUser(@RequestBody @Valid UserDTO user, @PathVariable Long id) {
         service.atualizarUsuario(user, id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

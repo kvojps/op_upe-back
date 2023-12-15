@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.dominio.dto;
+package com.upe.observatorio.user.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class UsuarioDTO {
+public class UserDTO {
 	
 	@Schema(example = "José", description = "Nome do usuário")
 	@NotBlank

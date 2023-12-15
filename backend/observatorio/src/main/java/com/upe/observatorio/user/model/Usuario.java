@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.dominio;
+package com.upe.observatorio.user.model;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.user.dominio.enums.Perfil;
+import com.upe.observatorio.user.model.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +45,7 @@ public class Usuario implements UserDetails {
 	private String matricula;
 
 	@Enumerated(EnumType.STRING)
-	private Perfil perfil;
+	private Role perfil;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Projeto> projetos;

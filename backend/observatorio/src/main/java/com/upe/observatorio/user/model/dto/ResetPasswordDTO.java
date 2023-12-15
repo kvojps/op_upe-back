@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.dominio.dto;
+package com.upe.observatorio.user.model.dto;
 
 
 import lombok.AllArgsConstructor;

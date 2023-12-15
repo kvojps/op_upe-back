@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.dominio.dto;
+package com.upe.observatorio.user.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Email;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CadastroRequestDTO {
+public class RegisterRequestDTO {
 
 	@NotBlank(message = "Name not be empty")
 	private String nome;

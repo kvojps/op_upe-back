@@ -1,11 +1,11 @@
 package com.upe.observatorio.user.servico;
 
 import com.upe.observatorio.config.JwtService;
-import com.upe.observatorio.user.dominio.Usuario;
-import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
-import com.upe.observatorio.user.dominio.dto.UsuarioDTO;
-import com.upe.observatorio.user.dominio.enums.Perfil;
+import com.upe.observatorio.user.model.Usuario;
+import com.upe.observatorio.user.model.dto.AuthResponseDTO;
+import com.upe.observatorio.user.model.dto.RegisterRequestDTO;
+import com.upe.observatorio.user.model.dto.UserDTO;
+import com.upe.observatorio.user.model.enums.Role;
 import com.upe.observatorio.user.repository.UserRepository;
 import com.upe.observatorio.utils.InvalidPasswordException;
 import com.upe.observatorio.utils.ObservatoryException;
@@ -33,7 +33,7 @@ public class UsuarioServico {
 		return repositorio.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
 	
-	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request)  {
+	public AuthResponseDTO cadastrarUsuario(RegisterRequestDTO request)  {
 		if (repositorio.findByEmail(request.getEmail()).isPresent()) {
 			throw new ObservatoryException("Já existe um usuário cadastrado com esse e-mail!");
 		}
@@ -43,14 +43,14 @@ public class UsuarioServico {
 		usuario.setNome(request.getNome());
 		usuario.setEmail(request.getEmail());
 		usuario.setSenha(passwordEncoder.encode(request.getSenha()));
-		usuario.setPerfil(Perfil.USUARIO);
+		usuario.setPerfil(Role.USUARIO);
 		repositorio.save(usuario);
 
 		var jwtToken = jwtService.generateToken(usuario);
-		return AutenticacaoResponseDTO.builder().token(jwtToken).build();
+		return AuthResponseDTO.builder().token(jwtToken).build();
 	}
 
-	public void atualizarUsuario(UsuarioDTO usuario, Long id) {
+	public void atualizarUsuario(UserDTO usuario, Long id) {
 		if (repositorio.findById(id).isEmpty()) {
 			throw new UserNotFoundException("User not found");
 		}

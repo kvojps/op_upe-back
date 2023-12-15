@@ -2,7 +2,7 @@ package com.upe.observatorio.user.controller.response;
 
 import com.upe.observatorio.project.controller.response.ProjectResponse;
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.user.dominio.Usuario;
+import com.upe.observatorio.user.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

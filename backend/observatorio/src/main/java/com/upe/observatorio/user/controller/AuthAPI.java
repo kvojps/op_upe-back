@@ -1,8 +1,8 @@
 package com.upe.observatorio.user.controller;
 
-import com.upe.observatorio.user.dominio.dto.AutenticacaoRequestDTO;
-import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.user.dominio.dto.ResetPasswordDTO;
+import com.upe.observatorio.user.model.dto.AuthRequestDTO;
+import com.upe.observatorio.user.model.dto.AuthResponseDTO;
+import com.upe.observatorio.user.model.dto.ResetPasswordDTO;
 import com.upe.observatorio.user.servico.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class AuthAPI {
     private final AuthService service;
 
     @PostMapping
-    public ResponseEntity<AutenticacaoResponseDTO> submitUserLogin(@RequestBody AutenticacaoRequestDTO request) {
+    public ResponseEntity<AuthResponseDTO> submitUserLogin(@RequestBody AuthRequestDTO request) {
         return ResponseEntity.ok(service.loginUsuario(request));
     }
 

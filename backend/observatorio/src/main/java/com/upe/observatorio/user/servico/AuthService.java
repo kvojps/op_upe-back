@@ -3,10 +3,10 @@ package com.upe.observatorio.user.servico;
 import com.upe.observatorio.config.JwtService;
 import com.upe.observatorio.project.model.dto.EmailDTO;
 import com.upe.observatorio.shared.EmailClient;
-import com.upe.observatorio.user.dominio.Usuario;
-import com.upe.observatorio.user.dominio.dto.AutenticacaoRequestDTO;
-import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.user.dominio.dto.ResetPasswordDTO;
+import com.upe.observatorio.user.model.Usuario;
+import com.upe.observatorio.user.model.dto.AuthRequestDTO;
+import com.upe.observatorio.user.model.dto.AuthResponseDTO;
+import com.upe.observatorio.user.model.dto.ResetPasswordDTO;
 import com.upe.observatorio.user.repository.UserRepository;
 import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;
@@ -35,13 +35,13 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public AutenticacaoResponseDTO loginUsuario(AutenticacaoRequestDTO request) {
+    public AuthResponseDTO loginUsuario(AuthRequestDTO request) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha()));
 
         Usuario usuario = repositorio.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(usuario);
-        return AutenticacaoResponseDTO.builder().token(jwtToken).build();
+        return AuthResponseDTO.builder().token(jwtToken).build();
     }
 
     public void forgotPassword(String email) {

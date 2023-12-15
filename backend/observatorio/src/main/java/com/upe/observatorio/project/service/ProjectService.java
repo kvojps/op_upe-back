@@ -5,7 +5,7 @@ import com.upe.observatorio.project.model.Projeto;
 import com.upe.observatorio.project.model.dto.ProjectDTO;
 import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
 import com.upe.observatorio.project.repository.ProjectRepository;
-import com.upe.observatorio.user.dominio.Usuario;
+import com.upe.observatorio.user.model.Usuario;
 import com.upe.observatorio.user.servico.UsuarioServico;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import jakarta.validation.constraints.NotNull;
