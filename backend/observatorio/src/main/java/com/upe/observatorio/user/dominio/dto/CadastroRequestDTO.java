@@ -1,4 +1,4 @@
-package com.upe.observatorio.usuario.dominio.dto;
+package com.upe.observatorio.user.dominio.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

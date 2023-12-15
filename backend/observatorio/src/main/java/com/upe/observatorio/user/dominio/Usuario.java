@@ -1,4 +1,4 @@
-package com.upe.observatorio.usuario.dominio;
+package com.upe.observatorio.user.dominio;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.usuario.dominio.enums.Perfil;
+import com.upe.observatorio.user.dominio.enums.Perfil;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

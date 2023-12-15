@@ -1,12 +1,12 @@
-package com.upe.observatorio.usuario.servico;
+package com.upe.observatorio.user.servico;
 
 import com.upe.observatorio.config.JwtService;
-import com.upe.observatorio.usuario.dominio.Usuario;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
-import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
-import com.upe.observatorio.usuario.dominio.enums.Perfil;
-import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.dominio.Usuario;
+import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
+import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
+import com.upe.observatorio.user.dominio.dto.UsuarioDTO;
+import com.upe.observatorio.user.dominio.enums.Perfil;
+import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.InvalidPasswordException;
 import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;

@@ -1,13 +1,13 @@
-package com.upe.observatorio.usuario.servico;
+package com.upe.observatorio.user.servico;
 
 import com.upe.observatorio.config.JwtService;
 import com.upe.observatorio.project.model.dto.EmailDTO;
 import com.upe.observatorio.shared.EmailClient;
-import com.upe.observatorio.usuario.dominio.Usuario;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.usuario.dominio.dto.ResetPasswordDTO;
-import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.dominio.Usuario;
+import com.upe.observatorio.user.dominio.dto.AutenticacaoRequestDTO;
+import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
+import com.upe.observatorio.user.dominio.dto.ResetPasswordDTO;
+import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;
 import io.jsonwebtoken.Claims;

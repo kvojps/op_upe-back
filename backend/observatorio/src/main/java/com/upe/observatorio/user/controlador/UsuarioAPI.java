@@ -1,11 +1,11 @@
-package com.upe.observatorio.usuario.controlador;
+package com.upe.observatorio.user.controlador;
 
-import com.upe.observatorio.usuario.controlador.model.UsuarioRepresentacao;
-import com.upe.observatorio.usuario.dominio.Usuario;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
-import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
-import com.upe.observatorio.usuario.servico.UsuarioServico;
+import com.upe.observatorio.user.controlador.model.UsuarioRepresentacao;
+import com.upe.observatorio.user.dominio.Usuario;
+import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
+import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
+import com.upe.observatorio.user.dominio.dto.UsuarioDTO;
+import com.upe.observatorio.user.servico.UsuarioServico;
 import com.upe.observatorio.utils.ObservatoryException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

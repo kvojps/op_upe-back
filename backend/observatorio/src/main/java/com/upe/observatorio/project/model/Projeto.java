@@ -2,7 +2,7 @@ package com.upe.observatorio.project.model;
 
 import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
 import com.upe.observatorio.project.model.enums.ModalityEnum;
-import com.upe.observatorio.usuario.dominio.Usuario;
+import com.upe.observatorio.user.dominio.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

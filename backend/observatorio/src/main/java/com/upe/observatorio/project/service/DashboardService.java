@@ -11,7 +11,7 @@ import com.upe.observatorio.project.repository.CampusRepository;
 import com.upe.observatorio.project.repository.CourseProjectRepository;
 import com.upe.observatorio.project.repository.CourseRepository;
 import com.upe.observatorio.project.repository.ProjectRepository;
-import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

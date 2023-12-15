@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
 
 import lombok.RequiredArgsConstructor;
 

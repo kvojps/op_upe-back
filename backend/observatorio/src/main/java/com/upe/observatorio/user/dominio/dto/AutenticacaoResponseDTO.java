@@ -1,4 +1,4 @@
-package com.upe.observatorio.usuario.dominio.dto;
+package com.upe.observatorio.user.dominio.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AutenticacaoRequestDTO {
+public class AutenticacaoResponseDTO {
 	
-	private String email;
-	
-	private String senha;
+	private String token;
 }

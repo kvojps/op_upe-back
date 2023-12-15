@@ -1,4 +1,4 @@
-package com.upe.observatorio.usuario.dominio.enums;
+package com.upe.observatorio.user.dominio.enums;
 
 public enum Perfil {
 	USUARIO,

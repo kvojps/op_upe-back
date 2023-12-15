@@ -1,9 +1,9 @@
-package com.upe.observatorio.usuario.controlador;
+package com.upe.observatorio.user.controlador;
 
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;
-import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
-import com.upe.observatorio.usuario.dominio.dto.ResetPasswordDTO;
-import com.upe.observatorio.usuario.servico.AuthService;
+import com.upe.observatorio.user.dominio.dto.AutenticacaoRequestDTO;
+import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
+import com.upe.observatorio.user.dominio.dto.ResetPasswordDTO;
+import com.upe.observatorio.user.servico.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
