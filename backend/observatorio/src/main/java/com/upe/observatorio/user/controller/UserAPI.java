@@ -1,6 +1,6 @@
-package com.upe.observatorio.user.controlador;
+package com.upe.observatorio.user.controller;
 
-import com.upe.observatorio.user.controlador.model.UsuarioRepresentacao;
+import com.upe.observatorio.user.controller.response.UsuarioRepresentacao;
 import com.upe.observatorio.user.dominio.Usuario;
 import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
@@ -24,50 +24,50 @@ import java.util.stream.Collectors;
 @RequestMapping("api/usuarios")
 @CrossOrigin
 @RequiredArgsConstructor
-public class UsuarioAPI {
+public class UserAPI {
 
-    private final UsuarioServico servico;
+    private final UsuarioServico service;
 
     @GetMapping
-    public ResponseEntity<List<UsuarioRepresentacao>> listarUsuarios() {
+    public ResponseEntity<List<UsuarioRepresentacao>> readUsers() {
         return ResponseEntity
-                .ok(servico.listarUsuarios().stream().map(UsuarioRepresentacao::new).collect(Collectors.toList()));
+                .ok(service.listarUsuarios().stream().map(UsuarioRepresentacao::new).collect(Collectors.toList()));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UsuarioRepresentacao> buscarUsuarioPorPrincipal() {
+    public ResponseEntity<UsuarioRepresentacao> findUserByPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new UsuarioRepresentacao(servico.buscarUsuarioPorId(user.getId())));
+        return ResponseEntity.ok(new UsuarioRepresentacao(service.buscarUsuarioPorId(user.getId())));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioRepresentacao> buscarUsuarioPorId(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(new UsuarioRepresentacao(servico.buscarUsuarioPorId(id)));
+    public ResponseEntity<UsuarioRepresentacao> findUserById(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(new UsuarioRepresentacao(service.buscarUsuarioPorId(id)));
     }
 
     @PostMapping
-    public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@Valid @RequestBody CadastroRequestDTO request,
-                                                                    BindingResult bindingResult) {
+    public ResponseEntity<AutenticacaoResponseDTO> createUser(@Valid @RequestBody CadastroRequestDTO request,
+                                                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 
-        return ResponseEntity.ok(servico.cadastrarUsuario(request));
+        return ResponseEntity.ok(service.cadastrarUsuario(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarUsuario(@RequestBody @Valid UsuarioDTO usuario, @PathVariable Long id) {
-        servico.atualizarUsuario(usuario, id);
+    public ResponseEntity<Void> updateUser(@RequestBody @Valid UsuarioDTO user, @PathVariable Long id) {
+        service.atualizarUsuario(user, id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerUsuario(@PathVariable("id") Long id) {
-        servico.removerUsuario(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+        service.removerUsuario(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.controlador.model;
+package com.upe.observatorio.user.controller.response;
 
 import com.upe.observatorio.project.controller.response.ProjectResponse;
 import com.upe.observatorio.project.model.Projeto;
