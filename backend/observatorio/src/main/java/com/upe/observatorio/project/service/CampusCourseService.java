@@ -3,10 +3,10 @@ package com.upe.observatorio.project.service;
 import com.upe.observatorio.project.model.Campus;
 import com.upe.observatorio.project.model.CampusCurso;
 import com.upe.observatorio.project.model.Curso;
-import com.upe.observatorio.project.model.dto.CampusCursoDTO;
+import com.upe.observatorio.project.model.dto.CampusCourseDTO;
 import com.upe.observatorio.project.repository.CampusCourseRepository;
-import com.upe.observatorio.utils.RelationExistsException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
+import com.upe.observatorio.utils.RelationExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CampusCourseService {
 	private final CampusService campusService;
 	private final CourseService courseService;
 
-	public CampusCurso createCampusCourse(CampusCursoDTO campusCourse)  {
+	public CampusCurso createCampusCourse(CampusCourseDTO campusCourse)  {
 		Campus existentCampus = campusService.findCampusById(campusCourse.getCampusId());
 		Curso existentCourse = courseService.findCourseById(campusCourse.getCursoId());
 		

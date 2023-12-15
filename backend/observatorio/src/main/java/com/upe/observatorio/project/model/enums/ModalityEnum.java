@@ -1,5 +1,5 @@
 package com.upe.observatorio.project.model.enums;
 
-public enum ModalidadeEnum {
+public enum ModalityEnum {
 	PROGRAMA, PROJETO, CURSO, OFICINA, EVENTO, INDEFINIDO
 }

@@ -1,8 +1,8 @@
 package com.upe.observatorio.project.controller.response;
 
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.project.model.enums.AreaTematicaEnum;
-import com.upe.observatorio.project.model.enums.ModalidadeEnum;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
+import com.upe.observatorio.project.model.enums.ModalityEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -15,10 +15,10 @@ public class ProjectResponse {
     private Long id;
 
     @Schema(example = "PESQUISA", description = "Área temática de um projeto")
-    private AreaTematicaEnum areaTematica;
+    private ThematicAreaEnum areaTematica;
 
     @Schema(example = "OFICINA", description = "Modalidade de um projeto")
-    private ModalidadeEnum modalidade;
+    private ModalityEnum modalidade;
 
     @Schema(example = "Observatório de projetos de pesquisa, extensão e inovação da Universidade de Pernambuco",
             description = "Título de um projeto")

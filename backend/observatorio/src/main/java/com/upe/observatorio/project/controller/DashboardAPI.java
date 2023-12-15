@@ -1,6 +1,6 @@
 package com.upe.observatorio.project.controller;
 
-import com.upe.observatorio.project.model.vos.DashboardResumoVO;
+import com.upe.observatorio.project.model.vos.DashboardOverviewVO;
 import com.upe.observatorio.project.model.vos.DashboardVO;
 import com.upe.observatorio.project.service.DashboardService;
 import com.upe.observatorio.utils.ObservatoryException;
@@ -25,7 +25,7 @@ public class DashboardAPI {
 	}
 
 	@GetMapping("/resumo")
-	public ResponseEntity<DashboardResumoVO> getDashboardOverview() {
+	public ResponseEntity<DashboardOverviewVO> getDashboardOverview() {
 		return ResponseEntity.ok(service.getDashboardOverview());
 	}
 }

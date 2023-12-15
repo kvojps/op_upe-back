@@ -1,7 +1,7 @@
 package com.upe.observatorio.project.model;
 
-import com.upe.observatorio.project.model.enums.AreaTematicaEnum;
-import com.upe.observatorio.project.model.enums.ModalidadeEnum;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
+import com.upe.observatorio.project.model.enums.ModalityEnum;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,10 +23,10 @@ public class Projeto {
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
-	private AreaTematicaEnum areaTematica;
+	private ThematicAreaEnum areaTematica;
 
 	@Enumerated(EnumType.STRING)
-	private ModalidadeEnum modalidade;
+	private ModalityEnum modalidade;
 
 	@Column(unique = true, columnDefinition = "TEXT")
 	private String titulo;

@@ -1,7 +1,7 @@
 package com.upe.observatorio.project.controller;
 
 import com.upe.observatorio.project.controller.response.CourseProjectResponse;
-import com.upe.observatorio.project.model.dto.CursoProjetoDTO;
+import com.upe.observatorio.project.model.dto.CourseProjectDTO;
 import com.upe.observatorio.project.service.CourseProjectService;
 import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class CourseProjectApi {
 
     @PostMapping
     public ResponseEntity<CourseProjectResponse> createCourseProject(
-            @RequestBody @Valid CursoProjetoDTO courseProject,
+            @RequestBody @Valid CourseProjectDTO courseProject,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {

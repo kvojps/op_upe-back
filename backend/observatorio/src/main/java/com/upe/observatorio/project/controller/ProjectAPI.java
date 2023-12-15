@@ -2,11 +2,11 @@ package com.upe.observatorio.project.controller;
 
 import com.upe.observatorio.project.controller.response.ProjectResponse;
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.project.model.dto.ProjetoDTO;
-import com.upe.observatorio.project.model.dto.ProjetoFiltroDTO;
-import com.upe.observatorio.project.model.enums.AreaTematicaEnum;
-import com.upe.observatorio.project.model.enums.ModalidadeEnum;
-import com.upe.observatorio.project.model.vos.StatusExecucaoVO;
+import com.upe.observatorio.project.model.dto.ProjectDTO;
+import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
+import com.upe.observatorio.project.model.enums.ModalityEnum;
+import com.upe.observatorio.project.model.vos.StatusExecutionVO;
 import com.upe.observatorio.project.service.SheetService;
 import com.upe.observatorio.project.service.ProjectService;
 import com.upe.observatorio.utils.ObservatoryException;
@@ -37,7 +37,7 @@ public class ProjectAPI {
 
     @PostMapping
     public ResponseEntity<ProjectResponse> createProject(
-            @RequestBody @Valid ProjetoDTO projectDTO,
+            @RequestBody @Valid ProjectDTO projectDTO,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
@@ -50,8 +50,8 @@ public class ProjectAPI {
     }
 
     @PostMapping("/planilha")
-    public ResponseEntity<List<StatusExecucaoVO>> batchCreateProjects(@RequestPart MultipartFile sheet) {
-        List<StatusExecucaoVO> statusExec = sheetService.batchCreateProjects(sheet);
+    public ResponseEntity<List<StatusExecutionVO>> batchCreateProjects(@RequestPart MultipartFile sheet) {
+        List<StatusExecutionVO> statusExec = sheetService.batchCreateProjects(sheet);
 
         return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(statusExec);
     }
@@ -59,13 +59,13 @@ public class ProjectAPI {
     @GetMapping
     public ResponseEntity<Map<String, Object>> readProjects(
             @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "thematicArea", required = false) AreaTematicaEnum thematicArea,
-            @RequestParam(value = "modality", required = false) ModalidadeEnum modality,
+            @RequestParam(value = "thematicArea", required = false) ThematicAreaEnum thematicArea,
+            @RequestParam(value = "modality", required = false) ModalityEnum modality,
             @RequestParam(value = "initialDate", required = false) String initialDate,
             @RequestParam(value = "finalDate", required = false) String finalDate,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        ProjetoFiltroDTO projectFilter = ProjetoFiltroDTO.builder().titulo(title).areaTematica(thematicArea).
+        ProjectFilterDTO projectFilter = ProjectFilterDTO.builder().titulo(title).areaTematica(thematicArea).
                 modalidade(modality).dataInicio(initialDate).dataFim(finalDate).page(page).size(size).build();
         Page<Projeto> projectsPage = service.readProjects(projectFilter, page, size);
 
@@ -79,7 +79,7 @@ public class ProjectAPI {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProject(
-            @RequestBody @Valid ProjetoDTO project,
+            @RequestBody @Valid ProjectDTO project,
             @PathVariable Long id,
             BindingResult bindingResult
     ) {

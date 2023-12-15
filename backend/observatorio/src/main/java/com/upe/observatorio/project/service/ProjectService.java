@@ -2,8 +2,8 @@ package com.upe.observatorio.project.service;
 
 import com.upe.observatorio.project.model.Campus;
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.project.model.dto.ProjetoDTO;
-import com.upe.observatorio.project.model.dto.ProjetoFiltroDTO;
+import com.upe.observatorio.project.model.dto.ProjectDTO;
+import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
 import com.upe.observatorio.project.repository.ProjectRepository;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
@@ -24,7 +24,7 @@ public class ProjectService {
     private final UsuarioServico userService;
     private final CampusService campusService;
 
-    public Projeto createProject(ProjetoDTO project) {
+    public Projeto createProject(ProjectDTO project) {
         Projeto projectToSave = new Projeto();
         BeanUtils.copyProperties(project, projectToSave);
 
@@ -36,7 +36,7 @@ public class ProjectService {
         return repository.save(projectToSave);
     }
 
-    public Page<Projeto> readProjects(ProjetoFiltroDTO dto, int page, int size) {
+    public Page<Projeto> readProjects(ProjectFilterDTO dto, int page, int size) {
         Pageable requestedPage = PageRequest.of(page, size);
         return repository.findWithFilters(dto.getDataInicio(), dto.getDataFim(),
                 dto.getTitulo(), dto.getAreaTematica(), dto.getModalidade(), requestedPage);
@@ -47,7 +47,7 @@ public class ProjectService {
                 new ProjectResourceNotFoundException("Project not found"));
     }
 
-    public void updateProject(ProjetoDTO project, @NotNull Long id) {
+    public void updateProject(ProjectDTO project, @NotNull Long id) {
         if (repository.findById(id).isEmpty()) {
             throw new ProjectResourceNotFoundException("Project not found");
         }

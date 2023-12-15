@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class StatusExecucaoVO {
+public class StatusExecutionVO {
     private String mensagem;
     private String causa;
 }

@@ -3,7 +3,7 @@ package com.upe.observatorio.project.service;
 import com.upe.observatorio.project.model.Curso;
 import com.upe.observatorio.project.model.CursoProjeto;
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.project.model.dto.CursoProjetoDTO;
+import com.upe.observatorio.project.model.dto.CourseProjectDTO;
 import com.upe.observatorio.project.repository.CourseProjectRepository;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import com.upe.observatorio.utils.RelationExistsException;
@@ -18,7 +18,7 @@ public class CourseProjectService {
     private final CourseService courseService;
     private final ProjectService projectService;
 
-    public CursoProjeto createCourseProject(CursoProjetoDTO courseProject) {
+    public CursoProjeto createCourseProject(CourseProjectDTO courseProject) {
         Curso existentCourse = courseService.findCourseById(courseProject.getCursoId());
         Projeto existentProject = projectService.findProjectById(courseProject.getProjetoId());
 

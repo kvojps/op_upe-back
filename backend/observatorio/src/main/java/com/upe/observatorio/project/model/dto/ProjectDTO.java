@@ -7,24 +7,24 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import com.upe.observatorio.project.model.enums.AreaTematicaEnum;
-import com.upe.observatorio.project.model.enums.ModalidadeEnum;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
+import com.upe.observatorio.project.model.enums.ModalityEnum;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class ProjetoDTO {
+public class ProjectDTO {
 	
 	@Schema(example = "PESQUISA", description = "Área temática de um projeto")
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	private AreaTematicaEnum areaTematica;
+	private ThematicAreaEnum areaTematica;
 	
 	@Schema(example = "OFICINA", description = "Modalidade de um projeto")
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	private ModalidadeEnum modalidade;
+	private ModalityEnum modalidade;
 	
 	@Schema(example = "Observatório de projetos de pesquisa, extensão e inovação da Universidade de Pernambuco", 
 			description = "Título de um projeto")

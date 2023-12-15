@@ -1,5 +1,5 @@
 package com.upe.observatorio.project.model.enums;
 
-public enum TipoCursoEnum {
+public enum CourseTypeEnum {
 	LICENCIATURA, BACHARELADO
 }

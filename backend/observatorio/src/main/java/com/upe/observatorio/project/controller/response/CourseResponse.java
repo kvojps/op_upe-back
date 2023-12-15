@@ -3,7 +3,7 @@ package com.upe.observatorio.project.controller.response;
 import com.upe.observatorio.project.model.CampusCurso;
 import com.upe.observatorio.project.model.Curso;
 import com.upe.observatorio.project.model.CursoProjeto;
-import com.upe.observatorio.project.model.enums.TipoCursoEnum;
+import com.upe.observatorio.project.model.enums.CourseTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -19,7 +19,7 @@ public class CourseResponse {
 	private String nome;
 	
 	@Schema(example = "BACHARELADO", description = "Tipo do curso")
-	private TipoCursoEnum tipo;
+	private CourseTypeEnum tipo;
 	
 	private List<CampusCourseResponse> campusCurso;
 	

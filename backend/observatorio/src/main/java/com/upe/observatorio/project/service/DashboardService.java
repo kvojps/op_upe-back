@@ -3,9 +3,9 @@ package com.upe.observatorio.project.service;
 import com.upe.observatorio.project.model.Campus;
 import com.upe.observatorio.project.model.Curso;
 import com.upe.observatorio.project.model.CursoProjeto;
-import com.upe.observatorio.project.model.enums.AreaTematicaEnum;
-import com.upe.observatorio.project.model.enums.ModalidadeEnum;
-import com.upe.observatorio.project.model.vos.DashboardResumoVO;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
+import com.upe.observatorio.project.model.enums.ModalityEnum;
+import com.upe.observatorio.project.model.vos.DashboardOverviewVO;
 import com.upe.observatorio.project.model.vos.DashboardVO;
 import com.upe.observatorio.project.repository.CampusRepository;
 import com.upe.observatorio.project.repository.CourseProjectRepository;
@@ -44,8 +44,8 @@ public class DashboardService {
 		return dashboard;
 	}
 
-	public DashboardResumoVO getDashboardOverview() {
-		DashboardResumoVO dashboardOverview = new DashboardResumoVO();
+	public DashboardOverviewVO getDashboardOverview() {
+		DashboardOverviewVO dashboardOverview = new DashboardOverviewVO();
 
 		dashboardOverview.setTotalCampuses(campusRepository.count());
 		dashboardOverview.setTotalCourses(courseRepository.count());
@@ -86,11 +86,11 @@ public class DashboardService {
 	private HashMap<String, Long> countProjectsPerModality() {
 		HashMap<String, Long> result = new HashMap<>();
 
-		result.put("Programa", projectRepository.countByModalidade(ModalidadeEnum.PROGRAMA));
-		result.put("Projeto", projectRepository.countByModalidade(ModalidadeEnum.PROJETO));
-		result.put("Curso", projectRepository.countByModalidade(ModalidadeEnum.CURSO));
-		result.put("Oficina", projectRepository.countByModalidade(ModalidadeEnum.OFICINA));
-		result.put("Evento", projectRepository.countByModalidade(ModalidadeEnum.EVENTO));
+		result.put("Programa", projectRepository.countByModalidade(ModalityEnum.PROGRAMA));
+		result.put("Projeto", projectRepository.countByModalidade(ModalityEnum.PROJETO));
+		result.put("Curso", projectRepository.countByModalidade(ModalityEnum.CURSO));
+		result.put("Oficina", projectRepository.countByModalidade(ModalityEnum.OFICINA));
+		result.put("Evento", projectRepository.countByModalidade(ModalityEnum.EVENTO));
 
 		return result;
 	}
@@ -98,9 +98,9 @@ public class DashboardService {
 	private HashMap<String, Long> countProjectsPerThematicaArea() {
 		HashMap<String, Long> result = new HashMap<>();
 
-		result.put("Pesquisa", projectRepository.countByAreaTematica(AreaTematicaEnum.PESQUISA));
-		result.put("Extensão", projectRepository.countByAreaTematica(AreaTematicaEnum.EXTENSAO));
-		result.put("Inovação", projectRepository.countByAreaTematica(AreaTematicaEnum.INOVACAO));
+		result.put("Pesquisa", projectRepository.countByAreaTematica(ThematicAreaEnum.PESQUISA));
+		result.put("Extensão", projectRepository.countByAreaTematica(ThematicAreaEnum.EXTENSAO));
+		result.put("Inovação", projectRepository.countByAreaTematica(ThematicAreaEnum.INOVACAO));
 
 		return result;
 	}

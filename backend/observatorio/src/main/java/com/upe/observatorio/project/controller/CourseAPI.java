@@ -2,7 +2,7 @@ package com.upe.observatorio.project.controller;
 
 import com.upe.observatorio.project.controller.response.CourseResponse;
 import com.upe.observatorio.project.model.Curso;
-import com.upe.observatorio.project.model.dto.CursoDTO;
+import com.upe.observatorio.project.model.dto.CourseDTO;
 import com.upe.observatorio.project.service.CourseService;
 import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class CourseAPI {
 
 	@PostMapping
 	public ResponseEntity<CourseResponse> createCourse(
-			@RequestBody @Valid CursoDTO course,
+			@RequestBody @Valid CourseDTO course,
 			BindingResult bindingResult
 			) {
 		if (bindingResult.hasErrors()) {
@@ -52,7 +52,7 @@ public class CourseAPI {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> updateCourse(
-			@RequestBody @Valid CursoDTO course,
+			@RequestBody @Valid CourseDTO course,
 			@PathVariable Long id,
 			BindingResult bindingResult
 	) {

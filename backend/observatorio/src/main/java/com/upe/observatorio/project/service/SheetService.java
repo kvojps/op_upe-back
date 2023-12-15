@@ -1,11 +1,11 @@
 package com.upe.observatorio.project.service;
 
 import com.upe.observatorio.project.model.Projeto;
-import com.upe.observatorio.project.model.dto.CursoProjetoDTO;
-import com.upe.observatorio.project.model.dto.ProjetoDTO;
-import com.upe.observatorio.project.model.enums.AreaTematicaEnum;
-import com.upe.observatorio.project.model.enums.ModalidadeEnum;
-import com.upe.observatorio.project.model.vos.StatusExecucaoVO;
+import com.upe.observatorio.project.model.dto.CourseProjectDTO;
+import com.upe.observatorio.project.model.dto.ProjectDTO;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
+import com.upe.observatorio.project.model.enums.ModalityEnum;
+import com.upe.observatorio.project.model.vos.StatusExecutionVO;
 import com.upe.observatorio.project.repository.ProjectRepository;
 import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class SheetService {
 	private final ProjectService projectService;
 	private final CourseProjectService courseProjectService;
 	
-	public List<StatusExecucaoVO> batchCreateProjects(MultipartFile file)  {
-		List<StatusExecucaoVO> statusList = new ArrayList<>();
+	public List<StatusExecutionVO> batchCreateProjects(MultipartFile file)  {
+		List<StatusExecutionVO> statusList = new ArrayList<>();
 
 		try (InputStream input = file.getInputStream()) {
 			Workbook workbook = new XSSFWorkbook(input);
@@ -47,19 +47,19 @@ public class SheetService {
 				formatDateCellValue(workbook, row, 10);
 
 				try {
-					ProjetoDTO project = createProjectByRow(row);
+					ProjectDTO project = createProjectByRow(row);
 					Projeto projectSaved = projectService.createProject(project);
 					long courseId = (long) (row.getCell(16).getNumericCellValue());
 					
 					addProjectToCourse(courseId, projectSaved.getId());
 				} catch (IllegalStateException | IllegalArgumentException | ObservatoryException | ParseException e) {
-					statusList.add(new StatusExecucaoVO("Erro (" +
+					statusList.add(new StatusExecutionVO("Erro (" +
 							row.getCell(2).getStringCellValue() + ") : " + e.getMessage(),
 							e.getClass().getSimpleName()));
 				}
 			}
 		} catch (IOException e) {
-			statusList.add(new StatusExecucaoVO("Erro: " + e.getMessage(), e.getClass().getSimpleName()));
+			statusList.add(new StatusExecutionVO("Erro: " + e.getMessage(), e.getClass().getSimpleName()));
 		}
 
 		return statusList;
@@ -77,11 +77,11 @@ public class SheetService {
 		dateCellValue.setCellValue(dateCellValueFormatted);
 	}
 
-	private ProjetoDTO createProjectByRow(Row row) throws ParseException {
+	private ProjectDTO createProjectByRow(Row row) throws ParseException {
 		String dataInicio = row.getCell(9).getStringCellValue();
 		String dataFim = row.getCell(10).getStringCellValue();
 
-		ProjetoDTO project = new ProjetoDTO();
+		ProjectDTO project = new ProjectDTO();
 		if(row.getCell(0) != null) project.setAreaTematica(getThematicArea(row.getCell(0).getStringCellValue()));
 		if(row.getCell(1) != null) project.setModalidade(getModality(row.getCell(1).getStringCellValue()));
 		if(row.getCell(2) != null) project.setTitulo(row.getCell(2).getStringCellValue());
@@ -104,19 +104,19 @@ public class SheetService {
 	}
 
 	private void addProjectToCourse(Long courseId, Long projectId) throws ObservatoryException {
-		CursoProjetoDTO courseProjectDTO = new CursoProjetoDTO();
+		CourseProjectDTO courseProjectDTO = new CourseProjectDTO();
 		courseProjectDTO.setCursoId(courseId);
 		courseProjectDTO.setProjetoId(projectId);
 
 		courseProjectService.createCourseProject(courseProjectDTO);
 	}
 	
-	private AreaTematicaEnum getThematicArea(String thematicArea) {
-		return AreaTematicaEnum.valueOf(thematicArea);
+	private ThematicAreaEnum getThematicArea(String thematicArea) {
+		return ThematicAreaEnum.valueOf(thematicArea);
 	}
 	
-	private ModalidadeEnum getModality(String modality) {
-		return ModalidadeEnum.valueOf(modality);
+	private ModalityEnum getModality(String modality) {
+		return ModalityEnum.valueOf(modality);
 	}
 	
 	private Date getDateByString(String date) throws ParseException {

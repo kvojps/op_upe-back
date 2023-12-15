@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-import com.upe.observatorio.project.model.enums.TipoCursoEnum;
+import com.upe.observatorio.project.model.enums.CourseTypeEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +30,7 @@ public class Curso {
 	private String nome;
 	
 	@Enumerated(EnumType.STRING)
-	private TipoCursoEnum tipo;
+	private CourseTypeEnum tipo;
 
 	@OneToMany(mappedBy = "curso")
 	private List<CampusCurso> campusCurso;

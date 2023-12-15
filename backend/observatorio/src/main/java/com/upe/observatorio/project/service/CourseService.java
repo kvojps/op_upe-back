@@ -1,7 +1,7 @@
 package com.upe.observatorio.project.service;
 
 import com.upe.observatorio.project.model.Curso;
-import com.upe.observatorio.project.model.dto.CursoDTO;
+import com.upe.observatorio.project.model.dto.CourseDTO;
 import com.upe.observatorio.project.repository.CourseRepository;
 import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
@@ -17,7 +17,7 @@ public class CourseService {
 
 	private final CourseRepository repository;
 
-	public Curso createCourse(CursoDTO course) {
+	public Curso createCourse(CourseDTO course) {
 		Curso courseToSave = new Curso();
 		BeanUtils.copyProperties(course, courseToSave);
 
@@ -33,7 +33,7 @@ public class CourseService {
 				new ProjectResourceNotFoundException("Curso not found"));
 	}
 
-	public void updateCourse(CursoDTO course, Long id) throws ObservatoryException {
+	public void updateCourse(CourseDTO course, Long id) throws ObservatoryException {
 		if (repository.findById(id).isEmpty()) {
 			throw new ProjectResourceNotFoundException("Curso not found");
 		}

@@ -4,13 +4,13 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 
-import com.upe.observatorio.project.model.enums.TipoCursoEnum;
+import com.upe.observatorio.project.model.enums.CourseTypeEnum;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class CursoDTO {
+public class CourseDTO {
 	
 	@Schema(example = "Engenharia de Software", description = "Nome do curso")
 	@NotBlank
@@ -18,6 +18,6 @@ public class CursoDTO {
 	
 	@Schema(example = "BACHARELADO", description = "Tipo do curso")
 	@Enumerated(EnumType.STRING)
-	private TipoCursoEnum tipo;
+	private CourseTypeEnum tipo;
 	
 }
