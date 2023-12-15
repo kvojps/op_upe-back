@@ -4,7 +4,7 @@ import com.upe.observatorio.projeto.controller.response.CampusResponse;
 import com.upe.observatorio.projeto.model.Campus;
 import com.upe.observatorio.projeto.model.dto.CampusDTO;
 import com.upe.observatorio.projeto.service.CampusService;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class CampusAPI {
 			BindingResult bindingResult
 	) {
 		if (bindingResult.hasErrors()) {
-			throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+			throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
 					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
 		}
 
@@ -56,7 +56,7 @@ public class CampusAPI {
 			BindingResult bindingResult
 	) {
 		if (bindingResult.hasErrors()) {
-			throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+			throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
 					.map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
 		}
 

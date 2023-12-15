@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GerenciadorExcecaoGlobal {
-    @ExceptionHandler(ObservatorioExcecao.class)
-    public ResponseEntity<Object> handleAcsException(ObservatorioExcecao ex) {
+public class GlobalExceptionHandler {
+    @ExceptionHandler(ObservatoryException.class)
+    public ResponseEntity<Object> handleAcsException(ObservatoryException ex) {
         return ResponseEntity.badRequest().body(new GlobalExceptionHandlerResponse(ex.getMessage()));
     }
 

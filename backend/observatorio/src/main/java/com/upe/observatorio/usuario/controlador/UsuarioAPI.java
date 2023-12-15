@@ -6,7 +6,7 @@ import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.usuario.dominio.dto.CadastroRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.servico.UsuarioServico;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -51,7 +51,7 @@ public class UsuarioAPI {
     public ResponseEntity<AutenticacaoResponseDTO> cadastrarUsuario(@Valid @RequestBody CadastroRequestDTO request,
                                                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+            throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 

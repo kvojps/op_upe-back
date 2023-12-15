@@ -3,7 +3,7 @@ package com.upe.observatorio.projeto.controller;
 import com.upe.observatorio.projeto.controller.response.CampusCourseResponse;
 import com.upe.observatorio.projeto.model.dto.CampusCursoDTO;
 import com.upe.observatorio.projeto.service.CampusCourseService;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class CampusCourseAPI {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+            throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 

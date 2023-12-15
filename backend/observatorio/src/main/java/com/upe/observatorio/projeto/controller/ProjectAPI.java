@@ -9,7 +9,7 @@ import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.model.vos.StatusExecucaoVO;
 import com.upe.observatorio.projeto.service.SheetService;
 import com.upe.observatorio.projeto.service.ProjectService;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
@@ -41,7 +41,7 @@ public class ProjectAPI {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+            throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(ObjectError::toString).toList()));
         }
 
@@ -84,7 +84,7 @@ public class ProjectAPI {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            throw new ObservatorioExcecao(String.join("; ", bindingResult.getAllErrors().stream()
+            throw new ObservatoryException(String.join("; ", bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage).toList()));
         }
 

@@ -8,7 +8,7 @@ import com.upe.observatorio.usuario.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.usuario.dominio.enums.Perfil;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
 import com.upe.observatorio.utils.InvalidPasswordException;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class UsuarioServico {
 	
 	public AutenticacaoResponseDTO cadastrarUsuario(CadastroRequestDTO request)  {
 		if (repositorio.findByEmail(request.getEmail()).isPresent()) {
-			throw new ObservatorioExcecao("Já existe um usuário cadastrado com esse e-mail!");
+			throw new ObservatoryException("Já existe um usuário cadastrado com esse e-mail!");
 		}
 		validarSenha(request.getSenha());
 

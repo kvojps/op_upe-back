@@ -8,7 +8,7 @@ import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;
 import com.upe.observatorio.usuario.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.usuario.dominio.dto.ResetPasswordDTO;
 import com.upe.observatorio.usuario.repositorio.UsuarioRepositorio;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -71,14 +71,14 @@ public class AuthService {
                     .parseClaimsJws(resetPasswordDTO.getResetToken())
                     .getBody();
         } catch (Exception e) {
-            throw new ObservatorioExcecao("Invalid JWT: " + e.getMessage());
+            throw new ObservatoryException("Invalid JWT: " + e.getMessage());
         }
 
         String tokenUserEmail = claims.get("email", String.class);
         String tokenType = claims.get("type", String.class);
 
         if (!"reset_password".equals(tokenType)) {
-            throw new ObservatorioExcecao("Invalid token_type");
+            throw new ObservatoryException("Invalid token_type");
         }
 
         UsuarioServico.validarSenha(resetPasswordDTO.getNewPassword());

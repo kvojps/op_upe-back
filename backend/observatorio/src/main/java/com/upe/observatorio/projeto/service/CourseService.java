@@ -3,7 +3,7 @@ package com.upe.observatorio.projeto.service;
 import com.upe.observatorio.projeto.model.Curso;
 import com.upe.observatorio.projeto.model.dto.CursoDTO;
 import com.upe.observatorio.projeto.repository.CourseRepository;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -33,7 +33,7 @@ public class CourseService {
 				new ProjectResourceNotFoundException("Curso not found"));
 	}
 
-	public void updateCourse(CursoDTO course, Long id) throws ObservatorioExcecao {
+	public void updateCourse(CursoDTO course, Long id) throws ObservatoryException {
 		if (repository.findById(id).isEmpty()) {
 			throw new ProjectResourceNotFoundException("Curso not found");
 		}
@@ -44,7 +44,7 @@ public class CourseService {
 		repository.save(existentCourse);
 	}
 
-	public void deleteCourse(Long id) throws ObservatorioExcecao {
+	public void deleteCourse(Long id) throws ObservatoryException {
 		if (repository.findById(id).isEmpty()) {
 			throw new ProjectResourceNotFoundException("Curso not found");
 		}

@@ -7,7 +7,7 @@ import com.upe.observatorio.projeto.model.enums.AreaTematicaEnum;
 import com.upe.observatorio.projeto.model.enums.ModalidadeEnum;
 import com.upe.observatorio.projeto.model.vos.StatusExecucaoVO;
 import com.upe.observatorio.projeto.repository.ProjectRepository;
-import com.upe.observatorio.utils.ObservatorioExcecao;
+import com.upe.observatorio.utils.ObservatoryException;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -52,7 +52,7 @@ public class SheetService {
 					long courseId = (long) (row.getCell(16).getNumericCellValue());
 					
 					addProjectToCourse(courseId, projectSaved.getId());
-				} catch (IllegalStateException | IllegalArgumentException | ObservatorioExcecao | ParseException e) {
+				} catch (IllegalStateException | IllegalArgumentException | ObservatoryException | ParseException e) {
 					statusList.add(new StatusExecucaoVO("Erro (" +
 							row.getCell(2).getStringCellValue() + ") : " + e.getMessage(),
 							e.getClass().getSimpleName()));
@@ -103,7 +103,7 @@ public class SheetService {
 		return project;
 	}
 
-	private void addProjectToCourse(Long courseId, Long projectId) throws ObservatorioExcecao{
+	private void addProjectToCourse(Long courseId, Long projectId) throws ObservatoryException {
 		CursoProjetoDTO courseProjectDTO = new CursoProjetoDTO();
 		courseProjectDTO.setCursoId(courseId);
 		courseProjectDTO.setProjetoId(projectId);
