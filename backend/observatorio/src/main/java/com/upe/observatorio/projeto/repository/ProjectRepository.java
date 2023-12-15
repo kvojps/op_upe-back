@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.repositorio;
+package com.upe.observatorio.projeto.repository;
 
 import com.upe.observatorio.projeto.dominio.Projeto;
 import com.upe.observatorio.projeto.dominio.enums.AreaTematicaEnum;

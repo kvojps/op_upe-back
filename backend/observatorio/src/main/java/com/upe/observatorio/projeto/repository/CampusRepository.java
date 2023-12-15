@@ -1,4 +1,4 @@
-package com.upe.observatorio.projeto.repositorio;
+package com.upe.observatorio.projeto.repository;
 
 import com.upe.observatorio.projeto.dominio.Campus;
 import org.springframework.data.jpa.repository.JpaRepository;
