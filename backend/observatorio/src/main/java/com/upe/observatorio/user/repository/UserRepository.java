@@ -1,4 +1,4 @@
-package com.upe.observatorio.user.repositorio;
+package com.upe.observatorio.user.repository;
 
 import java.util.Optional;
 
@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.upe.observatorio.user.dominio.Usuario;
 
-public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>  {
+public interface UserRepository extends JpaRepository<Usuario, Long>  {
 	Optional<Usuario> findByEmail(String email);
 }

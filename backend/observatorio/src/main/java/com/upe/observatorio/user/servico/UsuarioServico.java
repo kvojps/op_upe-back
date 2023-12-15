@@ -6,7 +6,7 @@ import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.user.dominio.dto.CadastroRequestDTO;
 import com.upe.observatorio.user.dominio.dto.UsuarioDTO;
 import com.upe.observatorio.user.dominio.enums.Perfil;
-import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.repository.UserRepository;
 import com.upe.observatorio.utils.InvalidPasswordException;
 import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioServico {
 
-	private final UsuarioRepositorio repositorio;
+	private final UserRepository repositorio;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
 

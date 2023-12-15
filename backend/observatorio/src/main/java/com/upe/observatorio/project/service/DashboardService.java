@@ -11,7 +11,7 @@ import com.upe.observatorio.project.repository.CampusRepository;
 import com.upe.observatorio.project.repository.CourseProjectRepository;
 import com.upe.observatorio.project.repository.CourseRepository;
 import com.upe.observatorio.project.repository.ProjectRepository;
-import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.repository.UserRepository;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class DashboardService {
 	private final CourseRepository courseRepository;
 	private final ProjectRepository projectRepository;
 	private final CourseProjectRepository courseProjectRepository;
-	private final UsuarioRepositorio userRepository;
+	private final UserRepository userRepository;
 
 	public DashboardVO getDashboard() {
 		DashboardVO dashboard = new DashboardVO();

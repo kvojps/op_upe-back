@@ -7,7 +7,7 @@ import com.upe.observatorio.user.dominio.Usuario;
 import com.upe.observatorio.user.dominio.dto.AutenticacaoRequestDTO;
 import com.upe.observatorio.user.dominio.dto.AutenticacaoResponseDTO;
 import com.upe.observatorio.user.dominio.dto.ResetPasswordDTO;
-import com.upe.observatorio.user.repositorio.UsuarioRepositorio;
+import com.upe.observatorio.user.repository.UserRepository;
 import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.UserNotFoundException;
 import io.jsonwebtoken.Claims;
@@ -29,7 +29,7 @@ public class AuthService {
 
     private static final String SECRET_KEY = System.getenv("SECRET_KEY");
 
-    private final UsuarioRepositorio repositorio;
+    private final UserRepository repositorio;
     private final EmailClient emailClient;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
