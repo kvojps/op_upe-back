@@ -1,7 +1,7 @@
 package com.upe.observatorio.usuario.servico;
 
 import com.upe.observatorio.config.JwtService;
-import com.upe.observatorio.projeto.model.dto.EmailDTO;
+import com.upe.observatorio.project.model.dto.EmailDTO;
 import com.upe.observatorio.shared.EmailClient;
 import com.upe.observatorio.usuario.dominio.Usuario;
 import com.upe.observatorio.usuario.dominio.dto.AutenticacaoRequestDTO;

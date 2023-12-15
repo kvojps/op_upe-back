@@ -1,6 +1,6 @@
 package com.upe.observatorio.shared;
 
-import com.upe.observatorio.projeto.model.dto.EmailDTO;
+import com.upe.observatorio.project.model.dto.EmailDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
