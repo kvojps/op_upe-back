@@ -1,11 +1,11 @@
-package com.upe.observatorio.project;
+package com.upe.observatorio.sheet.service;
 
 import com.upe.observatorio.project.model.Projeto;
 import com.upe.observatorio.project.model.dto.CourseProjectDTO;
 import com.upe.observatorio.project.model.dto.ProjectDTO;
 import com.upe.observatorio.project.model.enums.ModalityEnum;
 import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
-import com.upe.observatorio.project.model.vos.StatusExecutionVO;
+import com.upe.observatorio.sheet.controller.response.StatusExecutionResponse;
 import com.upe.observatorio.project.repository.ProjectRepository;
 import com.upe.observatorio.project.service.CourseProjectService;
 import com.upe.observatorio.project.service.ProjectService;
@@ -32,8 +32,8 @@ public class SheetService {
 	private final ProjectService projectService;
 	private final CourseProjectService courseProjectService;
 	
-	public List<StatusExecutionVO> batchCreateProjects(MultipartFile file)  {
-		List<StatusExecutionVO> statusList = new ArrayList<>();
+	public List<StatusExecutionResponse> batchCreateProjects(MultipartFile file)  {
+		List<StatusExecutionResponse> statusList = new ArrayList<>();
 
 		try (InputStream input = file.getInputStream()) {
 			Workbook workbook = new XSSFWorkbook(input);
@@ -55,13 +55,13 @@ public class SheetService {
 					
 					addProjectToCourse(courseId, projectSaved.getId());
 				} catch (ParseException | RuntimeException e) {
-					statusList.add(new StatusExecutionVO("Erro (" +
+					statusList.add(new StatusExecutionResponse("Erro (" +
 							row.getCell(2).getStringCellValue() + ") : " + e.getMessage(),
 							e.getClass().getSimpleName()));
 				}
 			}
 		} catch (IOException e) {
-			statusList.add(new StatusExecutionVO("Erro: " + e.getMessage(), e.getClass().getSimpleName()));
+			statusList.add(new StatusExecutionResponse("Erro: " + e.getMessage(), e.getClass().getSimpleName()));
 		}
 
 		return statusList;

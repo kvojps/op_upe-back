@@ -1,11 +1,11 @@
-package com.upe.observatorio.project.model.vos;
+package com.upe.observatorio.sheet.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class StatusExecutionVO {
+public class StatusExecutionResponse {
     private String mensagem;
     private String causa;
 }

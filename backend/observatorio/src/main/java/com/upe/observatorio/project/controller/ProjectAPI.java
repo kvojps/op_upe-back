@@ -4,24 +4,20 @@ import com.upe.observatorio.project.controller.response.ProjectResponse;
 import com.upe.observatorio.project.model.Projeto;
 import com.upe.observatorio.project.model.dto.ProjectDTO;
 import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
-import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
 import com.upe.observatorio.project.model.enums.ModalityEnum;
-import com.upe.observatorio.project.model.vos.StatusExecutionVO;
-import com.upe.observatorio.project.SheetService;
+import com.upe.observatorio.project.model.enums.ThematicAreaEnum;
 import com.upe.observatorio.project.service.ProjectService;
 import com.upe.observatorio.utils.ObservatoryException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +30,7 @@ import java.util.stream.Collectors;
 public class ProjectAPI {
 
     private final ProjectService service;
-    private final SheetService sheetService;
+
 
     @PostMapping
     public ResponseEntity<ProjectResponse> createProject(
@@ -50,12 +46,6 @@ public class ProjectAPI {
                 body(new ProjectResponse(service.createProject(projectDTO)));
     }
 
-    @PostMapping(value = "/planilha", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<List<StatusExecutionVO>> batchCreateProjects(@RequestPart("sheet") MultipartFile sheet) {
-        List<StatusExecutionVO> statusExec = sheetService.batchCreateProjects(sheet);
-
-        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(statusExec);
-    }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> readProjects(

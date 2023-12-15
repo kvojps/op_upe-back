@@ -37,6 +37,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/projetos/**").hasAnyAuthority("ADMIN", "COORDENADOR")
                                 .requestMatchers(HttpMethod.PUT, "/api/projetos/**").hasAnyAuthority("ADMIN", "COORDENADOR")
                                 .requestMatchers(HttpMethod.DELETE, "/api/projetos/**").hasAnyAuthority("ADMIN", "COORDENADOR")
+                                .requestMatchers("/api/sheets/**").hasAnyAuthority("ADMIN", "COORDENADOR")
                                 .requestMatchers("/api/auth/**", "/v3/**", "/swagger-ui/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
                                 .anyRequest()
