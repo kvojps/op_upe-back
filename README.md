@@ -18,7 +18,7 @@ Ao utilizar essas tecnologias, o sistema oferece aos usuários uma experiência 
 
 ### Visão de casos de uso 👤
 Há 04 (quatro) tipos de usuários que interagem com o observatório: usuário geral, usuário cadastrado, coordenador de projeto e administrador (figura 2). Cada um desses tipos de usuários têm diferentes usos para o sistema:
-| ![perfis de usuário](dados/readme-img/perfis.jpeg) |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/0eeb2982-542d-4144-8d98-187913312ba2) |
 |:--:|
 | Diagrama de casos de uso - Perfis do usuário |
 
@@ -36,65 +36,36 @@ Um administrador pode associar o perfil “Coordenador de Projeto” a um outro 
 
 ### Visão lógica 🖖🏾
 Os pacotes do back-end do sistema foram divididos por caso de uso, e inserido em cada caso de uso existem os pacotes de controlador, serviço, repositório e modelo. Além desses pacotes adicionais, existem os pacotes config e utils que possuem algumas configurações adicionais do sistema
-| ![pacotes do sistema](dados/readme-img/pacotes-back.jpeg)|
-|:--:|
-| Diagrama de pacotes - Back-end |
-
 
 ### Visão de implementação 🧑‍💻
-Esta seção tem como objetivo apresentar o diagrama de classes do sistema em questão. Por meio dele será possível visualizar as entidades que compõem o sistema e seus relacionamentos. Estas são as principais entidades do observatório:
+Esta seção tem como objetivo apresentar as classes do sistema em questão.É possível visualizar as entidades que compõem o sistema e seus relacionamentos. Estas são as principais entidades do observatório:
 * Campus;
 * Curso;
 * Projeto;
 * Usuário;
-* Publicacão;
-* Comentário;
-  
-| ![classes referentes ao escopo de projeto](dados/readme-img/classes-projeto.jpeg) |
-|:--:|
-| Diagrama de classes - Escopo Projeto |
-
-| ![classes referentes ao escopo de publicação](dados/readme-img/classes-publicacao.jpeg) |
-|:--:|
-| Diagrama de classes - Escopo Publicação |
 
 #### Endpoints disponíveis 🟢
-| ![Apis disponíveis](dados/readme-img/apis-disponiveis.jpeg) |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/293d78ff-bc82-4928-add7-e3e80efbaf34)|
 |:--:|
 | APIs disponíveis |
 
-| ![Endpoints disponíveis para entidade campus](dados/readme-img/campus-endpoints.jpeg) |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/7dae146e-3367-404a-94f8-bce65d00a88f)|
 |:--:|
-| Endpoints disponíveis - Campus API |
+| Endpoints disponíveis - Auth API |
 
-| ![Endpoints disponíveis para entidade curso](dados/readme-img/curso-endpoints.jpeg) |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/c8b62373-8d80-4873-9469-a3f9c9d6fe7f) |
 |:--:|
-| Endpoints disponíveis - Curso API |
+| Endpoints disponíveis - User API |
 
-| ![Endpoints disponíveis para entidade projeto](dados/readme-img/projeto-endpoints.jpeg) |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/537bd2ae-6837-479d-b3b9-10f688dd7f9f) |
 |:--:|
-| Endpoints disponíveis - Projeto API |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/3e50a9e2-f95d-4fba-bc62-4e2bdc772c1d) |
+| Endpoints disponíveis - Campus & Course API |
 
-| ![Endpoints disponíveis para entidade campus e curso](dados/readme-img/campus_curso-endpoints.jpeg) |
+| ![image](https://github.com/kvojps/op_upe-back/assets/62623689/b3a9cd42-4825-429b-bdf7-5be1f1077318) |
 |:--:|
-| Endpoints disponíveis - CampusCurso API |
+| Endpoints disponíveis - Project & Dashboard & Sheet API |
 
-| ![Endpoints disponíveis para entidade curso e projeto](dados/readme-img/curso_projeto-endpoints.jpeg) |
+|![image](https://github.com/kvojps/op_upe-back/assets/62623689/e19d4f5e-719f-421c-b10e-96db638757e0) |
 |:--:|
-| Endpoints disponíveis - CursoProjeto API |
-
-| ![Endpoints disponíveis para entidade dashboard](dados/readme-img/dashboard-endpoints.jpeg) |
-|:--:|
-| Endpoints disponíveis - Dashboard API |
-
-| ![Endpoints disponíveis para entidade usuário](dados/readme-img/usuario-endpoints.jpeg) |
-|:--:|
-| Endpoints disponíveis - Usuario API |
-
-| ![Endpoints disponíveis para entidade publicação](dados/readme-img/publicacao-endpoints.jpeg) |
-|:--:|
-| Endpoints disponíveis - Publicacao API |
-
-| ![Endpoints disponíveis para entidade comentário](dados/readme-img/comentarios-endpoints.jpeg) |
-|:--:|
-| Endpoints disponíveis - Comentario API |
+| Endpoints disponíveis - Course & Project API |
