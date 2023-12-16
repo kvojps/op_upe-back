@@ -43,6 +43,7 @@ public class UserService {
 		usuario.setNome(request.getNome());
 		usuario.setEmail(request.getEmail());
 		usuario.setSenha(passwordEncoder.encode(request.getSenha()));
+		usuario.setVerificado(false);
 		usuario.setPerfil(Role.USUARIO);
 		repository.save(usuario);
 

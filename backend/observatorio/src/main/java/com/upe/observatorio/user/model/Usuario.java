@@ -44,6 +44,8 @@ public class Usuario implements UserDetails {
 
 	private String matricula;
 
+	private boolean isVerificado;
+
 	@Enumerated(EnumType.STRING)
 	private Role perfil;
 
