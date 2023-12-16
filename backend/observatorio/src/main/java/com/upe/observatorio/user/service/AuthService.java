@@ -45,15 +45,7 @@ public class AuthService {
     }
 
     public void forgotPassword(String email) {
-        Map<String, Object> tokenPayload = new HashMap<>();
-        tokenPayload.put("email", email);
-        tokenPayload.put("type", "reset_password");
-        tokenPayload.put("exp", new Date(System.currentTimeMillis() + 3600000));
-
-        String jwtToken = Jwts.builder()
-                .addClaims(tokenPayload)
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                .compact();
+        String jwtToken = getJwtToken(email, "reset_password");
 
         EmailDTO emailContent = new EmailDTO();
         emailContent.setSubject("Recuperação de senha");
@@ -64,15 +56,7 @@ public class AuthService {
     }
 
     public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
-        Claims claims;
-        try{
-            claims = Jwts.parser()
-                    .setSigningKey(SECRET_KEY)
-                    .parseClaimsJws(resetPasswordDTO.getResetToken())
-                    .getBody();
-        } catch (Exception e) {
-            throw new ObservatoryException("Invalid JWT: " + e.getMessage());
-        }
+        Claims claims = extractClaims(resetPasswordDTO.getResetToken());
 
         String tokenUserEmail = claims.get("email", String.class);
         String tokenType = claims.get("type", String.class);
@@ -87,5 +71,62 @@ public class AuthService {
         userToUpdate.setSenha(passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
 
         repositorio.save(userToUpdate);
+    }
+
+    public void sendVerificationEmail(String email) {
+        String jwtToken = getJwtToken(email, "verify_email");
+
+        EmailDTO emailContent = new EmailDTO();
+        emailContent.setSubject("Verificação de e-mail");
+        emailContent.setMessage("Token de verificação de e-mail: " + jwtToken);
+        emailContent.setReceiver(email);
+
+        emailClient.sendEmail(emailContent);
+    }
+
+    public void verifyUser(String email, String verificationToken) {
+        Claims claims = extractClaims(verificationToken);
+
+        String tokenUserEmail = claims.get("email", String.class);
+        String tokenType = claims.get("type", String.class);
+
+        if (!"verify_email".equals(tokenType)) {
+            throw new ObservatoryException("Invalid token_type");
+        }
+        if (!tokenUserEmail.equals(email)) {
+            throw new ObservatoryException("Invalid email");
+        }
+
+        Usuario user = repositorio.findByEmail(email).orElseThrow(() ->
+                new UserNotFoundException("User not found"));
+        user.setVerificado(true);
+
+        repositorio.save(user);
+    }
+
+    private String getJwtToken(String email, String tokenType) {
+        Map<String, Object> tokenPayload = new HashMap<>();
+        tokenPayload.put("email", email);
+        tokenPayload.put("type", tokenType);
+        tokenPayload.put("exp", new Date(System.currentTimeMillis() + 3600000));
+
+        return Jwts.builder()
+                .addClaims(tokenPayload)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
+    private Claims extractClaims(String token) {
+        Claims claims;
+        try{
+            claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            throw new ObservatoryException("Invalid JWT: " + e.getMessage());
+        }
+
+        return claims;
     }
 }
