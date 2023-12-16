@@ -1,11 +1,14 @@
 package com.upe.observatorio.user.controller;
 
+import com.upe.observatorio.user.model.Usuario;
 import com.upe.observatorio.user.model.dto.AuthRequestDTO;
 import com.upe.observatorio.user.model.dto.AuthResponseDTO;
 import com.upe.observatorio.user.model.dto.ResetPasswordDTO;
 import com.upe.observatorio.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +33,24 @@ public class AuthAPI {
     @PostMapping("/reset-password")
     public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
         service.resetPassword(resetPasswordDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/verify-user")
+    public ResponseEntity<Void> sendVerificationEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) authentication.getPrincipal();
+
+        service.sendVerificationEmail(user.getEmail());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/verify-user")
+    public ResponseEntity<Void> verifyUser(@RequestParam String verificationToken) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) authentication.getPrincipal();
+
+        service.verifyUser(user.getEmail(), verificationToken);
         return ResponseEntity.noContent().build();
     }
 }
