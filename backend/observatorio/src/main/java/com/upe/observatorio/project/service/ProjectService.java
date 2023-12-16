@@ -7,6 +7,7 @@ import com.upe.observatorio.project.model.dto.ProjectFilterDTO;
 import com.upe.observatorio.project.repository.ProjectRepository;
 import com.upe.observatorio.user.model.Usuario;
 import com.upe.observatorio.user.service.UserService;
+import com.upe.observatorio.utils.ObservatoryException;
 import com.upe.observatorio.utils.ProjectResourceNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,7 +55,13 @@ public class ProjectService {
             throw new ProjectResourceNotFoundException("Project not found");
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) authentication.getPrincipal();
         Projeto existentProject = repository.findById(id).get();
+        if (!existentProject.getUsuario().getEmail().equals(user.getEmail())) {
+            throw new ObservatoryException("User not permitted to do this action");
+        }
+
         BeanUtils.copyProperties(project, existentProject);
 
         repository.save(existentProject);
@@ -61,6 +70,13 @@ public class ProjectService {
     public void deleteProject(@NotNull Long id) {
         if (repository.findById(id).isEmpty()) {
             throw new ProjectResourceNotFoundException("Project not found");
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) authentication.getPrincipal();
+        Projeto existentProject = repository.findById(id).get();
+        if (!existentProject.getUsuario().getEmail().equals(user.getEmail())) {
+            throw new ObservatoryException("User not permitted to do this action");
         }
 
         repository.deleteById(id);
